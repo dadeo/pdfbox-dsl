@@ -9,17 +9,19 @@ import groovy.transform.Immutable
 class DPoint {
     float x, y
 
-    DPoint plusX(float xAdjustment) {
-        float adjustedX = (float) (x + xAdjustment)
-        new DPoint(adjustedX, y)
+    DPoint offsetX(float xAdjustment) {
+        new DPoint((float) (x + xAdjustment), y)
     }
 
-    DPoint plusY(float yAdjustment) {
-        float adjustedY = (float) (y + yAdjustment)
-        new DPoint(x, adjustedY)
+    DPoint offsetY(float yAdjustment) {
+        new DPoint(x, (float) (y + yAdjustment))
     }
 
     DPoint offset(DPoint offsets) {
         new DPoint((float) (x + offsets.x), (float) (y + offsets.y))
+    }
+
+    DPoint offset(float offsetX, float offsetY) {
+        new DPoint((float) (x + offsetX), (float) (y + offsetY))
     }
 }

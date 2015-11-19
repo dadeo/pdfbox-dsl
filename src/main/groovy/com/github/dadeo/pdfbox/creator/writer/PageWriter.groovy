@@ -9,6 +9,8 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream
 class PageWriter {
     static final float ONE_INCH = 72f
 
+    ParagraphWriter paragraphWriter = new ParagraphWriter()
+
     void write(DContext documentContext, DPage dPage) {
         PDPage page = new PDPage()
         PDPageContentStream contentStream = new PDPageContentStream(documentContext.pdDocument, page)
@@ -22,8 +24,9 @@ class PageWriter {
                                                             pdContentStream: contentStream)
 
         // todo: should be looping over DObject (not DParagraph) and resolving writer from a factory.
-        dPage.contents.each { DParagraph dParagraph ->
-            new ParagraphWriter().write(pageContext, dParagraph)
+
+        dPage.contents.inject(null) { PreviousElementDetails previousElementDetails, DParagraph dParagraph ->
+            paragraphWriter.write(pageContext, dParagraph, previousElementDetails)
         }
 
 //        new DWriter(contentStream: contentStream).drawRectangle(pageBounds)

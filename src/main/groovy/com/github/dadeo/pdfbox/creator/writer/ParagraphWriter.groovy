@@ -9,10 +9,10 @@ class ParagraphWriter {
     StringTokenizer stringTokenizer = BootStrap.stringTokenizer
     TokensToLineAssigner tokensToLineAssigner = BootStrap.tokensToLineAssigner
 
-    void write(DContext pageContext, DParagraph dParagraph) {
-        DPoint topLeft = pageContext.currentLocation
-
+    PreviousElementDetails write(DContext pageContext, DParagraph dParagraph, PreviousElementDetails previousElementDetails) {
         DBounds borderOffsets = dParagraph.borderTextOffsets
+
+        DPoint topLeft = calculateTopLeftLocation(pageContext, previousElementDetails, borderOffsets)
 
         DFont font = dParagraph.font ?: dParagraph.font ?: pageContext.font
         DBounds paragraphBounds = pageContext.bounds.offset(borderOffsets)
@@ -20,7 +20,8 @@ class ParagraphWriter {
 
         DWriter writer = new DWriter(contentStream: pageContext.pdContentStream)
 
-        DPoint textBlockEndLocation = writeTextToBoundedLocation(dParagraph, writer, paragraphBounds, textBlockStartLocation, font)
+        WrittenTextResult writtenTextResult = writeTextToBoundedLocation(dParagraph, writer, paragraphBounds, textBlockStartLocation, font)
+        DPoint textBlockEndLocation = writtenTextResult.currentPosition
 
         float yOffset = (dParagraph.borderBottom == 0) ? 0 : font.descent
 
@@ -28,9 +29,34 @@ class ParagraphWriter {
         drawBorder(dParagraph, writer, topLeft, bottomRight)
 
         pageContext.currentLocation = new DPoint(pageContext.bounds.left, (float) (textBlockEndLocation.y + yOffset + borderOffsets.bottom))
+
+        new ParagraphPreviousElementDetails(lastLineDescent: writtenTextResult.lastLineDescent, hasBottomBorder: borderOffsets.bottom)
     }
 
-    protected DPoint writeTextToBoundedLocation(DParagraph dParagraph, DWriter writer, DBounds paragraphBounds, DPoint currentLocation, DFont font) {
+    /**
+     * Calculates the position the paragraph should start relative to the previous element.  This location is before
+     * margin and padding are taken in to count.
+     */
+    protected DPoint calculateTopLeftLocation(DContext pageContext, PreviousElementDetails previousElementDetails, DBounds borderOffsets) {
+        if (borderOffsets.top || borderOffsets.left || borderOffsets.right) {
+            float additionalOffsetFromPrevious
+
+            switch (previousElementDetails) {
+                case ParagraphPreviousElementDetails:
+                    ParagraphPreviousElementDetails details = (ParagraphPreviousElementDetails) previousElementDetails
+                    additionalOffsetFromPrevious = details.hasBottomBorder ? 0 : details.lastLineDescent
+                    break
+                default:
+                    additionalOffsetFromPrevious = 0
+            }
+
+            pageContext.currentLocation.offsetY(additionalOffsetFromPrevious)
+        } else {
+            pageContext.currentLocation
+        }
+    }
+
+    protected WrittenTextResult writeTextToBoundedLocation(DParagraph dParagraph, DWriter writer, DBounds paragraphBounds, DPoint currentLocation, DFont font) {
         List<StringToken> tokens = []
 
         dParagraph.contents.each { DPart part ->
@@ -48,7 +74,9 @@ class ParagraphWriter {
             }
         }
 
-        currentLocation
+        float lastLineDescent = assignedLines[-1].tokens.font.descent.max()
+
+        new WrittenTextResult(currentLocation, lastLineDescent)
     }
 
     protected void drawBorder(DParagraph dParagraph, DWriter writer, DPoint topLeft, DPoint bottomRight) {
