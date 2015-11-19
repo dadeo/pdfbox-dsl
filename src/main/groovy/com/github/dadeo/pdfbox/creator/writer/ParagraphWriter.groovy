@@ -23,12 +23,13 @@ class ParagraphWriter {
         WrittenTextResult writtenTextResult = writeTextToBoundedLocation(dParagraph, writer, paragraphBounds, textBlockStartLocation, font)
         DPoint textBlockEndLocation = writtenTextResult.currentPosition
 
-        float yOffset = (dParagraph.borderBottom == 0) ? 0 : font.descent
+        float borderYOffset = (borderOffsets.bottom == 0) ? 0 : font.descent
 
-        DPoint bottomRight = new DPoint(pageContext.bounds.right, (float) (textBlockEndLocation.y + yOffset))
+        DPoint bottomRight = new DPoint(pageContext.bounds.right, (float) (textBlockEndLocation.y + borderYOffset))
         drawBorder(dParagraph, writer, topLeft, bottomRight)
 
-        pageContext.currentLocation = new DPoint(pageContext.bounds.left, (float) (textBlockEndLocation.y + yOffset + borderOffsets.bottom))
+        float currentLocationBorderYOffset =  borderOffsets.bottom == 0 ? 0 : borderYOffset + 1
+        pageContext.currentLocation = new DPoint(pageContext.bounds.left, (float) (textBlockEndLocation.y + currentLocationBorderYOffset + borderOffsets.bottom))
 
         new ParagraphPreviousElementDetails(lastLineDescent: writtenTextResult.lastLineDescent, hasBottomBorder: borderOffsets.bottom)
     }
