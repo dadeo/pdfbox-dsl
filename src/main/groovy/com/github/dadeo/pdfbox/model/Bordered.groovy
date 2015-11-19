@@ -30,11 +30,11 @@ trait Bordered {
         this
     }
 
-    DBounds getBorderBounds() {
+    DBounds getBorderTextOffsets() {
         new DBounds(-borderTop, -borderRight, -borderBottom, borderLeft)
     }
 
-    DBounds getBorderOffsets() {
+    DBounds getBorderLineOffsets() {
         float topOffset = borderTop / 2
         float rightOffset = borderRight / 2
         float bottomOffset = borderBottom / 2

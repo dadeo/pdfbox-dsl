@@ -7,4 +7,8 @@ import org.apache.pdfbox.pdmodel.font.PDFont
 class DFont {
     PDFont font
     float size
+
+    float getDescent() {
+        (float) ((font.fontDescriptor.descent / 1000) * size)
+    }
 }
