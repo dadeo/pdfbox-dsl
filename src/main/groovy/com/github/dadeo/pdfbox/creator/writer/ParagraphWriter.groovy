@@ -13,8 +13,9 @@ class ParagraphWriter {
         DBounds marginOffsets = dParagraph.marginOffsets
         DBounds borderOffsets = dParagraph.borderTextOffsets
 
-        DPoint topLeft = calculateTopLeftLocation(pageContext, previousElementDetails, borderOffsets)
-            .offset(marginOffsets.leftTop())
+        DPoint topLeft = pageContext.currentLocation
+                                    .offsetY(calculatePreviousElementYOffset(previousElementDetails, borderOffsets))
+                                    .offset(marginOffsets.leftTop())
 
         DFont font = dParagraph.font ?: dParagraph.font ?: pageContext.font
         DBounds paragraphBounds = pageContext.bounds
@@ -47,26 +48,21 @@ class ParagraphWriter {
     }
 
     /**
-     * Calculates the position the paragraph should start relative to the previous element.  This location is before
-     * margin and padding are taken in to count.
+     * Calculates the offset the paragraph should start relative to the previous element.
      */
-    protected DPoint calculateTopLeftLocation(DContext pageContext, PreviousElementDetails previousElementDetails, DBounds borderOffsets) {
-        if (borderOffsets.top || borderOffsets.left || borderOffsets.right) {
-            float additionalOffsetFromPrevious
+    protected float calculatePreviousElementYOffset(PreviousElementDetails previousElementDetails, DBounds borderOffsets) {
+        float additionalOffsetFromPrevious = 0
 
+        if (borderOffsets.top || borderOffsets.left || borderOffsets.right) {
             switch (previousElementDetails) {
                 case ParagraphPreviousElementDetails:
                     ParagraphPreviousElementDetails details = (ParagraphPreviousElementDetails) previousElementDetails
                     additionalOffsetFromPrevious = details.hasBottomBorder ? 0 : details.lastLineDescent
                     break
-                default:
-                    additionalOffsetFromPrevious = 0
             }
-
-            pageContext.currentLocation.offsetY(additionalOffsetFromPrevious)
-        } else {
-            pageContext.currentLocation
         }
+
+        additionalOffsetFromPrevious
     }
 
     protected WrittenTextResult writeTextToBoundedLocation(DParagraph dParagraph, DWriter writer, DBounds paragraphBounds, DPoint currentLocation, DFont font) {
