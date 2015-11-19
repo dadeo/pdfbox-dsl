@@ -99,13 +99,20 @@ class VisualPlaygroundTest {
 
         DParagraph paragraph3 = new DParagraph(loremIpsum)
         paragraph3.font = new DFont(PDType1Font.HELVETICA_BOLD, 12)
-        paragraph3.border = 20
+//        paragraph3.border = 20
 //        paragraph3.borderLeft = 20
-        paragraph3.borderBottom = 20
+//        paragraph3.borderBottom = 21
 
         DParagraph paragraph4 = new DParagraph(loremIpsum)
-        paragraph4.font = new DFont(PDType1Font.HELVETICA_BOLD, 16)
-        paragraph4.border = 20
+        paragraph4.font = new DFont(PDType1Font.HELVETICA_BOLD, 18)
+//        paragraph4.border = 20
+//        paragraph4.margin = 20
+        paragraph4.marginTop = 5
+        paragraph4.marginBottom = 5
+        paragraph4.borderLeft = 10
+        paragraph4.marginLeft = 20
+        paragraph4.borderRight = 10
+        paragraph4.marginRight = 20
 
         DPage page = new DPage()
         page.addContent(paragraph3)
