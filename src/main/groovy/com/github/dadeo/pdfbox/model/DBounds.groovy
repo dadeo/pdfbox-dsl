@@ -29,6 +29,10 @@ class DBounds {
         right - left
     }
 
+    DBounds offset(DBounds offsets) {
+        new DBounds((float) (top + offsets.top), (float) (right + offsets.right), (float) (bottom + offsets.bottom), (float) (left + offsets.left))
+    }
+
     DBounds offset(float topOffset, float rightOffset, float bottomOffset, float leftOffset) {
         new DBounds((float) (top + topOffset), (float) (right + rightOffset), (float) (bottom + bottomOffset), (float) (left + leftOffset))
     }

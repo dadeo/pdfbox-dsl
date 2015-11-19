@@ -6,8 +6,13 @@ import com.github.dadeo.pdfbox.model.*
 class ParagraphWriter {
 
     void write(DContext pageContext, DParagraph dParagraph) {
+        DPoint topLeft = pageContext.currentLocation
+
+        DBounds borderOffsets = dParagraph.borderBounds
+
         DContext childContext = (DContext) pageContext.cloneNotNull(font: dParagraph.font,
-                                                                    currentLocation: pageContext.currentLocation)
+                                                                    bounds: pageContext.bounds.offset(borderOffsets),
+                                                                    currentLocation: pageContext.currentLocation.offset(borderOffsets.leftTop()))
 
         List<StringToken> tokens = []
 
@@ -16,8 +21,6 @@ class ParagraphWriter {
         }
 
         DWriter writer = new DWriter(contentStream: childContext.pdContentStream)
-
-        DPoint topLeft = childContext.currentLocation
 
         float width = childContext.bounds.width
         List<AssignedLine> assignedLines = BootStrap.tokensToLineAssigner.assignToLine(tokens, width, false)
@@ -33,23 +36,23 @@ class ParagraphWriter {
         float descent = (float) ((childContext.font.font.fontDescriptor.descent / 1000) * childContext.font.size)
         float yOffset = (dParagraph.borderBottom == 0) ? 0 : descent
 
-        drawBorder(dParagraph, writer, topLeft, childContext, yOffset)
+        DPoint bottomRight = new DPoint(pageContext.bounds.right, (float) (childContext.currentLocation.y + yOffset))
+        drawBorder(dParagraph, writer, topLeft, bottomRight)
 
-        pageContext.currentLocation = new DPoint(pageContext.bounds.left, (float) (childContext.currentLocation.y + yOffset))
-
+        pageContext.currentLocation = new DPoint(pageContext.bounds.left, (float) (childContext.currentLocation.y + yOffset + borderOffsets.bottom))
     }
 
-    protected void drawBorder(DParagraph dParagraph, DWriter writer, DPoint topLeft, DContext childContext, float descent) {
+    protected void drawBorder(DParagraph dParagraph, DWriter writer, DPoint topLeft, DPoint bottomRight) {
         float top = topLeft.y
-        float right = childContext.bounds.right
-        float bottom = (float) (childContext.currentLocation.y + descent)
+        float right = bottomRight.x
+        float bottom = bottomRight.y
         float left = topLeft.x
 
         DBounds borderOffsets = dParagraph.borderOffsets
 
-        float offsetTop = top - borderOffsets.top
-        float offsetRight = right - borderOffsets.right
-        float offsetBottom = bottom - borderOffsets.bottom
+        float offsetTop = top + borderOffsets.top
+        float offsetRight = right + borderOffsets.right
+        float offsetBottom = bottom + borderOffsets.bottom
         float offsetLeft = left + borderOffsets.left
 
         if (dParagraph.borderTop != 0)

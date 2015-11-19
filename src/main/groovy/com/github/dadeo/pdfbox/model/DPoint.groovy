@@ -18,4 +18,8 @@ class DPoint {
         float adjustedY = (float) (y + yAdjustment)
         new DPoint(x, adjustedY)
     }
+
+    DPoint offset(DPoint offsets) {
+        new DPoint((float) (x + offsets.x), (float) (y + offsets.y))
+    }
 }

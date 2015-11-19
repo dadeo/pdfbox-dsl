@@ -99,11 +99,11 @@ class VisualPlaygroundTest {
 
         DParagraph paragraph3 = new DParagraph(loremIpsum)
         paragraph3.font = new DFont(PDType1Font.HELVETICA_BOLD, 12)
-        paragraph3.border = 5
+        paragraph3.border = 0
 
         DParagraph paragraph4 = new DParagraph(loremIpsum)
         paragraph4.font = new DFont(PDType1Font.HELVETICA_BOLD, 16)
-        paragraph4.border = 5
+        paragraph4.border = 0
 
         DPage page = new DPage()
         page.addContent(paragraph3)
