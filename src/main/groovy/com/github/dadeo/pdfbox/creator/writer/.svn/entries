@@ -1,0 +1,35 @@
+10
+
+dir
+0
+https://htmlunit.svn.sourceforge.net/svnroot/htmlunit/trunk/htmlunit/pdfbox-dsl/src/main/groovy/com/github/dadeo/pdfbox/creator/writer
+https://htmlunit.svn.sourceforge.net/svnroot/htmlunit
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+797ba2fd-6919-0410-a55a-8c1f0daf9432
+
+ParagraphWriter.groovy
+file
+
+
+
+add
+
