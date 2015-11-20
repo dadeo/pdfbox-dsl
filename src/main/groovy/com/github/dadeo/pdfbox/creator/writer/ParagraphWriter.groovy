@@ -10,19 +10,23 @@ class ParagraphWriter {
     TokensToLineAssigner tokensToLineAssigner = BootStrap.tokensToLineAssigner
 
     PreviousElementDetails write(DContext pageContext, DParagraph dParagraph, PreviousElementDetails previousElementDetails) {
+        DFont font = dParagraph.font ?: dParagraph.font ?: pageContext.font
+
         DBounds marginOffsets = dParagraph.marginOffsets
         DBounds borderOffsets = dParagraph.borderTextOffsets
+        DBounds paddingOffsets = dParagraph.paddingOffsets
 
-        DPoint topLeft = pageContext.currentLocation
-                                    .offsetY(calculatePreviousElementYOffset(previousElementDetails, borderOffsets))
-                                    .offset(marginOffsets.leftTop())
+        DPoint borderTopLeft = pageContext.currentLocation
+                                          .offsetY(calculatePreviousElementYOffset(previousElementDetails, borderOffsets))
+                                          .offset(marginOffsets.leftTop())
 
-        DFont font = dParagraph.font ?: dParagraph.font ?: pageContext.font
         DBounds paragraphBounds = pageContext.bounds
-                                             .offset(borderOffsets)
                                              .offset(marginOffsets)
+                                             .offset(borderOffsets)
+                                             .offset(paddingOffsets)
 
-        DPoint textBlockStartLocation = topLeft.offset(borderOffsets.leftTop())
+        DPoint textBlockStartLocation = borderTopLeft.offset(borderOffsets.leftTop())
+                                                     .offset(paddingOffsets.leftTop())
 
         DWriter writer = new DWriter(contentStream: pageContext.pdContentStream)
 
@@ -31,16 +35,18 @@ class ParagraphWriter {
 
         float fontDescentOffsetWhenBorder = (borderOffsets.bottom == 0) ? 0 : font.descent
 
-        DPoint bottomRight = new DPoint(pageContext.bounds.right, textBlockEndLocation.y)
+        DPoint borderBottomRight = new DPoint(pageContext.bounds.right, textBlockEndLocation.y)
+            .offsetY(paddingOffsets.bottom)
             .offsetY(fontDescentOffsetWhenBorder)
             .offsetX(marginOffsets.right)
 
-        drawBorder(dParagraph, writer, topLeft, bottomRight)
+        drawBorder(dParagraph, writer, borderTopLeft, borderBottomRight)
 
         float currentLocationBorderYOffset = borderOffsets.bottom == 0 ? 0 : fontDescentOffsetWhenBorder + 1
 
         pageContext.currentLocation = new DPoint(pageContext.bounds.left, textBlockEndLocation.y)
             .offsetY(currentLocationBorderYOffset)
+            .offsetY(paddingOffsets.bottom)
             .offsetY(borderOffsets.bottom)
             .offsetY(marginOffsets.bottom)
 

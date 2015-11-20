@@ -71,4 +71,21 @@ class MarginedTest {
         assert margined.marginBottom == 5
         assert margined.marginLeft == 5
     }
+
+    @Test
+    void test_getMarginOffsets() {
+        Margined margined = new Margined() {}
+        margined.marginTop = 1
+        margined.marginRight = 2
+        margined.marginBottom = 3
+        margined.marginLeft = 4
+
+        DBounds offsets = margined.marginOffsets
+
+        assert offsets.top == -1
+        assert offsets.right == -2
+        assert offsets.bottom == -3
+        assert offsets.left == 4
+    }
+
 }

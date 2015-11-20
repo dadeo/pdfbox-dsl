@@ -2,7 +2,7 @@ package com.github.dadeo.pdfbox.model
 
 import org.apache.pdfbox.pdmodel.font.PDFont
 
-class DParagraph implements DObject, Margined, Bordered {
+class DParagraph implements DObject, Margined, Bordered, Padded {
     List<DPart> contents = []
     DFont font
 
