@@ -8,6 +8,7 @@ import com.github.dadeo.pdfbox.model.*
 class ParagraphWriter {
     StringTokenizer stringTokenizer = BootStrap.stringTokenizer
     TokensToLineAssigner tokensToLineAssigner = BootStrap.tokensToLineAssigner
+    LineBorder lineBorder = new LineBorder()
 
     PreviousElementDetails write(DContext pageContext, DParagraph dParagraph, PreviousElementDetails previousElementDetails) {
         DFont font = dParagraph.font ?: dParagraph.font ?: pageContext.font
@@ -36,10 +37,11 @@ class ParagraphWriter {
 
         DPoint borderBottomRight = new DPoint(pageContext.bounds.right, textBlockEndLocation.y)
             .offsetY(paddingOffsets.bottom)
+            .offsetY(borderOffsets.bottom)
             .offsetY(fontDescentOffsetWhenBorder)
             .offsetX(marginOffsets.right)
 
-        drawBorder(dParagraph, writer, borderTopLeft, borderBottomRight)
+        lineBorder.drawBorder(dParagraph, writer, borderTopLeft, borderBottomRight)
 
         float currentLocationBorderYOffset = borderOffsets.bottom == 0 ? 0 : fontDescentOffsetWhenBorder + 1
 
@@ -91,32 +93,6 @@ class ParagraphWriter {
         float lastLineDescent = assignedLines[-1].tokens.font.descent.max()
 
         new WrittenTextResult(currentLocation, lastLineDescent)
-    }
-
-    protected void drawBorder(DParagraph dParagraph, DWriter writer, DPoint topLeft, DPoint bottomRight) {
-        float top = topLeft.y
-        float right = bottomRight.x
-        float bottom = bottomRight.y
-        float left = topLeft.x
-
-        DBounds borderOffsets = dParagraph.borderLineOffsets
-
-        float offsetTop = top + borderOffsets.top
-        float offsetRight = right + borderOffsets.right
-        float offsetBottom = bottom + borderOffsets.bottom
-        float offsetLeft = left + borderOffsets.left
-
-        if (dParagraph.borderTop != 0)
-            writer.drawLine(new DPoint(left, offsetTop), new DPoint(right, offsetTop), dParagraph.borderTop)
-
-        if (dParagraph.borderRight != 0)
-            writer.drawLine(new DPoint(offsetRight, top), new DPoint(offsetRight, offsetBottom), dParagraph.borderRight)
-
-        if (dParagraph.borderBottom != 0)
-            writer.drawLine(new DPoint(left, offsetBottom), new DPoint(right, offsetBottom), dParagraph.borderBottom)
-
-        if (dParagraph.borderLeft != 0)
-            writer.drawLine(new DPoint(offsetLeft, top), new DPoint(offsetLeft, offsetBottom), dParagraph.borderLeft)
     }
 
 }

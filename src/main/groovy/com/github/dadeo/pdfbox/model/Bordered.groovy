@@ -39,6 +39,6 @@ trait Bordered {
         float rightOffset = borderRight / 2
         float bottomOffset = borderBottom / 2
         float leftOffset = borderLeft / 2
-        new DBounds(-topOffset, -rightOffset, -bottomOffset, leftOffset)
+        new DBounds(-topOffset, -rightOffset, bottomOffset, leftOffset)
     }
 }
