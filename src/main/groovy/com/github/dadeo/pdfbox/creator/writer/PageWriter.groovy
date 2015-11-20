@@ -21,15 +21,14 @@ class PageWriter {
         DContext pageContext = documentContext.cloneNotNull(bounds: pageBounds,
                                                             currentLocation: pageBounds.leftTop(),
                                                             font: dPage.font,
-                                                            pdContentStream: contentStream)
+                                                            pdContentStream: contentStream,
+                                                            writer: new DWriter(contentStream: contentStream))
 
         // todo: should be looping over DObject (not DParagraph) and resolving writer from a factory.
 
-        dPage.contents.inject(null) { PreviousElementDetails previousElementDetails, DParagraph dParagraph ->
+        dPage.contents.inject((PreviousElementDetails) null) { PreviousElementDetails previousElementDetails, DParagraph dParagraph ->
             paragraphWriter.write(pageContext, dParagraph, previousElementDetails)
         }
-
-//        new DWriter(contentStream: contentStream).drawRectangle(pageBounds)
 
         contentStream.close()
         documentContext.pdDocument.addPage(page)

@@ -11,6 +11,7 @@ class ParagraphWriter {
 
     PreviousElementDetails write(DContext pageContext, DParagraph dParagraph, PreviousElementDetails previousElementDetails) {
         DFont font = dParagraph.font ?: dParagraph.font ?: pageContext.font
+        DWriter writer = pageContext.writer
 
         DBounds marginOffsets = dParagraph.marginOffsets
         DBounds borderOffsets = dParagraph.borderTextOffsets
@@ -27,8 +28,6 @@ class ParagraphWriter {
 
         DPoint textBlockStartLocation = borderTopLeft.offset(borderOffsets.leftTop())
                                                      .offset(paddingOffsets.leftTop())
-
-        DWriter writer = new DWriter(contentStream: pageContext.pdContentStream)
 
         WrittenTextResult writtenTextResult = writeTextToBoundedLocation(dParagraph, writer, paragraphBounds, textBlockStartLocation, font)
         DPoint textBlockEndLocation = writtenTextResult.currentPosition
