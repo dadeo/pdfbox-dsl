@@ -1,5 +1,6 @@
-package com.github.dadeo.pdfbox.creator.writer
+package com.github.dadeo.pdfbox.creator.writer.border
 
+import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.model.Bordered
 import com.github.dadeo.pdfbox.model.DPoint
 import spock.lang.Specification

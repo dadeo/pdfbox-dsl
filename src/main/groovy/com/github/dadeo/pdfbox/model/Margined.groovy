@@ -17,6 +17,6 @@ trait Margined {
     }
 
     DBounds getMarginOffsets() {
-        new DBounds(-marginTop, -marginRight, -marginBottom, marginLeft)
+        new DBounds(-marginTop, -marginRight, marginBottom, marginLeft)
     }
 }

@@ -1,5 +1,6 @@
 package com.github.dadeo.pdfbox.creator.writer
 
+import com.github.dadeo.pdfbox.creator.writer.page.PageWriter
 import com.github.dadeo.pdfbox.model.DDocument
 import org.apache.pdfbox.pdmodel.PDDocument
 

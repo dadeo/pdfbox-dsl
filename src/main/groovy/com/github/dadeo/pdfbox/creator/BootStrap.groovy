@@ -1,8 +1,8 @@
-package com.github.dadeo.pdfbox.model
+package com.github.dadeo.pdfbox.creator
 
-import com.github.dadeo.pdfbox.creator.StringTokenizer
-import com.github.dadeo.pdfbox.creator.StringWidthCalculator
-import com.github.dadeo.pdfbox.creator.TokensToLineAssigner
+import com.github.dadeo.pdfbox.creator.writer.text.StringTokenizer
+import com.github.dadeo.pdfbox.creator.writer.text.StringWidthCalculator
+import com.github.dadeo.pdfbox.creator.writer.text.TokensToLineAssigner
 
 
 class BootStrap {

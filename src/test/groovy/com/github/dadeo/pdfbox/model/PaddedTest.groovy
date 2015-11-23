@@ -84,7 +84,7 @@ class PaddedTest {
 
         assert offsets.top == -1
         assert offsets.right == -2
-        assert offsets.bottom == -3
+        assert offsets.bottom == 3
         assert offsets.left == 4
     }
 

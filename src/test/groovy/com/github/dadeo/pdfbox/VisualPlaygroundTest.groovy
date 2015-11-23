@@ -85,6 +85,14 @@ class VisualPlaygroundTest {
     @Test
     void test_build_DDocument() {
 
+        Closure timer = { String description, Closure timed ->
+            long startTime = System.currentTimeMillis()
+            timed()
+            println("duration($description): ${System.currentTimeMillis() - startTime}")
+        }
+
+        PDType1Font.HELVETICA_BOLD
+
         String loremIpsum = """|Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                                |tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                                |quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -95,33 +103,35 @@ class VisualPlaygroundTest {
             .replaceAll(/\r/, '')
             .replaceAll(/\n/, '')
 
-        DDocument document = new DDocument()
+        1.times {
 
-        DParagraph paragraph3 = new DParagraph(loremIpsum)
-        paragraph3.font = new DFont(PDType1Font.HELVETICA_BOLD, 12)
-//        paragraph3.border = 20
-//        paragraph3.borderLeft = 20
-//        paragraph3.borderBottom = 21
+            timer("create pdf") {
+                DDocument document = new DDocument()
 
-        DParagraph paragraph4 = new DParagraph(loremIpsum)
-        paragraph4.font = new DFont(PDType1Font.HELVETICA_BOLD, 18)
-//        paragraph4.border = 20
-//        paragraph4.margin = 20
-        paragraph4.marginTop = 5
-        paragraph4.marginBottom = 5
-        paragraph4.borderLeft = 10
-        paragraph4.marginLeft = 20
-        paragraph4.borderRight = 10
-        paragraph4.marginRight = 20
+                DParagraph paragraph3 = new DParagraph(loremIpsum)
+                paragraph3.font = new DFont(PDType1Font.HELVETICA_OBLIQUE, 12)
 
-        DPage page = new DPage()
-        page.addContent(paragraph3)
-        page.addContent(paragraph4)
-        page.addContent(paragraph3)
+                DParagraph paragraph4 = new DParagraph(loremIpsum)
+                paragraph4.font = new DFont(PDType1Font.HELVETICA_BOLD, 18)
+                paragraph4.borderLeft = 10
+                paragraph4.borderRight = 10
+                paragraph4.paddingLeft = 10
+                paragraph4.paddingRight = 10
+                paragraph4.margin = 20
 
-        document.addPage(page)
+                DPage page = new DPage()
+                page.border = 5
+                page.padding = ONE_INCH
+                page.addContent(paragraph3)
+                page.addContent(paragraph4)
+                page.addContent(paragraph3)
 
-        new File('target/DDocumentPdf.pdf').bytes = new PdfCreator().createFor(document)
+                document.addPage(page)
+                document.addPage(new DPage())
+
+                new File('target/DDocumentPdf.pdf').bytes = new PdfCreator().createFor(document)
+            }
+        }
     }
 
 }

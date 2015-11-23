@@ -17,6 +17,6 @@ trait Padded {
     }
 
     DBounds getPaddingOffsets() {
-        new DBounds(-paddingTop, -paddingRight, -paddingBottom, paddingLeft)
+        new DBounds(-paddingTop, -paddingRight, paddingBottom, paddingLeft)
     }
 }

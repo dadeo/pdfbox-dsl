@@ -31,7 +31,7 @@ trait Bordered {
     }
 
     DBounds getBorderTextOffsets() {
-        new DBounds(-borderTop, -borderRight, -borderBottom, borderLeft)
+        new DBounds(-borderTop, -borderRight, borderBottom, borderLeft)
     }
 
     DBounds getBorderLineOffsets() {

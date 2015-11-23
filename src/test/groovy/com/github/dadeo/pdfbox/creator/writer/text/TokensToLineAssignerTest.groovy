@@ -1,6 +1,5 @@
-package com.github.dadeo.pdfbox.creator
+package com.github.dadeo.pdfbox.creator.writer.text
 
-import com.github.dadeo.pdfbox.model.AssignedLine
 import org.junit.Before
 import org.junit.Test
 

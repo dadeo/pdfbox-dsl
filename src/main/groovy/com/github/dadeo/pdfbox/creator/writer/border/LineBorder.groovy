@@ -1,11 +1,16 @@
-package com.github.dadeo.pdfbox.creator.writer
+package com.github.dadeo.pdfbox.creator.writer.border
 
+import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.model.Bordered
 import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DPoint
 
 
 class LineBorder {
+
+    void drawBorder(Bordered bordered, DWriter writer, DBounds bounds) {
+        drawBorder(bordered, writer, bounds.leftTop(), bounds.rightBottom())
+    }
 
     void drawBorder(Bordered bordered, DWriter writer, DPoint topLeft, DPoint bottomRight) {
         float top = topLeft.y

@@ -1,15 +1,23 @@
-package com.github.dadeo.pdfbox.creator.writer
+package com.github.dadeo.pdfbox.creator.writer.paragraph
 
-import com.github.dadeo.pdfbox.creator.StringToken
-import com.github.dadeo.pdfbox.creator.StringTokenizer
-import com.github.dadeo.pdfbox.creator.TokensToLineAssigner
+import com.github.dadeo.pdfbox.creator.BootStrap
+import com.github.dadeo.pdfbox.creator.writer.DContext
+import com.github.dadeo.pdfbox.creator.writer.DWriter
+import com.github.dadeo.pdfbox.creator.writer.border.LineBorder
+import com.github.dadeo.pdfbox.creator.writer.page.PageObjectWriter
+import com.github.dadeo.pdfbox.creator.writer.page.PreviousElementDetails
+import com.github.dadeo.pdfbox.creator.writer.text.AssignedLine
+import com.github.dadeo.pdfbox.creator.writer.text.StringToken
+import com.github.dadeo.pdfbox.creator.writer.text.StringTokenizer
+import com.github.dadeo.pdfbox.creator.writer.text.TokensToLineAssigner
 import com.github.dadeo.pdfbox.model.*
 
-class ParagraphWriter {
+class ParagraphWriter implements PageObjectWriter<DParagraph> {
     StringTokenizer stringTokenizer = BootStrap.stringTokenizer
     TokensToLineAssigner tokensToLineAssigner = BootStrap.tokensToLineAssigner
     LineBorder lineBorder = new LineBorder()
 
+    @Override
     PreviousElementDetails write(DContext pageContext, DParagraph dParagraph, PreviousElementDetails previousElementDetails) {
         DFont font = dParagraph.font ?: dParagraph.font ?: pageContext.font
         DWriter writer = pageContext.writer
@@ -36,8 +44,8 @@ class ParagraphWriter {
         float fontDescentOffsetWhenBorder = (borderOffsets.bottom == 0) ? 0 : font.descent
 
         DPoint borderBottomRight = new DPoint(pageContext.bounds.right, textBlockEndLocation.y)
-            .offsetY(paddingOffsets.bottom)
-            .offsetY(borderOffsets.bottom)
+            .offsetY(-paddingOffsets.bottom)
+            .offsetY(-borderOffsets.bottom)
             .offsetY(fontDescentOffsetWhenBorder)
             .offsetX(marginOffsets.right)
 
@@ -47,9 +55,9 @@ class ParagraphWriter {
 
         pageContext.currentLocation = new DPoint(pageContext.bounds.left, textBlockEndLocation.y)
             .offsetY(currentLocationBorderYOffset)
-            .offsetY(paddingOffsets.bottom)
-            .offsetY(borderOffsets.bottom)
-            .offsetY(marginOffsets.bottom)
+            .offsetY(-paddingOffsets.bottom)
+            .offsetY(-borderOffsets.bottom)
+            .offsetY(-marginOffsets.bottom)
 
         new ParagraphPreviousElementDetails(lastLineDescent: writtenTextResult.lastLineDescent, hasBottomBorder: borderOffsets.bottom)
     }

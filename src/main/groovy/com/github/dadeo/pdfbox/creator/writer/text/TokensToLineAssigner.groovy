@@ -1,7 +1,4 @@
-package com.github.dadeo.pdfbox.creator
-
-import com.github.dadeo.pdfbox.model.AssignedLine
-
+package com.github.dadeo.pdfbox.creator.writer.text
 
 class TokensToLineAssigner {
 

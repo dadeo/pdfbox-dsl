@@ -1,6 +1,5 @@
-package com.github.dadeo.pdfbox.model
+package com.github.dadeo.pdfbox.creator.writer.text
 
-import com.github.dadeo.pdfbox.creator.StringToken
 import groovy.transform.Canonical
 
 @Canonical

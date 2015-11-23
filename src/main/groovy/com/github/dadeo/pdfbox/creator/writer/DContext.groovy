@@ -15,6 +15,8 @@ class DContext implements Cloneable {
     PDDocument pdDocument
     PDPage pdPage
     PDPageContentStream pdContentStream
+    DBounds borderBounds
+    DBounds pageContentBounds
     DWriter writer
     DBounds bounds
     DPoint currentLocation
@@ -28,4 +30,5 @@ class DContext implements Cloneable {
         }
         clone
     }
+
 }
