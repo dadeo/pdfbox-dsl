@@ -2,6 +2,7 @@ package com.github.dadeo.pdfbox.creator.writer.border
 
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.model.Bordered
+import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DPoint
 import spock.lang.Specification
 
@@ -15,7 +16,7 @@ class LineBorderTest extends Specification {
         bordered.borderTop = 6
 
         when:
-        lineBorder.drawBorder(bordered, writer, new DPoint(100, 100), new DPoint(200, 0))
+        lineBorder.drawBorder(bordered, writer, new DBounds(100, 200, 0, 100))
 
         then:
         1 * writer.drawLine(new DPoint(100, 97), new DPoint(200, 97), 6)
@@ -27,7 +28,7 @@ class LineBorderTest extends Specification {
         bordered.borderRight = 6
 
         when:
-        lineBorder.drawBorder(bordered, writer, new DPoint(100, 100), new DPoint(200, 0))
+        lineBorder.drawBorder(bordered, writer, new DBounds(100, 200, 0, 100))
 
         then:
         1 * writer.drawLine(new DPoint(197, 100), new DPoint(197, 0), 6)
@@ -39,7 +40,7 @@ class LineBorderTest extends Specification {
         bordered.borderBottom = 6
 
         when:
-        lineBorder.drawBorder(bordered, writer, new DPoint(100, 100), new DPoint(200, 0))
+        lineBorder.drawBorder(bordered, writer, new DBounds(100, 200, 0, 100))
 
         then:
         1 * writer.drawLine(new DPoint(100, 3), new DPoint(200, 3), 6)
@@ -51,7 +52,7 @@ class LineBorderTest extends Specification {
         bordered.borderLeft = 6
 
         when:
-        lineBorder.drawBorder(bordered, writer, new DPoint(100, 100), new DPoint(200, 0))
+        lineBorder.drawBorder(bordered, writer, new DBounds(100, 200, 0, 100))
 
         then:
         1 * writer.drawLine(new DPoint(103, 100), new DPoint(103, 0), 6)
@@ -63,7 +64,7 @@ class LineBorderTest extends Specification {
         bordered.border = 8
 
         when:
-        lineBorder.drawBorder(bordered, writer, new DPoint(100, 100), new DPoint(200, 0))
+        lineBorder.drawBorder(bordered, writer, new DBounds(100, 200, 0, 100))
 
         then:
         1 * writer.drawLine(new DPoint(100, 96), new DPoint(200, 96), 8)    // top

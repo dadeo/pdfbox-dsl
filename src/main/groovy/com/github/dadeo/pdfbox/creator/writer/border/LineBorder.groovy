@@ -9,14 +9,10 @@ import com.github.dadeo.pdfbox.model.DPoint
 class LineBorder {
 
     void drawBorder(Bordered bordered, DWriter writer, DBounds bounds) {
-        drawBorder(bordered, writer, bounds.leftTop(), bounds.rightBottom())
-    }
-
-    void drawBorder(Bordered bordered, DWriter writer, DPoint topLeft, DPoint bottomRight) {
-        float top = topLeft.y
-        float right = bottomRight.x
-        float bottom = bottomRight.y
-        float left = topLeft.x
+        float top = bounds.top
+        float right = bounds.right
+        float bottom = bounds.bottom
+        float left = bounds.left
 
         DBounds borderOffsets = bordered.borderLineOffsets
 
