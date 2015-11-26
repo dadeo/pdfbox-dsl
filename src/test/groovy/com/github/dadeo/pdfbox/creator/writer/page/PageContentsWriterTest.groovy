@@ -7,9 +7,8 @@ import spock.lang.Specification
 
 import static org.hamcrest.CoreMatchers.sameInstance
 
-
 class PageContentsWriterTest extends Specification {
-    private static final DContext pageContext = new DContext()
+    private DContext pageContext = Mock(DContext)
     private PageObjectWriterFactory factory = Mock(PageObjectWriterFactory)
     private PageContentsWriter writer = new PageContentsWriter(writerFactory: factory)
     private DPage dPage = new DPage()
@@ -41,16 +40,15 @@ class PageContentsWriterTest extends Specification {
         PageObjectWriter contentsWriter1 = Mock(PageObjectWriter)
         PageObjectWriter contentsWriter2 = Mock(PageObjectWriter)
         PageObjectWriter contentsWriter3 = Mock(PageObjectWriter)
-        PreviousElementDetails previousElementDetails1 = new PreviousElementDetails() {}
-        PreviousElementDetails previousElementDetails2 = new PreviousElementDetails() {}
-        PreviousElementDetails previousElementDetails3 = new PreviousElementDetails() {}
+        PreviousElementDetails previousElementDetails1 = Mock(PreviousElementDetails)
+        PreviousElementDetails previousElementDetails2 = Mock(PreviousElementDetails)
+        PreviousElementDetails previousElementDetails3 = Mock(PreviousElementDetails)
 
         given:
 
         dPage.contents = [contents1, contents2, contents3]
 
         when:
-
 
         writer.writeContents(dPage, pageContext)
 

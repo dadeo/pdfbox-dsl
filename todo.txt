@@ -1,0 +1,8 @@
+- add font color
+- add table support
+- add list support
+- add inline-canvas
+- add positional-canvas
+- add horizontal rule
+- allow paragraph to hold on to border
+- move tracking of current location to PageContentsWriter

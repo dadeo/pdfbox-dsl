@@ -10,8 +10,8 @@ import static org.hamcrest.CoreMatchers.sameInstance
 
 class PageBoundsCalculatorTest extends Specification {
     private static final DPage CURRENT_PAGE = new DPage()
-    public static final DBounds BORDER_BOUNDS = new DBounds()
-    public static final DBounds TEXT_BOUNDS = new DBounds(500, 0, 0, 72)
+    private static final DBounds BORDER_BOUNDS = new DBounds()
+    private static final DBounds TEXT_BOUNDS = new DBounds(500, 0, 0, 72)
 
     private PageBoundsCalculations pageBoundsCalculations = Mock(PageBoundsCalculations)
     private PageBoundsCalculator calculator = new PageBoundsCalculator(pageBoundsCalculations: pageBoundsCalculations)
@@ -28,7 +28,7 @@ class PageBoundsCalculatorTest extends Specification {
 
         then:
 
-        pageContext.bounds.is TEXT_BOUNDS
+        pageContext.contentsBounds.is TEXT_BOUNDS
     }
 
     def "addCalculationsTo adds border bounds to page context"() {

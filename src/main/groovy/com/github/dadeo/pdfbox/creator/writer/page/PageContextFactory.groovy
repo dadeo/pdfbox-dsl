@@ -5,8 +5,9 @@ import com.github.dadeo.pdfbox.model.DPage
 
 class PageContextFactory {
 
-    DContext createPageContextFrom(DContext documentContext, DPage dPage) {
+    DContext createContextFrom(DContext documentContext, DPage dPage) {
         DContext pageContext = documentContext.clone()
+        pageContext.parent = documentContext
         pageContext.font = dPage.font ?: pageContext.font
         pageContext
     }

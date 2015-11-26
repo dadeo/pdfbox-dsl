@@ -8,4 +8,9 @@ class StringToken {
     String text
     float size
     DFont font
+
+    float getDescent() {
+        font?.descent ?: 0
+    }
+
 }

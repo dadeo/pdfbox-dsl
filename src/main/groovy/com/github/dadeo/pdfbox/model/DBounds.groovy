@@ -2,10 +2,12 @@ package com.github.dadeo.pdfbox.model
 
 import groovy.transform.CompileStatic
 import groovy.transform.Immutable
+import groovy.transform.ToString
 
 
-@Immutable
 @CompileStatic
+@Immutable
+@ToString
 class DBounds {
     float top, right, bottom, left
 

@@ -1,20 +1,18 @@
-package com.github.dadeo.pdfbox.creator.writer.page
+package com.github.dadeo.pdfbox.creator.writer.border
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.DWriter
-import com.github.dadeo.pdfbox.creator.writer.border.LineBorder
+import com.github.dadeo.pdfbox.model.Bordered
 import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPage
 import spock.lang.Specification
 
 import static org.hamcrest.CoreMatchers.sameInstance
 
-
-class PageBorderDrawerTest extends Specification {
+class BorderDrawerTest extends Specification {
     private static final DBounds BORDER_BOUNDS = new DBounds(0, 0, 0, 0)
-    private PageBorderDrawer drawer = new PageBorderDrawer()
+    private BorderDrawer drawer = new BorderDrawer()
     private LineBorder border = Mock(LineBorder)
-    private DPage dPage = new DPage()
+    private Bordered bordered = new Bordered() {}
     private DWriter writer = new DWriter()
     private DContext pageContext = new DContext()
 
@@ -27,11 +25,11 @@ class PageBorderDrawerTest extends Specification {
 
         when:
 
-        drawer.drawFor(dPage, pageContext)
+        drawer.drawFor(bordered, pageContext)
 
         then:
 
-        1 * border.drawBorder(sameInstance(dPage), sameInstance(writer), sameInstance(BORDER_BOUNDS))
+        1 * border.drawBorder(sameInstance(bordered), sameInstance(writer), sameInstance(BORDER_BOUNDS))
     }
 
 }

@@ -11,7 +11,7 @@ class PageBoundsCalculator {
         DBounds borderBounds = pageBoundsCalculations.calculatePageBorderBounds(dPage)
         DBounds pageContentBounds = pageBoundsCalculations.calculatePageContentBounds(dPage)
 
-        pageContext.bounds = pageContentBounds
+        pageContext.contentsBounds = pageContentBounds
         pageContext.borderBounds = borderBounds
         pageContext.currentLocation = pageContentBounds.leftTop()
     }

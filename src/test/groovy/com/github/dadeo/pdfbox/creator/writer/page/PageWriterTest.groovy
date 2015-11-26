@@ -1,6 +1,7 @@
 package com.github.dadeo.pdfbox.creator.writer.page
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
+import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.model.DPage
 import spock.lang.Specification
 
@@ -13,7 +14,7 @@ class PageWriterTest extends Specification {
     private PagePdfBoxHelper pagePdfBoxHelper = Mock(PagePdfBoxHelper)
     private PageBoundsCalculator pageBoundsCalculator = Mock(PageBoundsCalculator)
     private PageContentsWriter pageContentsWriter = Mock(PageContentsWriter)
-    private PageBorderDrawer pageBorderDrawer = Mock(PageBorderDrawer)
+    private BorderDrawer pageBorderDrawer = Mock(BorderDrawer)
 
     def setup() {
         pageWriter = new PageWriter(
@@ -34,7 +35,7 @@ class PageWriterTest extends Specification {
         pageWriter.write(documentContext, dPage)
 
         then:
-        1 * pageContextFactory.createPageContextFrom(sameInstance(documentContext), dPage) >> { pageContext }
+        1 * pageContextFactory.createContextFrom(sameInstance(documentContext), dPage) >> { pageContext }
         1 * pagePdfBoxHelper.initializePageObjects(sameInstance(pageContext))
         1 * pageBoundsCalculator.addCalculationsTo(sameInstance(pageContext), dPage)
         1 * pageContentsWriter.writeContents(dPage, sameInstance(pageContext))

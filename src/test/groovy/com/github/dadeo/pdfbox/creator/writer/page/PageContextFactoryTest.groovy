@@ -19,18 +19,24 @@ class PageContextFactoryTest extends Specification {
     def "document context is cloned and returned"() {
         expect:
 
-        factory.createPageContextFrom(documentContext, new DPage()).is clonedContext
+        factory.createContextFrom(documentContext, new DPage()).is clonedContext
     }
 
     def "DPage font overrides document context font"() {
         expect:
 
-        factory.createPageContextFrom(documentContext, new DPage(font: PAGE_FONT)).font.is PAGE_FONT
+        factory.createContextFrom(documentContext, new DPage(font: PAGE_FONT)).font.is PAGE_FONT
     }
 
     def "page context contains document context font when DPage font is null"() {
         expect:
 
-        factory.createPageContextFrom(documentContext, new DPage()).font.is DOCUMENT_FONT
+        factory.createContextFrom(documentContext, new DPage()).font.is DOCUMENT_FONT
+    }
+
+    def "page context contains document context as parent"() {
+        expect:
+
+        factory.createContextFrom(documentContext, new DPage()).parent.is documentContext
     }
 }

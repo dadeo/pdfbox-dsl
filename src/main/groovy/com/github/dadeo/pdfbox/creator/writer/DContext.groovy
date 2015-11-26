@@ -12,23 +12,14 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream
 @Canonical
 @AutoClone
 class DContext implements Cloneable {
+    DContext parent
     PDDocument pdDocument
     PDPage pdPage
     PDPageContentStream pdContentStream
-    DBounds borderBounds
-    DBounds pageContentBounds
     DWriter writer
-    DBounds bounds
+    DBounds containingBounds
+    DBounds contentsBounds
+    DBounds borderBounds
     DPoint currentLocation
     DFont font
-
-    DContext cloneNotNull(Map props) {
-        DContext clone = clone()
-        props.each { k, v ->
-            if (v != null)
-                clone[k] = v
-        }
-        clone
-    }
-
 }
