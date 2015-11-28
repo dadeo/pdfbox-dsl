@@ -4,5 +4,5 @@
 - add inline-canvas
 - add positional-canvas
 - add horizontal rule
-- allow paragraph to hold on to border
+- allow border color to be specified
 - move tracking of current location to PageContentsWriter

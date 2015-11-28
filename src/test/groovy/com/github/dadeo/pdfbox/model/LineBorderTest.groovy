@@ -1,9 +1,6 @@
-package com.github.dadeo.pdfbox.creator.writer.border
+package com.github.dadeo.pdfbox.model
 
 import com.github.dadeo.pdfbox.creator.writer.DWriter
-import com.github.dadeo.pdfbox.model.Bordered
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPoint
 import spock.lang.Specification
 
 class LineBorderTest extends Specification {

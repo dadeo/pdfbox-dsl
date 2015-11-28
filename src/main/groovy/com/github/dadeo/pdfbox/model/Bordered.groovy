@@ -1,5 +1,7 @@
 package com.github.dadeo.pdfbox.model
 
+import com.github.dadeo.pdfbox.creator.BootStrap
+
 import java.awt.*
 
 trait Bordered {
@@ -8,6 +10,8 @@ trait Bordered {
     float borderRight = 0
     float borderBottom = 0
     float borderLeft = 0
+
+    DBorder borderPainter = BootStrap.lineBorder
 
     Color borderTopColor = Color.black
     Color borderRightColor = Color.black
