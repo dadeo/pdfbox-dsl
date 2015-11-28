@@ -6,6 +6,7 @@ import com.github.dadeo.pdfbox.model.DPoint
 import groovy.transform.Canonical
 import org.apache.pdfbox.pdmodel.PDPageContentStream
 
+import java.awt.*
 
 @Canonical
 class DWriter {
@@ -19,8 +20,9 @@ class DWriter {
         contentStream.endText()
     }
 
-    void drawLine(DPoint start, DPoint end, float lineWidth = 1) {
+    void drawLine(DPoint start, DPoint end, float lineWidth = 1, Color color = Color.black) {
         contentStream.lineWidth = lineWidth
+        contentStream.strokingColor = color
         contentStream.moveTo(start.x, start.y)
         contentStream.lineTo(end.x, end.y)
         contentStream.stroke()

@@ -17,17 +17,17 @@ class LineBorder implements DBorder {
         float offsetBottom = bottom + borderOffsets.bottom
         float offsetLeft = left + borderOffsets.left
 
-        if (bordered.borderTop != 0)
-            writer.drawLine(new DPoint(left, offsetTop), new DPoint(right, offsetTop), bordered.borderTop)
+        if (bordered.borderLeft != 0)
+            writer.drawLine(new DPoint(offsetLeft, top), new DPoint(offsetLeft, bottom), bordered.borderLeft, bordered.borderLeftColor)
 
         if (bordered.borderRight != 0)
-            writer.drawLine(new DPoint(offsetRight, top), new DPoint(offsetRight, bottom), bordered.borderRight)
+            writer.drawLine(new DPoint(offsetRight, top), new DPoint(offsetRight, bottom), bordered.borderRight, bordered.borderRightColor)
+
+        if (bordered.borderTop != 0)
+            writer.drawLine(new DPoint(left, offsetTop), new DPoint(right, offsetTop), bordered.borderTop, bordered.borderTopColor)
 
         if (bordered.borderBottom != 0)
-            writer.drawLine(new DPoint(left, offsetBottom), new DPoint(right, offsetBottom), bordered.borderBottom)
-
-        if (bordered.borderLeft != 0)
-            writer.drawLine(new DPoint(offsetLeft, top), new DPoint(offsetLeft, bottom), bordered.borderLeft)
+            writer.drawLine(new DPoint(left, offsetBottom), new DPoint(right, offsetBottom), bordered.borderBottom, bordered.borderBottomColor)
     }
 
 }

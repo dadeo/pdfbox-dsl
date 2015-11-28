@@ -4,6 +4,8 @@ import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.model.support.BorderFragmentLengthAndSpacing
 import com.github.dadeo.pdfbox.model.support.BorderFragmentLengthAndSpacingCalculator
 
+import java.awt.*
+
 class DashedBorder implements DBorder {
     BorderFragmentLengthAndSpacingCalculator calculator = new BorderFragmentLengthAndSpacingCalculator()
 
@@ -86,40 +88,40 @@ class DashedBorder implements DBorder {
         float offsetBottom = bottom + borderOffsets.bottom
         float offsetLeft = left + borderOffsets.left
 
-        if (bordered.borderTop != 0)
-            drawHorizontalDashedLine(writer, new DPoint(left, offsetTop), new DPoint(right, offsetTop), bordered.borderTop)
+        if (bordered.borderLeft != 0)
+            drawVerticalDashedLine(writer, new DPoint(offsetLeft, top), new DPoint(offsetLeft, bottom), bordered.borderLeft, bordered.borderLeftColor)
 
         if (bordered.borderRight != 0)
-            drawVerticalDashedLine(writer, new DPoint(offsetRight, top), new DPoint(offsetRight, bottom), bordered.borderRight)
+            drawVerticalDashedLine(writer, new DPoint(offsetRight, top), new DPoint(offsetRight, bottom), bordered.borderRight, bordered.borderRightColor)
+
+        if (bordered.borderTop != 0)
+            drawHorizontalDashedLine(writer, new DPoint(left, offsetTop), new DPoint(right, offsetTop), bordered.borderTop, bordered.borderTopColor)
 
         if (bordered.borderBottom != 0)
-            drawHorizontalDashedLine(writer, new DPoint(left, offsetBottom), new DPoint(right, offsetBottom), bordered.borderBottom)
-
-        if (bordered.borderLeft != 0)
-            drawVerticalDashedLine(writer, new DPoint(offsetLeft, top), new DPoint(offsetLeft, bottom), bordered.borderLeft)
+            drawHorizontalDashedLine(writer, new DPoint(left, offsetBottom), new DPoint(right, offsetBottom), bordered.borderBottom, bordered.borderBottomColor)
     }
 
-    protected void drawVerticalDashedLine(DWriter writer, DPoint highPoint, DPoint lowPoint, float width) {
+    protected void drawVerticalDashedLine(DWriter writer, DPoint highPoint, DPoint lowPoint, float width, Color color) {
         int fragmentCount = verticalFragments
         float totalLength = highPoint.y - lowPoint.y
         BorderFragmentLengthAndSpacing lengths = calculator.calculate(totalLength, fragmentCount, verticalFragmentLength, verticalSpacingLength)
         DPoint start = highPoint
         DPoint end = highPoint.offsetY(-lengths.fragmentLength)
         fragmentCount.times {
-            writer.drawLine(start, end, width)
+            writer.drawLine(start, end, width, color)
             start = start.offsetY((float) -(lengths.spacingLength + lengths.fragmentLength))
             end = end.offsetY((float) -(lengths.spacingLength + lengths.fragmentLength))
         }
     }
 
-    protected void drawHorizontalDashedLine(DWriter writer, DPoint leftPoint, DPoint rightPoint, float width) {
+    protected void drawHorizontalDashedLine(DWriter writer, DPoint leftPoint, DPoint rightPoint, float width, Color color) {
         int fragmentCount = horizontalFragments
         float totalLength = rightPoint.x - leftPoint.x
         BorderFragmentLengthAndSpacing lengths = calculator.calculate(totalLength, fragmentCount, horizontalFragmentLength, horizontalSpacingLength)
         DPoint start = leftPoint
         DPoint end = leftPoint.offsetX(lengths.fragmentLength)
         fragmentCount.times {
-            writer.drawLine(start, end, width)
+            writer.drawLine(start, end, width, color)
             start = start.offsetX((float) (lengths.spacingLength + lengths.fragmentLength))
             end = end.offsetX((float) (lengths.spacingLength + lengths.fragmentLength))
         }
