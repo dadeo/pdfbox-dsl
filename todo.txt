@@ -1,4 +1,3 @@
-- add font color
 - add table support
 - add list support
 - add inline-canvas

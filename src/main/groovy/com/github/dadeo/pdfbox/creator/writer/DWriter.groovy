@@ -14,6 +14,7 @@ class DWriter {
 
     void writeText(String text, DPoint location, DFont font) {
         contentStream.beginText()
+        contentStream.nonStrokingColor = font.color
         contentStream.setFont(font.font, font.size)
         contentStream.newLineAtOffset(location.x, location.y)
         contentStream.showText(text)
