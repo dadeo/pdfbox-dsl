@@ -52,7 +52,6 @@ class ParagraphWriterTest extends Specification {
         1 * borderDrawer.drawFor(paragraph, paragraphContext)
         1 * previousElementDetailsFactory.createFor(paragraphContext, paragraph, textBlock)
         0 * _
-        pageContext.currentLocation == PARAGRAPH_CONTAINGING_BOUNDS.leftBottom()
     }
 
 }

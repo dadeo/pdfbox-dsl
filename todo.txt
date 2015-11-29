@@ -3,4 +3,3 @@
 - add inline-canvas
 - add positional-canvas
 - add horizontal rule
-- move tracking of current location to PageContentsWriter

@@ -9,8 +9,9 @@ import static org.hamcrest.CoreMatchers.sameInstance
 
 class PageContentsWriterTest extends Specification {
     private DContext pageContext = Mock(DContext)
+    private PageContentsCurrentLocationAdjuster currentLocationAdjuster = Mock(PageContentsCurrentLocationAdjuster)
     private PageObjectWriterFactory factory = Mock(PageObjectWriterFactory)
-    private PageContentsWriter writer = new PageContentsWriter(writerFactory: factory)
+    private PageContentsWriter writer = new PageContentsWriter(writerFactory: factory, currentLocationAdjuster: currentLocationAdjuster)
     private DPage dPage = new DPage()
 
     def "passes null in to first child writer"() {
@@ -58,9 +59,11 @@ class PageContentsWriterTest extends Specification {
         1 * contentsWriter1.write(sameInstance(pageContext), contents1, null) >> previousElementDetails1
 
         1 * factory.createWriter(sameInstance(contents2)) >> contentsWriter2
+        1 * currentLocationAdjuster.adjust(pageContext, previousElementDetails1)
         1 * contentsWriter2.write(sameInstance(pageContext), contents2, previousElementDetails1) >> previousElementDetails2
 
         1 * factory.createWriter(sameInstance(contents3)) >> contentsWriter3
+        1 * currentLocationAdjuster.adjust(pageContext, previousElementDetails2)
         1 * contentsWriter3.write(sameInstance(pageContext), contents3, previousElementDetails2) >> previousElementDetails3
 
         0 * _

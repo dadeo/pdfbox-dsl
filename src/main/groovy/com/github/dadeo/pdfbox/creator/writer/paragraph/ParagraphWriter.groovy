@@ -25,7 +25,6 @@ class ParagraphWriter implements PageObjectWriter<DParagraph> {
         paragraphBoundsCalculator.addCalculationsTo(paragraphContext, dParagraph, textBlock)
         boundedTextBlockWriter.write(textBlock, paragraphContext)
         borderDrawer.drawFor(dParagraph, paragraphContext)
-        pageContext.currentLocation = paragraphContext.containingBounds.leftBottom()
         previousElementDetailsFactory.createFor(paragraphContext, dParagraph, textBlock)
     }
 
