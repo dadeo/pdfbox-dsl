@@ -2,9 +2,10 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
+import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjustmentRule
 import com.github.dadeo.pdfbox.model.Bordered
 
-class AdjacentBordersParagraphAdjustmentRule implements ParagraphAdjustmentRule {
+class AdjacentBordersParagraphAdjustmentRule implements CurrentLocationAdjustmentRule<Bordered> {
 
     float calculateAdjustmentFor(DContext paragraphContext, Bordered bordered, ElementDetails previousElementDetails) {
         switch (previousElementDetails) {

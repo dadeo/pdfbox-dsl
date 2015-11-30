@@ -3,6 +3,7 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
+import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
 import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DParagraph
 import spock.lang.Specification
@@ -15,7 +16,7 @@ class ParagraphWriterTest extends Specification {
     private ParagraphWidthCalculator paragraphWidthCalculator = Mock(ParagraphWidthCalculator)
     private ParagraphContextFactory paragraphContextFactory = Mock(ParagraphContextFactory)
     private BoundedTextBlockFactory boundedTextBlockFactory = Mock(BoundedTextBlockFactory)
-    private ParagraphCurrentLocationAdjuster currentLocationAdjuster = Mock(ParagraphCurrentLocationAdjuster)
+    private CurrentLocationAdjuster currentLocationAdjuster = Mock(CurrentLocationAdjuster)
     private ParagraphBoundsCalculator paragraphBoundsCalculator = Mock(ParagraphBoundsCalculator)
     private BoundedTextBlockWriter boundedTextBlockWriter = Mock(BoundedTextBlockWriter)
     private BorderDrawer borderDrawer = Mock(BorderDrawer)
