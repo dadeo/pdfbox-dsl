@@ -3,16 +3,17 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.BootStrap
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
-import com.github.dadeo.pdfbox.creator.writer.page.PageObjectWriter
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
+import com.github.dadeo.pdfbox.creator.writer.page.PageObjectWriter
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
+import com.github.dadeo.pdfbox.model.Bordered
 import com.github.dadeo.pdfbox.model.DParagraph
 
 class ParagraphWriter implements PageObjectWriter<DParagraph> {
     ParagraphWidthCalculator paragraphWidthCalculator = new ParagraphWidthCalculator()
     ParagraphContextFactory paragraphContextFactory = new ParagraphContextFactory()
     BoundedTextBlockFactory boundedTextBlockFactory = new BoundedTextBlockFactory()
-    CurrentLocationAdjuster currentLocationAdjuster = BootStrap.paragraphCurrentLocationAdjuster
+    CurrentLocationAdjuster<Bordered> currentLocationAdjuster = BootStrap.paragraphCurrentLocationAdjuster
     ParagraphBoundsCalculator paragraphBoundsCalculator = new ParagraphBoundsCalculator()
     BoundedTextBlockWriter boundedTextBlockWriter = new BoundedTextBlockWriter()
     BorderDrawer borderDrawer = new BorderDrawer()
