@@ -1,7 +1,7 @@
 package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.creator.writer.page.PreviousElementDetails
+import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.Bordered
 import com.github.dadeo.pdfbox.model.DPoint
 import spock.lang.Specification
@@ -18,7 +18,7 @@ class AdjacentBordersParagraphAdjustmentRuleTest extends Specification {
     @Unroll
     def "adjust current location by previous element's last line descent when it has a bottom border and current element has a top, left, or right border"() {
         given:
-        ParagraphPreviousElementDetails previousElementDetails = new ParagraphPreviousElementDetails(hasBottomBorder: previousBorder, lastLineDescent: -10)
+        ParagraphElementDetails previousElementDetails = new ParagraphElementDetails(hasBottomBorder: previousBorder, lastLineDescent: -10)
         bordered.borderTop >> borderTop
         bordered.borderRight >> borderRight
         bordered.borderBottom >> borderBottom
@@ -47,7 +47,7 @@ class AdjacentBordersParagraphAdjustmentRuleTest extends Specification {
     @Unroll
     def "zero returned when previous element is not for a paragraph"() {
         given:
-        PreviousElementDetails previousElementDetails = Mock(PreviousElementDetails)
+        ElementDetails previousElementDetails = Mock(ElementDetails)
         bordered.borderTop >> borderTop
         bordered.borderRight >> borderRight
         bordered.borderBottom >> borderBottom

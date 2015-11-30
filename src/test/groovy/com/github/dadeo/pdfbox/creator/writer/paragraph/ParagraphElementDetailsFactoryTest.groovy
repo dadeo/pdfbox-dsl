@@ -5,9 +5,9 @@ import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DParagraph
 import spock.lang.Specification
 
-class ParagraphPreviousElementDetailsFactoryTest extends Specification {
+class ParagraphElementDetailsFactoryTest extends Specification {
     private static final DBounds CONTAINING_BOUNDS = new DBounds(1, 2, 3, 4)
-    private ParagraphPreviousElementDetailsFactory factory = new ParagraphPreviousElementDetailsFactory()
+    private ParagraphElementDetailsFactory factory = new ParagraphElementDetailsFactory()
     private DParagraph paragraph = new DParagraph()
     private BoundedTextBlock textBlock = Mock(BoundedTextBlock)
     private DContext context = new DContext()
@@ -19,7 +19,7 @@ class ParagraphPreviousElementDetailsFactoryTest extends Specification {
         context.containingBounds = CONTAINING_BOUNDS
 
         expect:
-        factory.createFor(context, paragraph, textBlock) == new ParagraphPreviousElementDetails(expectedLastLineDescent, expectedHasBorder, CONTAINING_BOUNDS)
+        factory.createFor(context, paragraph, textBlock) == new ParagraphElementDetails(expectedLastLineDescent, expectedHasBorder, CONTAINING_BOUNDS)
 
         where:
         borderBottom | lastLineDescent | expectedHasBorder | expectedLastLineDescent

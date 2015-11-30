@@ -12,7 +12,7 @@ class PageContentsCurrentLocationAdjusterTest extends Specification {
     def "adjusts the current location to the bottom bounds of the previous element"() {
         given:
         DContext pageContext = new DContext()
-        PreviousElementDetails previousElementDetails = Mock(PreviousElementDetails)
+        ElementDetails previousElementDetails = Mock(ElementDetails)
         1 * previousElementDetails.containingBounds >> new DBounds(500, 600, 350, 120)
 
         when:

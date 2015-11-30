@@ -11,7 +11,7 @@ class ParagraphCurrentLocationAdjusterTest extends Specification {
     private ParagraphCurrentLocationAdjuster adjuster = new ParagraphCurrentLocationAdjuster()
     private DContext context = new DContext(currentLocation: new DPoint(72, ORIGINAL_Y))
     private Bordered bordered = Mock(Bordered)
-    private ParagraphPreviousElementDetails previousElementDetails = new ParagraphPreviousElementDetails(0, false, null)
+    private ParagraphElementDetails previousElementDetails = new ParagraphElementDetails(0, false, null)
 
     @Unroll
     def "adjusts current location by sum of rule calculated offsets"() {

@@ -10,7 +10,7 @@ class PageContentsWriter {
     PageObjectWriterFactory writerFactory = new PageObjectWriterFactory()
 
     void writeContents(DPage dPage, DContext pageContext) {
-        dPage.contents.inject((PreviousElementDetails) null) { PreviousElementDetails previousElementDetails, DObject dObject ->
+        dPage.contents.inject((ElementDetails) null) { ElementDetails previousElementDetails, DObject dObject ->
             if (previousElementDetails)
                 currentLocationAdjuster.adjust(pageContext, previousElementDetails)
             PageObjectWriter writer = writerFactory.createWriter(dObject)

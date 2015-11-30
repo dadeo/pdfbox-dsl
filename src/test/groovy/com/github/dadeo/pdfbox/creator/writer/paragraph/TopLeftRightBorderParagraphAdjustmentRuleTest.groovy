@@ -17,7 +17,7 @@ class TopLeftRightBorderParagraphAdjustmentRuleTest extends Specification {
     @Unroll
     def "adjust current location by previous element's last line descent when it has a bottom border and current element has a top, left, or right border"() {
         given:
-        ParagraphPreviousElementDetails previousElementDetails = new ParagraphPreviousElementDetails(hasBottomBorder: previousBorder, lastLineDescent: -10)
+        ParagraphElementDetails previousElementDetails = new ParagraphElementDetails(hasBottomBorder: previousBorder, lastLineDescent: -10)
         bordered.borderTop >> borderTop
         bordered.borderRight >> borderRight
         bordered.borderBottom >> borderBottom

@@ -2,7 +2,7 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
-import com.github.dadeo.pdfbox.creator.writer.page.PreviousElementDetails
+import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DParagraph
 import spock.lang.Specification
@@ -19,7 +19,7 @@ class ParagraphWriterTest extends Specification {
     private ParagraphBoundsCalculator paragraphBoundsCalculator = Mock(ParagraphBoundsCalculator)
     private BoundedTextBlockWriter boundedTextBlockWriter = Mock(BoundedTextBlockWriter)
     private BorderDrawer borderDrawer = Mock(BorderDrawer)
-    private ParagraphPreviousElementDetailsFactory previousElementDetailsFactory = Mock(ParagraphPreviousElementDetailsFactory)
+    private ParagraphElementDetailsFactory previousElementDetailsFactory = Mock(ParagraphElementDetailsFactory)
     private ParagraphWriter paragraphWriter = new ParagraphWriter(paragraphWidthCalculator: paragraphWidthCalculator,
                                                                   paragraphContextFactory: paragraphContextFactory,
                                                                   boundedTextBlockFactory: boundedTextBlockFactory,
@@ -27,11 +27,11 @@ class ParagraphWriterTest extends Specification {
                                                                   paragraphBoundsCalculator: paragraphBoundsCalculator,
                                                                   boundedTextBlockWriter: boundedTextBlockWriter,
                                                                   borderDrawer: borderDrawer,
-                                                                  previousElementDetailsFactory: previousElementDetailsFactory)
+                                                                  paragraphElementDetailsFactory: previousElementDetailsFactory)
     private DContext pageContext = new DContext()
     private DContext paragraphContext = new DContext()
     private DParagraph paragraph = new DParagraph()
-    private PreviousElementDetails previousElementDetails = Mock(PreviousElementDetails)
+    private ElementDetails previousElementDetails = Mock(ElementDetails)
     private BoundedTextBlock textBlock = Mock(BoundedTextBlock)
 
     def "write paragraph orchestration"() {

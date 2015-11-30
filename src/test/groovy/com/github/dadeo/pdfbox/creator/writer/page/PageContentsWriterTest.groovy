@@ -41,9 +41,9 @@ class PageContentsWriterTest extends Specification {
         PageObjectWriter contentsWriter1 = Mock(PageObjectWriter)
         PageObjectWriter contentsWriter2 = Mock(PageObjectWriter)
         PageObjectWriter contentsWriter3 = Mock(PageObjectWriter)
-        PreviousElementDetails previousElementDetails1 = Mock(PreviousElementDetails)
-        PreviousElementDetails previousElementDetails2 = Mock(PreviousElementDetails)
-        PreviousElementDetails previousElementDetails3 = Mock(PreviousElementDetails)
+        ElementDetails previousElementDetails1 = Mock(ElementDetails)
+        ElementDetails previousElementDetails2 = Mock(ElementDetails)
+        ElementDetails previousElementDetails3 = Mock(ElementDetails)
 
         given:
 
