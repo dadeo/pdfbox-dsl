@@ -6,10 +6,12 @@ import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DPoint
 
 
-class LeftJustifiedTextBlockCurrentLocationPositioner implements TextBlockCurrentLocationPositioner {
+class CenterJustifiedTextBlockCurrentLocationPositioner implements TextBlockCurrentLocationPositioner {
 
     DPoint repositionForLine(DPoint currentLocation, DBounds contentsBounds, AssignedLine line) {
-        new DPoint(x: contentsBounds.left, y: currentLocation.y - line.height)
+        float middleOfBounds = (contentsBounds.right - contentsBounds.left) / 2
+        float halfOfLineWidth = line.width / 2
+        new DPoint(x: contentsBounds.left + middleOfBounds - halfOfLineWidth, y: currentLocation.y - line.height)
     }
 
     DPoint repositionForNextToken(StringToken token, DPoint currentLocation) {

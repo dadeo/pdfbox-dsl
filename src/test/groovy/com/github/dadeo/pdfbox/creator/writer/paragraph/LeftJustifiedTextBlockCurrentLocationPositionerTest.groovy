@@ -19,15 +19,6 @@ class LeftJustifiedTextBlockCurrentLocationPositionerTest extends Specification 
         repositioner.repositionForLine(new DPoint(225, 500), new DBounds(800, 600, 100, 72), line) == new DPoint(72, 488)
     }
 
-    def "repositioning for current token returns the existing current location"() {
-        given:
-        DPoint lastLocation = new DPoint(225, 500)
-        StringToken token = new StringToken(size: 15)
-
-        expect:
-        repositioner.repositionForCurrentToken(token, lastLocation) == lastLocation
-    }
-
     def "repositioning for next token increments the current location by the width of the token"() {
         given:
         DPoint lastLocation = new DPoint(225, 500)

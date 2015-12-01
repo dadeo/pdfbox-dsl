@@ -12,6 +12,9 @@ class TextBlockLineWriterFactory {
             case Justification.LEFT:
                 return BootStrap.leftJustifiedTextBlockLineWriter
 
+            case Justification.CENTER:
+                return BootStrap.centerJustifiedTextBlockLineWriter
+
             case Justification.RIGHT:
                 return BootStrap.rightJustifiedTextBlockLineWriter
 

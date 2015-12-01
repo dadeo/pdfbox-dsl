@@ -36,6 +36,19 @@ class TextBlockLineWriterFactoryTest extends Specification {
         textBlockLineWriter.tokenWriter.currentLocationPositioner instanceof RightJustifiedTextBlockCurrentLocationPositioner
     }
 
+    def "creates writer for center justified text"() {
+        given:
+        context.textJustification = Justification.CENTER
+
+        when:
+        BoundedTextBlockLineWriter textBlockLineWriter = factory.createWriterFor(context)
+
+        then:
+        textBlockLineWriter == BootStrap.centerJustifiedTextBlockLineWriter
+        textBlockLineWriter.currentLocationPositioner instanceof CenterJustifiedTextBlockCurrentLocationPositioner
+        textBlockLineWriter.tokenWriter.currentLocationPositioner instanceof CenterJustifiedTextBlockCurrentLocationPositioner
+    }
+
     def "defaults to writer for left justified text when not specified"() {
         given:
         context.textJustification = null

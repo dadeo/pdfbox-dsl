@@ -36,6 +36,7 @@ class BootStrap {
 
     static BoundedTextBlockLineWriter leftJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new LeftJustifiedTextBlockCurrentLocationPositioner())
     static BoundedTextBlockLineWriter rightJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new RightJustifiedTextBlockCurrentLocationPositioner())
+    static BoundedTextBlockLineWriter centerJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new CenterJustifiedTextBlockCurrentLocationPositioner())
 
     private
     static BoundedTextBlockLineWriter createJustifiedTextBlockWriter(TextBlockCurrentLocationPositioner currentLocationRepositioner) {

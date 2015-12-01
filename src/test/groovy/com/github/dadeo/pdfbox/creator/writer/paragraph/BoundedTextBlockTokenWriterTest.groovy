@@ -17,7 +17,6 @@ class BoundedTextBlockTokenWriterTest extends Specification {
     def "writes token and returns the location to place next token"() {
         given:
         DPoint currentLocation = new DPoint(0, 1)
-        DPoint preWriteRepositionedLocation = new DPoint(0, 2)
         DPoint postWriteRepositionedLocation = new DPoint(0, 3)
 
         token.font = font
@@ -29,9 +28,8 @@ class BoundedTextBlockTokenWriterTest extends Specification {
 
         then:
         newLocation == postWriteRepositionedLocation
-        1 * currentLocationRepositioner.repositionForCurrentToken(token, currentLocation) >> preWriteRepositionedLocation
-        1 * currentLocationRepositioner.repositionForNextToken(token, preWriteRepositionedLocation) >> postWriteRepositionedLocation
-        1 * dWriter.writeText("yo dog", preWriteRepositionedLocation, font)
+        1 * currentLocationRepositioner.repositionForNextToken(token, currentLocation) >> postWriteRepositionedLocation
+        1 * dWriter.writeText("yo dog", currentLocation, font)
     }
 
 }

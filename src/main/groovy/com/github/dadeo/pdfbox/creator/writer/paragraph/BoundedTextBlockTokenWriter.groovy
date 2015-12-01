@@ -9,9 +9,8 @@ class BoundedTextBlockTokenWriter {
     TextBlockCurrentLocationPositioner currentLocationPositioner
 
     DPoint write(StringToken token, DPoint currentLocation, DWriter dWriter) {
-        DPoint adjustedLocation = currentLocationPositioner.repositionForCurrentToken(token, currentLocation)
-        dWriter.writeText(token.text, adjustedLocation, token.font)
-        currentLocationPositioner.repositionForNextToken(token, adjustedLocation)
+        dWriter.writeText(token.text, currentLocation, token.font)
+        currentLocationPositioner.repositionForNextToken(token, currentLocation)
     }
 
 }
