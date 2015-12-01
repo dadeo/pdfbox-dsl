@@ -17,7 +17,7 @@ class HorizontalRuleElementDetailsFactoryTest extends Specification {
         context.containingBounds = containingBounds
 
         when:
-        HorizontalRulerElementDetails details = factory.createFor(horizontalRule, context)
+        HorizontalRuleElementDetails details = factory.createFor(horizontalRule, context)
 
         then:
         details.containingBounds == containingBounds

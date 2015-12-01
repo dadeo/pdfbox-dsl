@@ -1,6 +1,9 @@
 package com.github.dadeo.pdfbox.creator.writer.page
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
+import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
+import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactory
+import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactoryFactory
 import com.github.dadeo.pdfbox.model.DObject
 import com.github.dadeo.pdfbox.model.DPage
 import spock.lang.Specification
@@ -10,13 +13,14 @@ import static org.hamcrest.CoreMatchers.sameInstance
 class PageContentsWriterTest extends Specification {
     private DContext pageContext = Mock(DContext)
     private PageContentsCurrentLocationAdjuster currentLocationAdjuster = Mock(PageContentsCurrentLocationAdjuster)
-    private PageObjectWriterFactory factory = Mock(PageObjectWriterFactory)
-    private PageContentsWriter writer = new PageContentsWriter(writerFactory: factory, currentLocationAdjuster: currentLocationAdjuster)
+    private ObjectWritableFactoryFactory factoryFactory = Mock(ObjectWritableFactoryFactory)
+    private PageContentsWriter writer = new PageContentsWriter(writerFactory: factoryFactory, currentLocationAdjuster: currentLocationAdjuster)
     private DPage dPage = new DPage()
 
     def "passes null in to first child writer"() {
         DObject contents1 = new DObject() {}
-        PageObjectWriter contentsWriter1 = Mock(PageObjectWriter)
+        ObjectWritable objectWritable1 = Mock(ObjectWritable)
+        ObjectWritableFactory factory1 = Mock(ObjectWritableFactory)
 
         given:
 
@@ -29,8 +33,10 @@ class PageContentsWriterTest extends Specification {
 
         then:
 
-        1 * factory.createWriter(contents1) >> contentsWriter1
-        1 * contentsWriter1.write(sameInstance(pageContext), contents1, null)
+        1 * factoryFactory.createWriter(contents1) >> factory1
+        1 * factory1.createFor(sameInstance(pageContext), contents1, null) >> objectWritable1
+        1 * objectWritable1.write()
+        1 * objectWritable1.elementDetails
         0 * _
     }
 
@@ -38,12 +44,15 @@ class PageContentsWriterTest extends Specification {
         DObject contents1 = new DObject() {}
         DObject contents2 = new DObject() {}
         DObject contents3 = new DObject() {}
-        PageObjectWriter contentsWriter1 = Mock(PageObjectWriter)
-        PageObjectWriter contentsWriter2 = Mock(PageObjectWriter)
-        PageObjectWriter contentsWriter3 = Mock(PageObjectWriter)
-        ElementDetails previousElementDetails1 = Mock(ElementDetails)
-        ElementDetails previousElementDetails2 = Mock(ElementDetails)
-        ElementDetails previousElementDetails3 = Mock(ElementDetails)
+        ObjectWritable objectWritable1 = Mock(ObjectWritable)
+        ObjectWritable objectWritable2 = Mock(ObjectWritable)
+        ObjectWritable objectWritable3 = Mock(ObjectWritable)
+        ObjectWritableFactory factory1 = Mock(ObjectWritableFactory)
+        ObjectWritableFactory factory2 = Mock(ObjectWritableFactory)
+        ObjectWritableFactory factory3 = Mock(ObjectWritableFactory)
+        ElementDetails elementDetails1 = Mock(ElementDetails)
+        ElementDetails elementDetails2 = Mock(ElementDetails)
+        ElementDetails elementDetails3 = Mock(ElementDetails)
 
         given:
 
@@ -55,16 +64,22 @@ class PageContentsWriterTest extends Specification {
 
         then:
 
-        1 * factory.createWriter(sameInstance(contents1)) >> contentsWriter1
-        1 * contentsWriter1.write(sameInstance(pageContext), contents1, null) >> previousElementDetails1
+        1 * factoryFactory.createWriter(sameInstance(contents1)) >> factory1
+        1 * factory1.createFor(sameInstance(pageContext), contents1, null) >> objectWritable1
+        1 * objectWritable1.write()
+        1 * objectWritable1.elementDetails >> elementDetails1
 
-        1 * factory.createWriter(sameInstance(contents2)) >> contentsWriter2
-        1 * currentLocationAdjuster.adjust(pageContext, previousElementDetails1)
-        1 * contentsWriter2.write(sameInstance(pageContext), contents2, previousElementDetails1) >> previousElementDetails2
+        1 * factoryFactory.createWriter(sameInstance(contents2)) >> factory2
+        1 * currentLocationAdjuster.adjust(pageContext, elementDetails1)
+        1 * factory2.createFor(sameInstance(pageContext), contents2, elementDetails1) >> objectWritable2
+        1 * objectWritable2.write()
+        1 * objectWritable2.elementDetails >> elementDetails2
 
-        1 * factory.createWriter(sameInstance(contents3)) >> contentsWriter3
-        1 * currentLocationAdjuster.adjust(pageContext, previousElementDetails2)
-        1 * contentsWriter3.write(sameInstance(pageContext), contents3, previousElementDetails2) >> previousElementDetails3
+        1 * factoryFactory.createWriter(sameInstance(contents3)) >> factory3
+        1 * currentLocationAdjuster.adjust(pageContext, elementDetails2)
+        1 * factory3.createFor(sameInstance(pageContext), contents3, elementDetails2) >> objectWritable3
+        1 * objectWritable3.write()
+        1 * objectWritable3.elementDetails >> elementDetails3
 
         0 * _
     }

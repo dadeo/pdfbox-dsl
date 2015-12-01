@@ -5,6 +5,6 @@ import com.github.dadeo.pdfbox.model.DBounds
 import groovy.transform.Immutable
 
 @Immutable
-class HorizontalRulerElementDetails implements ElementDetails {
+class HorizontalRuleElementDetails implements ElementDetails {
     DBounds containingBounds
 }

@@ -1,6 +1,8 @@
 package com.github.dadeo.pdfbox.creator
 
+import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.hr.BottomBorderHorizontalRuleAdjustmentRule
+import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleContentsDrawer
 import com.github.dadeo.pdfbox.creator.writer.paragraph.*
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
 import com.github.dadeo.pdfbox.creator.writer.text.StringTokenizer
@@ -23,20 +25,32 @@ class BootStrap {
         stringTokenizer = new StringTokenizer(calculator: stringWidthCalculator)
     }
 
-    static CurrentLocationAdjuster<Bordered> paragraphCurrentLocationAdjuster = new CurrentLocationAdjuster(
+    static final BorderDrawer borderDrawer = new BorderDrawer()
+
+    static final ParagraphElementDetailsFactory paragraphElementDetailsFactory = new ParagraphElementDetailsFactory()
+
+    static final BoundedTextBlockWriter boundedTextBlockWriter = new BoundedTextBlockWriter()
+
+    static final CurrentLocationAdjuster<Bordered> paragraphCurrentLocationAdjuster = new CurrentLocationAdjuster(
         adjustmentRules: [
             new TopLeftRightBorderParagraphAdjustmentRule(),
             new AdjacentBordersParagraphAdjustmentRule()
         ])
 
-    static CurrentLocationAdjuster<DHorizontalRule> horizontalRuleCurrentLocationAdjuster = new CurrentLocationAdjuster(
+    static
+    final CurrentLocationAdjuster<DHorizontalRule> horizontalRuleCurrentLocationAdjuster = new CurrentLocationAdjuster(
         adjustmentRules: [
             new BottomBorderHorizontalRuleAdjustmentRule(),
         ])
 
-    static BoundedTextBlockLineWriter leftJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new LeftJustifiedTextBlockCurrentLocationPositioner())
-    static BoundedTextBlockLineWriter rightJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new RightJustifiedTextBlockCurrentLocationPositioner())
-    static BoundedTextBlockLineWriter centerJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new CenterJustifiedTextBlockCurrentLocationPositioner())
+    static
+    final BoundedTextBlockLineWriter leftJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new LeftJustifiedTextBlockCurrentLocationPositioner())
+    static
+    final BoundedTextBlockLineWriter rightJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new RightJustifiedTextBlockCurrentLocationPositioner())
+    static
+    final BoundedTextBlockLineWriter centerJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new CenterJustifiedTextBlockCurrentLocationPositioner())
+
+    static final HorizontalRuleContentsDrawer horizontalRuleContentsDrawer = new HorizontalRuleContentsDrawer()
 
     private
     static BoundedTextBlockLineWriter createJustifiedTextBlockWriter(TextBlockCurrentLocationPositioner currentLocationRepositioner) {
