@@ -17,7 +17,8 @@ class BoundedTextBlockWriterTest extends Specification {
     private static final DPoint END_LOCATION_4 = new DPoint(100, 675)
 
     private BoundedTextBlockLineWriter lineWriter = Mock(BoundedTextBlockLineWriter)
-    private BoundedTextBlockWriter textBlockWriter = new BoundedTextBlockWriter(lineWriter: lineWriter)
+    private TextBlockLineWriterFactory lineWriterFactory = Mock(TextBlockLineWriterFactory)
+    private BoundedTextBlockWriter textBlockWriter = new BoundedTextBlockWriter(textBlockLineWriterFactory: lineWriterFactory)
     private DContext context = new DContext()
     private BoundedTextBlock textBlock = new BoundedTextBlock()
     private DWriter dWriter = Mock(DWriter)
@@ -34,6 +35,7 @@ class BoundedTextBlockWriterTest extends Specification {
         textBlockWriter.write(textBlock, context)
 
         then:
+        1 * lineWriterFactory.createWriterFor(context) >> lineWriter
         1 * lineWriter.write(assignedLines[0], CONTENTS_BOUNDS, STARTING_LOCATION, dWriter) >> END_LOCATION_1
         1 * lineWriter.write(assignedLines[1], CONTENTS_BOUNDS, END_LOCATION_1, dWriter) >> END_LOCATION_2
         1 * lineWriter.write(assignedLines[2], CONTENTS_BOUNDS, END_LOCATION_2, dWriter) >> END_LOCATION_3

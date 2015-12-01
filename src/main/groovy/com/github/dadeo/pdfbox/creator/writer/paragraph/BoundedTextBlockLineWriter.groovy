@@ -8,7 +8,7 @@ import com.github.dadeo.pdfbox.model.DPoint
 
 
 class BoundedTextBlockLineWriter {
-    BoundedTextBlockCurrentLocationRepositioner currentLocationPositioner = new BoundedTextBlockCurrentLocationRepositioner()
+    TextBlockCurrentLocationRepositioner currentLocationPositioner = new LeftJustifiedTextBlockCurrentLocationRepositioner()
     BoundedTextBlockTokenWriter tokenWriter = new BoundedTextBlockTokenWriter()
 
     DPoint write(AssignedLine line, DBounds contentsBounds, DPoint currentLocation, DWriter writer) {

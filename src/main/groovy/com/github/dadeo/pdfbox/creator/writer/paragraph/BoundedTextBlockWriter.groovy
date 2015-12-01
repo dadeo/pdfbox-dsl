@@ -7,12 +7,14 @@ import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DPoint
 
 class BoundedTextBlockWriter {
-    BoundedTextBlockLineWriter lineWriter = new BoundedTextBlockLineWriter()
+    TextBlockLineWriterFactory textBlockLineWriterFactory = new TextBlockLineWriterFactory()
 
     void write(BoundedTextBlock textBlock, DContext context) {
         DWriter writer = context.writer
         DBounds contentsBounds = context.contentsBounds
         DPoint currentLocation = context.contentsBounds.leftTop()
+
+        BoundedTextBlockLineWriter lineWriter = textBlockLineWriterFactory.createWriterFor(context)
 
         textBlock.assignedLines.inject(currentLocation) { DPoint location, AssignedLine line ->
             lineWriter.write(line, contentsBounds, location, writer)
