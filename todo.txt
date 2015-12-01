@@ -2,4 +2,3 @@
 - add list support
 - add inline-canvas
 - add positional-canvas
-- add horizontal rule
