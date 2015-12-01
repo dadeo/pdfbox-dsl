@@ -3,6 +3,7 @@ package com.github.dadeo.pdfbox.creator.writer
 import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DFont
 import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Justification
 import groovy.transform.AutoClone
 import groovy.transform.Canonical
 import org.apache.pdfbox.pdmodel.PDDocument
@@ -22,4 +23,5 @@ class DContext implements Cloneable {
     DBounds borderBounds
     DPoint currentLocation
     DFont font
+    Justification textJustification
 }

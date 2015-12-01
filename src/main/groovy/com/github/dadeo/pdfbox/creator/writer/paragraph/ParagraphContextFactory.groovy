@@ -9,6 +9,7 @@ class ParagraphContextFactory {
         DContext paragraphContext = pageContext.clone()
         paragraphContext.parent = pageContext
         paragraphContext.font = paragraph.font ?: paragraphContext.font
+        paragraphContext.textJustification = paragraph.justification
         paragraphContext
     }
 

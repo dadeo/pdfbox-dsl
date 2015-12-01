@@ -6,9 +6,11 @@ import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DPoint
 
 
-interface TextBlockCurrentLocationRepositioner {
+interface TextBlockCurrentLocationPositioner {
 
     DPoint repositionForLine(DPoint currentLocation, DBounds contentsBounds, AssignedLine line)
+
+    DPoint repositionForCurrentToken(StringToken token, DPoint currentLocation)
 
     DPoint repositionForNextToken(StringToken token, DPoint currentLocation)
 

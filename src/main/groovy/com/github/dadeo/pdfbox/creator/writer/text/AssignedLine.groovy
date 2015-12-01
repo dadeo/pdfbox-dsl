@@ -14,4 +14,7 @@ class AssignedLine {
         tokens.inject(0f) { a, b -> float d = b.descent; a < d ? a : d }
     }
 
+    int getWidth() {
+        tokens.inject(0f) { a, b -> a + b.size }
+    }
 }

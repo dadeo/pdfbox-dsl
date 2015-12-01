@@ -7,19 +7,32 @@ class TokensToLineAssigner {
         AssignedLine currentLine = new AssignedLine()
         float currentLineLength = 0
 
+        List<StringToken> spacesBuffer = []
+
         Closure lineComplete = {
             result << currentLine
             currentLine = new AssignedLine()
             currentLineLength = 0
+            spacesBuffer.clear()
         }
 
         for (StringToken token : tokenList) {
             if (allowLineToStartWithSpaces || !(currentLineLength == 0 && token.text == ' ')) {
                 currentLineLength += token.size
 
-                if (currentLineLength < width) {
+                if (token.text == ' ') {
+                    spacesBuffer << token
+                } else if (currentLineLength < width) {
+                    if (spacesBuffer) {
+                        currentLine.tokens.addAll spacesBuffer
+                        spacesBuffer.clear()
+                    }
                     currentLine.tokens << token
                 } else if (currentLineLength == width) {
+                    if (spacesBuffer) {
+                        currentLine.tokens.addAll spacesBuffer
+                        spacesBuffer.clear()
+                    }
                     currentLine.tokens << token
                     lineComplete()
                 } else {

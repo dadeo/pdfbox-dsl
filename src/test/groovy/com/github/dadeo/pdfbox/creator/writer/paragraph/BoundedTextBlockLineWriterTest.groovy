@@ -8,7 +8,7 @@ import com.github.dadeo.pdfbox.model.DPoint
 import spock.lang.Specification
 
 class BoundedTextBlockLineWriterTest extends Specification {
-    private TextBlockCurrentLocationRepositioner currentLocationPositioner = Mock(TextBlockCurrentLocationRepositioner)
+    private TextBlockCurrentLocationPositioner currentLocationPositioner = Mock(TextBlockCurrentLocationPositioner)
     private BoundedTextBlockTokenWriter tokenWriter = Mock(BoundedTextBlockTokenWriter)
     private BoundedTextBlockLineWriter lineWriter = new BoundedTextBlockLineWriter(tokenWriter: tokenWriter,
                                                                                    currentLocationPositioner: currentLocationPositioner)

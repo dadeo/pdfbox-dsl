@@ -207,4 +207,72 @@ class TokensToLineAssignerTest {
         ]
     }
 
+    @Test
+    void test_assignToLine_line_is_not_allowed_to_end_with_spaces() {
+        StringToken token1 = new StringToken(size: 10)
+        StringToken token2 = new StringToken(size: 17)
+        StringToken token3 = new StringToken(size: 1, text: ' ')
+        StringToken token4 = new StringToken(size: 1, text: ' ')
+        StringToken token5 = new StringToken(size: 10)
+        StringToken token6 = new StringToken(size: 9)
+        StringToken token7 = new StringToken(size: 1)
+        StringToken token8 = new StringToken(size: 1, text: ' ')
+        StringToken token9 = new StringToken(size: 1, text: ' ')
+        StringToken token10 = new StringToken(size: 1, text: ' ')
+        List<AssignedLine> actualAssignments = assigner.assignToLine([
+                                                                         token1,
+                                                                         token2,
+                                                                         token3,
+                                                                         token4,
+                                                                         token5,
+                                                                         token6,
+                                                                         token7,
+                                                                         token8,
+                                                                         token9,
+                                                                         token10,
+                                                                     ],
+                                                                     29,
+                                                                     true)
+
+        assert actualAssignments == [
+            new AssignedLine([token1, token2]),
+            new AssignedLine([token5, token6, token7])
+        ]
+    }
+
+    @Test
+    void test_assignToLine_multiple_spaces_allowed_in_line() {
+        StringToken token1 = new StringToken(size: 10)
+        StringToken token2 = new StringToken(size: 17)
+        StringToken token3 = new StringToken(size: 1, text: ' ')
+        StringToken token4 = new StringToken(size: 1, text: ' ')
+        StringToken token5 = new StringToken(size: 1, text: ' ')
+        StringToken token6 = new StringToken(size: 9)
+        StringToken token7 = new StringToken(size: 1)
+        StringToken token8 = new StringToken(size: 1, text: ' ')
+        StringToken token9 = new StringToken(size: 1, text: ' ')
+        StringToken token10 = new StringToken(size: 1, text: ' ')
+        StringToken token11 = new StringToken(size: 1)
+        List<AssignedLine> actualAssignments = assigner.assignToLine([
+                                                                         token1,
+                                                                         token2,
+                                                                         token3,
+                                                                         token4,
+                                                                         token5,
+                                                                         token6,
+                                                                         token7,
+                                                                         token8,
+                                                                         token9,
+                                                                         token10,
+                                                                         token11,
+                                                                     ],
+                                                                     39,
+                                                                     true)
+
+        assert actualAssignments == [
+            new AssignedLine([token1, token2, token3, token4, token5, token6]),
+            new AssignedLine([token7, token8, token9, token10, token11])
+        ]
+    }
+
 }

@@ -5,6 +5,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont
 class DParagraph implements DObject, Margined, Bordered, Padded {
     List<DPart> contents = []
     DFont font
+    Justification justification
 
     DParagraph() {
     }

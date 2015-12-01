@@ -1,8 +1,7 @@
 package com.github.dadeo.pdfbox.creator
 
 import com.github.dadeo.pdfbox.creator.writer.hr.BottomBorderHorizontalRuleAdjustmentRule
-import com.github.dadeo.pdfbox.creator.writer.paragraph.AdjacentBordersParagraphAdjustmentRule
-import com.github.dadeo.pdfbox.creator.writer.paragraph.TopLeftRightBorderParagraphAdjustmentRule
+import com.github.dadeo.pdfbox.creator.writer.paragraph.*
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
 import com.github.dadeo.pdfbox.creator.writer.text.StringTokenizer
 import com.github.dadeo.pdfbox.creator.writer.text.StringWidthCalculator
@@ -34,5 +33,14 @@ class BootStrap {
         adjustmentRules: [
             new BottomBorderHorizontalRuleAdjustmentRule(),
         ])
+
+    static BoundedTextBlockLineWriter leftJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new LeftJustifiedTextBlockCurrentLocationPositioner())
+    static BoundedTextBlockLineWriter rightJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new RightJustifiedTextBlockCurrentLocationPositioner())
+
+    private
+    static BoundedTextBlockLineWriter createJustifiedTextBlockWriter(TextBlockCurrentLocationPositioner currentLocationRepositioner) {
+        BoundedTextBlockTokenWriter tokenWriter = new BoundedTextBlockTokenWriter(currentLocationPositioner: currentLocationRepositioner)
+        new BoundedTextBlockLineWriter(currentLocationPositioner: currentLocationRepositioner, tokenWriter: tokenWriter)
+    }
 
 }

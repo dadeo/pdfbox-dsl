@@ -6,11 +6,12 @@ import com.github.dadeo.pdfbox.model.DPoint
 
 
 class BoundedTextBlockTokenWriter {
-    TextBlockCurrentLocationRepositioner currentLocationRepositioner = new LeftJustifiedTextBlockCurrentLocationRepositioner()
+    TextBlockCurrentLocationPositioner currentLocationPositioner
 
     DPoint write(StringToken token, DPoint currentLocation, DWriter dWriter) {
-        dWriter.writeText(token.text, currentLocation, token.font)
-        currentLocationRepositioner.repositionForNextToken(token, currentLocation)
+        DPoint adjustedLocation = currentLocationPositioner.repositionForCurrentToken(token, currentLocation)
+        dWriter.writeText(token.text, adjustedLocation, token.font)
+        currentLocationPositioner.repositionForNextToken(token, adjustedLocation)
     }
 
 }

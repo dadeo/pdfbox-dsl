@@ -19,6 +19,19 @@ class AssignedLineTest extends Specification {
         [8, 7, 3, 5] | 8
     }
 
+    def "width is the sum of all token widths added together"() {
+        expect:
+        List<StringToken> tokens = tokenWidths.collect { new StringToken(size: it) }
+        new AssignedLine(tokens: tokens).width == width
+
+        where:
+        tokenWidths  | width
+        []           | 0
+        [5]          | 5
+        [5, 7, 3]    | 15
+        [5, 7, 3, 8] | 23
+    }
+
     def "descent is the maximum descent of the font"() {
         given:
         List<StringToken> tokens = fontDescents.collect {

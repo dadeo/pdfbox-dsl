@@ -3,6 +3,7 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.model.DFont
 import com.github.dadeo.pdfbox.model.DParagraph
+import com.github.dadeo.pdfbox.model.Justification
 import spock.lang.Specification
 
 class ParagraphContextFactoryTest extends Specification {
@@ -31,6 +32,20 @@ class ParagraphContextFactoryTest extends Specification {
         expect:
 
         factory.createContextFrom(pageContext, new DParagraph()).font.is PAGE_FONT
+    }
+
+    def "paragraph context contains justification when one is specified"() {
+        given:
+        DParagraph paragraph = new DParagraph(justification: justification)
+
+        when:
+        DContext paragraphContext = factory.createContextFrom(pageContext, paragraph)
+
+        then:
+        paragraphContext.textJustification == justification
+
+        where:
+        justification << Justification.values()
     }
 
     def "paragraph context contains page context as parent"() {
