@@ -5,11 +5,11 @@ import com.github.dadeo.pdfbox.model.DParagraph
 
 class ParagraphContextFactory {
 
-    DContext createContextFrom(DContext pageContext, DParagraph paragraph) {
-        DContext paragraphContext = pageContext.clone()
-        paragraphContext.parent = pageContext
+    DContext createContextFrom(DContext parentContext, DParagraph paragraph) {
+        DContext paragraphContext = parentContext.clone()
+        paragraphContext.parent = parentContext
         paragraphContext.font = paragraph.font ?: paragraphContext.font
-        paragraphContext.textJustification = paragraph.justification
+        paragraphContext.textJustification = paragraph.justification ?: parentContext.textJustification
         paragraphContext
     }
 

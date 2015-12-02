@@ -12,26 +12,26 @@ class ParagraphContextFactoryTest extends Specification {
 
     private ParagraphContextFactory factory = new ParagraphContextFactory()
     private DContext clonedContext = new DContext(font: PAGE_FONT)
-    private DContext pageContext = Mock(DContext) {
+    private DContext parentContext = Mock(DContext) {
         1 * clone() >> clonedContext
     }
 
     def "page context is cloned and returned"() {
         expect:
 
-        factory.createContextFrom(pageContext, new DParagraph()).is clonedContext
+        factory.createContextFrom(parentContext, new DParagraph()).is clonedContext
     }
 
     def "DParagraph font overrides page context font"() {
         expect:
 
-        factory.createContextFrom(pageContext, new DParagraph(font: PARAGRAPH_FONT)).font.is PARAGRAPH_FONT
+        factory.createContextFrom(parentContext, new DParagraph(font: PARAGRAPH_FONT)).font.is PARAGRAPH_FONT
     }
 
-    def "paragraph context contains page context font when DParagraph font is null"() {
+    def "paragraph context contains parent context font when DParagraph font is null"() {
         expect:
 
-        factory.createContextFrom(pageContext, new DParagraph()).font.is PAGE_FONT
+        factory.createContextFrom(parentContext, new DParagraph()).font.is PAGE_FONT
     }
 
     def "paragraph context contains justification when one is specified"() {
@@ -39,7 +39,7 @@ class ParagraphContextFactoryTest extends Specification {
         DParagraph paragraph = new DParagraph(justification: justification)
 
         when:
-        DContext paragraphContext = factory.createContextFrom(pageContext, paragraph)
+        DContext paragraphContext = factory.createContextFrom(parentContext, paragraph)
 
         then:
         paragraphContext.textJustification == justification
@@ -48,9 +48,17 @@ class ParagraphContextFactoryTest extends Specification {
         justification << Justification.values()
     }
 
-    def "paragraph context contains page context as parent"() {
+    def "paragraph context contains parent context justification when DParagraph justification is null"() {
+        given:
+        parentContext.textJustification >> Justification.CENTER
+
+        expect:
+        factory.createContextFrom(parentContext, new DParagraph()).textJustification.is Justification.CENTER
+    }
+
+    def "paragraph context contains parent context as parent"() {
         expect:
 
-        factory.createContextFrom(pageContext, new DParagraph()).parent.is pageContext
+        factory.createContextFrom(parentContext, new DParagraph()).parent.is parentContext
     }
 }
