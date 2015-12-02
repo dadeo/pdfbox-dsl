@@ -1,6 +1,7 @@
 package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
+import com.github.dadeo.pdfbox.creator.writer.object.ObjectContentsWidthCalculator
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
 import com.github.dadeo.pdfbox.model.DBounds
@@ -11,13 +12,13 @@ class ParagraphWritableFactoryTest extends Specification {
     private static final float CONTENT_WIDTH = 600
     private static final DBounds PAGE_CONTENT_BOUNDS = new DBounds(1, 2, 3, 4)
     private static final DBounds PARAGRAPH_CONTAINING_BOUNDS = new DBounds(1, 2, 3, 4)
-    private ParagraphWidthCalculator paragraphWidthCalculator = Mock(ParagraphWidthCalculator)
+    private ObjectContentsWidthCalculator objectContentsWidthCalculator = Mock(ObjectContentsWidthCalculator)
     private ParagraphContextFactory paragraphContextFactory = Mock(ParagraphContextFactory)
     private BoundedTextBlockFactory boundedTextBlockFactory = Mock(BoundedTextBlockFactory)
     private CurrentLocationAdjuster currentLocationAdjuster = Mock(CurrentLocationAdjuster)
     private ParagraphBoundsCalculator paragraphBoundsCalculator = Mock(ParagraphBoundsCalculator)
     private ParagraphElementDetailsFactory elementDetailsFactory = Mock(ParagraphElementDetailsFactory)
-    private ParagraphWritableFactory paragraphWritableFactory = new ParagraphWritableFactory(paragraphWidthCalculator: paragraphWidthCalculator,
+    private ParagraphWritableFactory paragraphWritableFactory = new ParagraphWritableFactory(objectContentsWidthCalculator: objectContentsWidthCalculator,
                                                                                              paragraphContextFactory: paragraphContextFactory,
                                                                                              boundedTextBlockFactory: boundedTextBlockFactory,
                                                                                              currentLocationAdjuster: currentLocationAdjuster,
@@ -44,7 +45,7 @@ class ParagraphWritableFactoryTest extends Specification {
         writable.paragraphContext.is paragraphContext
         writable.elementDetails.is elementDetails
 
-        1 * paragraphWidthCalculator.calculateFor(paragraph, PAGE_CONTENT_BOUNDS) >> CONTENT_WIDTH
+        1 * objectContentsWidthCalculator.calculateFor(paragraph, PAGE_CONTENT_BOUNDS) >> CONTENT_WIDTH
         1 * paragraphContextFactory.createContextFrom(pageContext, paragraph) >> paragraphContext
         1 * boundedTextBlockFactory.createFrom(paragraphContext, paragraph, CONTENT_WIDTH) >> textBlock
         1 * currentLocationAdjuster.adjustFor(paragraphContext, paragraph, previousElementDetails)

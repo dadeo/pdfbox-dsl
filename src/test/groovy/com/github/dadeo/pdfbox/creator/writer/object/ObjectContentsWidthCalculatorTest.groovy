@@ -1,12 +1,10 @@
-package com.github.dadeo.pdfbox.creator.writer.paragraph
+package com.github.dadeo.pdfbox.creator.writer.object
 
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DParagraph
+import com.github.dadeo.pdfbox.model.*
 import spock.lang.Specification
 
-
-class ParagraphWidthCalculatorTest extends Specification {
-    private ParagraphWidthCalculator calculator = new ParagraphWidthCalculator()
+class ObjectContentsWidthCalculatorTest extends Specification {
+    private ObjectContentsWidthCalculator calculator = new ObjectContentsWidthCalculator()
 
     def "calculate when no margins, border, and spacing"() {
         expect:
@@ -42,5 +40,39 @@ class ParagraphWidthCalculatorTest extends Specification {
 
         calculator.calculateFor(paragraph, new DBounds(0, 600, 0, 100)) == 305f
     }
+
+
+    def "calculate when object is not Bordered or Padded"() {
+        given:
+        MarginedTestDObject object = new MarginedTestDObject()
+        object.margin = 20
+
+        expect:
+        calculator.calculateFor(object, new DBounds(0, 600, 0, 100)) == 460f
+    }
+
+    def "calculate when object is not Margined or Padded"() {
+        given:
+        BorderedTestDObject object = new BorderedTestDObject() {}
+        object.border = 20
+
+        expect:
+        calculator.calculateFor(object, new DBounds(0, 600, 0, 100)) == 460f
+    }
+
+    def "calculate when object is not Margined or Bordered"() {
+        given:
+        PaddedTestDObject object = new PaddedTestDObject() {}
+        object.padding = 20
+
+        expect:
+        calculator.calculateFor(object, new DBounds(0, 600, 0, 100)) == 460f
+    }
+
+    private class MarginedTestDObject implements DObject, Margined {}
+
+    private class BorderedTestDObject implements DObject, Bordered {}
+
+    private class PaddedTestDObject implements DObject, Padded {}
 
 }
