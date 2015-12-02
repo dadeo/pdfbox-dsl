@@ -5,11 +5,11 @@ import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.model.DPage
 
 class PageWriter {
-    PageContextFactory pageContextFactory = new PageContextFactory()
-    PagePdfBoxHelper pagePdfBoxHelper = new PagePdfBoxHelper()
-    PageBoundsCalculator pageBoundsCalculator = new PageBoundsCalculator()
-    PageContentsWriter pageContentsWriter = new PageContentsWriter()
-    BorderDrawer pageBorderDrawer = new BorderDrawer()
+    PageContextFactory pageContextFactory
+    PagePdfBoxHelper pagePdfBoxHelper
+    PageBoundsCalculator pageBoundsCalculator
+    PageContentsWriter pageContentsWriter
+    BorderDrawer pageBorderDrawer
 
     void write(DContext documentContext, DPage dPage) {
         DContext pageContext = pageContextFactory.createContextFrom(documentContext, dPage)

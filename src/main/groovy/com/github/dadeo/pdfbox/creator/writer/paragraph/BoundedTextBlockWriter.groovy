@@ -7,7 +7,7 @@ import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DPoint
 
 class BoundedTextBlockWriter {
-    TextBlockLineWriterFactory textBlockLineWriterFactory = new TextBlockLineWriterFactory()
+    TextBlockLineWriterFactory textBlockLineWriterFactory
 
     void write(BoundedTextBlock textBlock, DContext context) {
         DWriter writer = context.writer

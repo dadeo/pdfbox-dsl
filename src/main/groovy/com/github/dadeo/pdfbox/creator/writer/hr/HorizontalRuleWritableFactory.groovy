@@ -1,6 +1,5 @@
 package com.github.dadeo.pdfbox.creator.writer.hr
 
-import com.github.dadeo.pdfbox.creator.BootStrap
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
@@ -11,10 +10,10 @@ import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuste
 import com.github.dadeo.pdfbox.model.DHorizontalRule
 
 class HorizontalRuleWritableFactory implements ObjectWritableFactory<DHorizontalRule> {
-    ObjectContextFactory contextFactory = new ObjectContextFactory()
-    CurrentLocationAdjuster<DHorizontalRule> currentLocationAdjuster = BootStrap.horizontalRuleCurrentLocationAdjuster
-    ObjectBoundsCalculator objectBoundsCalculator = new ObjectBoundsCalculator()
-    HorizontalRuleElementDetailsFactory elementDetailsFactory = new HorizontalRuleElementDetailsFactory()
+    ObjectContextFactory contextFactory
+    CurrentLocationAdjuster<DHorizontalRule> currentLocationAdjuster
+    ObjectBoundsCalculator objectBoundsCalculator
+    HorizontalRuleElementDetailsFactory elementDetailsFactory
 
     @Override
     ObjectWritable createFor(DContext pageContext, DHorizontalRule horizontalRule, ElementDetails previousElementDetails) {

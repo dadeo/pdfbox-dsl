@@ -11,4 +11,8 @@ class DPage implements Margined, Bordered, Padded {
         contents << part
         this
     }
+
+    DPage leftShift(DObject part) {
+        addContent(part)
+    }
 }

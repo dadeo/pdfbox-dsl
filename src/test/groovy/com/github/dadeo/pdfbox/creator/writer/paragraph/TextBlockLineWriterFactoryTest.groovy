@@ -7,7 +7,7 @@ import spock.lang.Specification
 
 
 class TextBlockLineWriterFactoryTest extends Specification {
-    private TextBlockLineWriterFactory factory = new TextBlockLineWriterFactory()
+    private TextBlockLineWriterFactory factory = BootStrap.textBlockLineWriterFactory
     private DContext context = new DContext()
 
     def "creates writer for left justified text"() {

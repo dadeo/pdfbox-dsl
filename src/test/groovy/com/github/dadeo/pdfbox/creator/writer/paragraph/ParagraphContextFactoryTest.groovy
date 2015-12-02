@@ -1,6 +1,7 @@
 package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
+import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DFont
 import com.github.dadeo.pdfbox.model.DParagraph
@@ -12,7 +13,8 @@ class ParagraphContextFactoryTest extends Specification {
     private static final DFont PAGE_FONT = new DFont()
     private static final DFont PARAGRAPH_FONT = new DFont()
 
-    private ParagraphContextFactory factory = new ParagraphContextFactory()
+    private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
+    private ParagraphContextFactory factory = new ParagraphContextFactory(objectBoundsCalculator: objectBoundsCalculator)
     private DContext clonedContext = new DContext(font: PAGE_FONT)
     private DContext parentContext = Mock(DContext) {
         getContentsBounds() >> PARENT_CONTENTS_BOUNDS
@@ -66,13 +68,15 @@ class ParagraphContextFactoryTest extends Specification {
     }
 
     def "new context's containingBounds, borderBounds, and contentsBounds are initialized to parent context's contentsBounds"() {
+        given:
+        DParagraph paragraph = new DParagraph()
+
         when:
-        DContext childContext = factory.createContextFrom(parentContext, new DParagraph())
+        DContext childContext = factory.createContextFrom(parentContext, paragraph)
 
         then:
         childContext.containingBounds == PARENT_CONTENTS_BOUNDS
-        childContext.borderBounds == PARENT_CONTENTS_BOUNDS
-        childContext.contentsBounds == PARENT_CONTENTS_BOUNDS
+        1 * objectBoundsCalculator.calculateMaxBounds(paragraph, clonedContext)
     }
 
 }

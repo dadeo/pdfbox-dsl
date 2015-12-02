@@ -1,14 +1,17 @@
 package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
+import com.github.dadeo.pdfbox.creator.writer.positioning.DescentMultiplier
 import com.github.dadeo.pdfbox.model.Bordered
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class TopLeftRightBorderParagraphAdjustmentRuleTest extends Specification {
     private static final float NONE = 0
-    private static final float ADJUSTED = -10
-    private TopLeftRightBorderParagraphAdjustmentRule rule = new TopLeftRightBorderParagraphAdjustmentRule()
+    private static final float DESCENT = -10
+    private static final float ADJUSTED = -20
+    private DescentMultiplier descentMultiplier = Mock(DescentMultiplier)
+    private TopLeftRightBorderParagraphAdjustmentRule rule = new TopLeftRightBorderParagraphAdjustmentRule(descentMultiplier: descentMultiplier)
     private DContext context = new DContext()
     private Bordered bordered = Mock(Bordered)
 
@@ -20,6 +23,7 @@ class TopLeftRightBorderParagraphAdjustmentRuleTest extends Specification {
         bordered.borderRight >> borderRight
         bordered.borderBottom >> borderBottom
         bordered.borderLeft >> borderLeft
+        descentMultiplier.apply(DESCENT) >> ADJUSTED
 
         expect:
         rule.calculateAdjustmentFor(context, bordered, previousElementDetails) == expectedAdjustment

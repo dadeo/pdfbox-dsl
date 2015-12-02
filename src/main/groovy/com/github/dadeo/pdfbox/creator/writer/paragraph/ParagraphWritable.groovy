@@ -12,24 +12,29 @@ class ParagraphWritable implements ObjectWritable {
     private BorderDrawer borderDrawer = BootStrap.borderDrawer
     private DParagraph dParagraph
     private BoundedTextBlock textBlock
-    private DContext paragraphContext
+    private DContext context
     private ElementDetails elementDetails
 
-    ParagraphWritable(DParagraph paragraph, BoundedTextBlock textBlock, DContext paragraphContext, ElementDetails elementDetails) {
+    ParagraphWritable(DParagraph paragraph, BoundedTextBlock textBlock, DContext context, ElementDetails elementDetails) {
         this.dParagraph = paragraph
         this.textBlock = textBlock
-        this.paragraphContext = paragraphContext
+        this.context = context
         this.elementDetails = elementDetails
     }
 
     @Override
     void write() {
-        boundedTextBlockWriter.write(textBlock, paragraphContext)
-        borderDrawer.drawFor(dParagraph, paragraphContext)
+        boundedTextBlockWriter.write(textBlock, context)
+        borderDrawer.drawFor(dParagraph, context)
     }
 
     @Override
     ElementDetails getElementDetails() {
         elementDetails
+    }
+
+    @Override
+    DContext getContext() {
+        context
     }
 }

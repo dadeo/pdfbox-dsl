@@ -1,25 +1,26 @@
 package com.github.dadeo.pdfbox.creator.writer.paragraph
 
-import com.github.dadeo.pdfbox.creator.BootStrap
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.model.Justification
 
-
 class TextBlockLineWriterFactory {
+    BoundedTextBlockLineWriter leftJustifiedTextBlockLineWriter
+    BoundedTextBlockLineWriter rightJustifiedTextBlockLineWriter
+    BoundedTextBlockLineWriter centerJustifiedTextBlockLineWriter
 
     BoundedTextBlockLineWriter createWriterFor(DContext context) {
         switch (context.textJustification) {
             case Justification.LEFT:
-                return BootStrap.leftJustifiedTextBlockLineWriter
+                return leftJustifiedTextBlockLineWriter
 
             case Justification.CENTER:
-                return BootStrap.centerJustifiedTextBlockLineWriter
+                return centerJustifiedTextBlockLineWriter
 
             case Justification.RIGHT:
-                return BootStrap.rightJustifiedTextBlockLineWriter
+                return rightJustifiedTextBlockLineWriter
 
             default:
-                BootStrap.leftJustifiedTextBlockLineWriter
+                leftJustifiedTextBlockLineWriter
         }
     }
 

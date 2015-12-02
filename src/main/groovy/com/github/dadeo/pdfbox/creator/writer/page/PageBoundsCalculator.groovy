@@ -5,12 +5,13 @@ import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DPage
 
 class PageBoundsCalculator {
-    PageBoundsCalculations pageBoundsCalculations = new PageBoundsCalculations()
+    PageBoundsCalculations pageBoundsCalculations
 
     void addCalculationsTo(DContext pageContext, DPage dPage) {
         DBounds borderBounds = pageBoundsCalculations.calculatePageBorderBounds(dPage)
         DBounds pageContentBounds = pageBoundsCalculations.calculatePageContentBounds(dPage)
 
+        pageContext.containingBounds = dPage.pageBounds
         pageContext.contentsBounds = pageContentBounds
         pageContext.borderBounds = borderBounds
     }

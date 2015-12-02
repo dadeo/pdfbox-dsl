@@ -15,6 +15,10 @@ class ObjectBoundsCalculator {
             context.borderBounds = context.borderBounds
                                           .offset(object.marginOffsets)
 
+        if (object instanceof Bordered && object.borderBottom)
+            context.borderBounds = context.borderBounds
+                                          .offset(0, 0, -1, 0)
+
         context.contentsBounds = context.borderBounds
 
         if (object instanceof Bordered)

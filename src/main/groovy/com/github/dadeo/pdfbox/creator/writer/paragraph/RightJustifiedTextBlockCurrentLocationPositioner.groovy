@@ -9,7 +9,7 @@ import com.github.dadeo.pdfbox.model.DPoint
 class RightJustifiedTextBlockCurrentLocationPositioner implements TextBlockCurrentLocationPositioner {
 
     DPoint repositionForLine(DPoint currentLocation, DBounds contentsBounds, AssignedLine line) {
-        new DPoint(x: contentsBounds.right - line.width, y: currentLocation.y - line.height)
+        new DPoint(x: contentsBounds.right - line.width - 1, y: currentLocation.y - line.height)
     }
 
     DPoint repositionForNextToken(StringToken token, DPoint currentLocation) {

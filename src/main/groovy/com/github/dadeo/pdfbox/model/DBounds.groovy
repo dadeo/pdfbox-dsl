@@ -46,4 +46,14 @@ class DBounds {
     DBounds offset(float topOffset, float rightOffset, float bottomOffset, float leftOffset) {
         new DBounds((float) (top + topOffset), (float) (right + rightOffset), (float) (bottom + bottomOffset), (float) (left + leftOffset))
     }
+
+    static DBounds createFrom(DPoint leftTop, DPoint rightBottom) {
+        float top = leftTop.y
+        float right = rightBottom.x
+        float bottom = rightBottom.y
+        float left = leftTop.x
+
+        new DBounds(top, right, bottom, left)
+    }
+
 }

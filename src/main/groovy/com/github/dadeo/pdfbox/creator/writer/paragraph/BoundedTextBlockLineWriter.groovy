@@ -9,7 +9,7 @@ import com.github.dadeo.pdfbox.model.DPoint
 
 class BoundedTextBlockLineWriter {
     TextBlockCurrentLocationPositioner currentLocationPositioner
-    BoundedTextBlockTokenWriter tokenWriter = new BoundedTextBlockTokenWriter()
+    BoundedTextBlockTokenWriter tokenWriter
 
     DPoint write(AssignedLine line, DBounds contentsBounds, DPoint currentLocation, DWriter writer) {
         DPoint repositionedLocation = currentLocationPositioner.repositionForLine(currentLocation, contentsBounds, line)

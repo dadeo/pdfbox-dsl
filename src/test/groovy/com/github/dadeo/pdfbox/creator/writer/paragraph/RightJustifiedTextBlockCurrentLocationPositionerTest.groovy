@@ -21,7 +21,7 @@ class RightJustifiedTextBlockCurrentLocationPositionerTest extends Specification
         line.width >> LINE_WIDTH
 
         expect:
-        repositioner.repositionForLine(new DPoint(225, CURRENT_Y), new DBounds(800, RIGHT, 100, 72), line) == new DPoint((float) (RIGHT - LINE_WIDTH), (float) (CURRENT_Y - LINE_HEIGHT))
+        repositioner.repositionForLine(new DPoint(225, CURRENT_Y), new DBounds(800, RIGHT, 100, 72), line) == new DPoint((float) (RIGHT - LINE_WIDTH - 1), (float) (CURRENT_Y - LINE_HEIGHT))
     }
 
     def "repositioning for the next token increments the current lcoation by the width of the token"() {

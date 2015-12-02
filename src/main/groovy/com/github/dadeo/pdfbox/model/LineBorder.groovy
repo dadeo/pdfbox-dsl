@@ -2,6 +2,8 @@ package com.github.dadeo.pdfbox.model
 
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 
+import java.awt.Color
+
 class LineBorder implements DBorder {
 
     void drawBorder(Bordered bordered, DWriter writer, DBounds bounds) {
@@ -28,6 +30,14 @@ class LineBorder implements DBorder {
 
         if (bordered.borderBottom != 0)
             writer.drawLine(new DPoint(left, offsetBottom), new DPoint(right, offsetBottom), bordered.borderBottom, bordered.borderBottomColor)
+
+        if(bordered.borderBottomColor == Color.orange) {
+            writer.drawLine(new DPoint(left, top), new DPoint(left, bottom), 1, Color.black)
+            writer.drawLine(new DPoint(right, top), new DPoint(right, bottom), 1, Color.black)
+            writer.drawLine(new DPoint(left, top), new DPoint(right, top), 1, Color.black)
+            writer.drawLine(new DPoint(left, bottom), new DPoint(right, bottom), 1, Color.black)
+        }
+
     }
 
 }
