@@ -13,7 +13,6 @@ class PageBoundsCalculator {
 
         pageContext.contentsBounds = pageContentBounds
         pageContext.borderBounds = borderBounds
-        pageContext.currentLocation = pageContentBounds.leftTop()
     }
 
 }

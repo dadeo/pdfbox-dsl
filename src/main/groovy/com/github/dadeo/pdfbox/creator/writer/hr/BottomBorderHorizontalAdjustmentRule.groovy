@@ -6,7 +6,7 @@ import com.github.dadeo.pdfbox.creator.writer.paragraph.ParagraphElementDetails
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjustmentRule
 import com.github.dadeo.pdfbox.model.DHorizontalRule
 
-class BottomBorderHorizontalRuleAdjustmentRule implements CurrentLocationAdjustmentRule<DHorizontalRule> {
+class BottomBorderHorizontalAdjustmentRule implements CurrentLocationAdjustmentRule<DHorizontalRule> {
 
     float calculateAdjustmentFor(DContext context, DHorizontalRule horizontalRule, ElementDetails previousElementDetails) {
         float additionalOffsetFromPrevious = 0

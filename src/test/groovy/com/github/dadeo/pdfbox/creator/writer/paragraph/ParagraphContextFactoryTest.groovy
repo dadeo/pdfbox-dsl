@@ -75,12 +75,4 @@ class ParagraphContextFactoryTest extends Specification {
         childContext.contentsBounds == PARENT_CONTENTS_BOUNDS
     }
 
-    def "new context's currentLocation is initialized to the top-left of the parent context's contentsBounds"() {
-        when:
-        DContext childContext = factory.createContextFrom(parentContext)
-
-        then:
-        childContext.currentLocation == PARENT_CONTENTS_BOUNDS.leftTop()
-    }
-
 }

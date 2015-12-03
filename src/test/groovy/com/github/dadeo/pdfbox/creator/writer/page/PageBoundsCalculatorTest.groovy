@@ -46,18 +46,4 @@ class PageBoundsCalculatorTest extends Specification {
         pageContext.borderBounds.is BORDER_BOUNDS
     }
 
-    def "addCalculationsTo sets current location to top-left of text bounds"() {
-        given:
-
-        1 * pageBoundsCalculations.calculatePageContentBounds(sameInstance(CURRENT_PAGE)) >> TEXT_BOUNDS
-
-        when:
-
-        calculator.addCalculationsTo(pageContext, CURRENT_PAGE)
-
-        then:
-
-        pageContext.currentLocation == TEXT_BOUNDS.leftTop()
-    }
-
 }

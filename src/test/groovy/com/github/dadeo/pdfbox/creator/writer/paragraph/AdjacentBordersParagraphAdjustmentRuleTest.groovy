@@ -3,16 +3,14 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.Bordered
-import com.github.dadeo.pdfbox.model.DPoint
 import spock.lang.Specification
 import spock.lang.Unroll
-
 
 class AdjacentBordersParagraphAdjustmentRuleTest extends Specification {
     private static final float NONE = 0
     private static final float ADJUSTED = 1
     private AdjacentBordersParagraphAdjustmentRule rule = new AdjacentBordersParagraphAdjustmentRule()
-    private DContext context = new DContext(currentLocation: new DPoint(72, NONE))
+    private DContext context = new DContext()
     private Bordered bordered = Mock(Bordered)
 
     @Unroll

@@ -1,7 +1,7 @@
 package com.github.dadeo.pdfbox.creator
 
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
-import com.github.dadeo.pdfbox.creator.writer.hr.BottomBorderHorizontalRuleAdjustmentRule
+import com.github.dadeo.pdfbox.creator.writer.hr.BottomBorderHorizontalAdjustmentRule
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleContentsDrawer
 import com.github.dadeo.pdfbox.creator.writer.paragraph.*
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
@@ -40,7 +40,7 @@ class BootStrap {
     static
     final CurrentLocationAdjuster<DHorizontalRule> horizontalRuleCurrentLocationAdjuster = new CurrentLocationAdjuster(
         adjustmentRules: [
-            new BottomBorderHorizontalRuleAdjustmentRule(),
+            new BottomBorderHorizontalAdjustmentRule(),
         ])
 
     static

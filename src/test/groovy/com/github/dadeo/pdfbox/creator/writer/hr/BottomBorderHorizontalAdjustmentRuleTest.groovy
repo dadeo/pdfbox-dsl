@@ -3,15 +3,14 @@ package com.github.dadeo.pdfbox.creator.writer.hr
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.paragraph.ParagraphElementDetails
 import com.github.dadeo.pdfbox.model.DHorizontalRule
-import com.github.dadeo.pdfbox.model.DPoint
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class BottomBorderHorizontalAdjustmentRuleTest extends Specification {
     private static final float NONE = 0
     private static final float ADJUSTED = -10
-    private BottomBorderHorizontalRuleAdjustmentRule rule = new BottomBorderHorizontalRuleAdjustmentRule()
-    private DContext context = new DContext(currentLocation: new DPoint(72, NONE))
+    private BottomBorderHorizontalAdjustmentRule rule = new BottomBorderHorizontalAdjustmentRule()
+    private DContext context = new DContext()
     private DHorizontalRule horizontalRule = Mock(DHorizontalRule)
 
     @Unroll

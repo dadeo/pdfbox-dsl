@@ -15,13 +15,12 @@ class PageContentsCurrentLocationAdjusterTest extends Specification {
         given:
         DContext pageContext = new DContext(contentsBounds: CONTENTS_BOUNDS)
         ElementDetails previousElementDetails = Mock(ElementDetails)
-        1 * previousElementDetails.containingBounds >> new DBounds(500, 600, 350, 120)
+        1 * previousElementDetails.containingBounds >> new DBounds(500, 550, 350, 120)
 
         when:
         adjuster.adjust(pageContext, previousElementDetails)
 
         then:
-        pageContext.currentLocation == new DPoint(120, 349)
         pageContext.contentsBounds == UPDATED_CONTENTS_BOUNDS
     }
 

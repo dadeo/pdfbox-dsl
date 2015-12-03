@@ -7,8 +7,9 @@ import com.github.dadeo.pdfbox.model.DBounds
 class PageContentsCurrentLocationAdjuster {
 
     void adjust(DContext pageContext, ElementDetails previousElementDetails) {
-        pageContext.currentLocation = previousElementDetails.containingBounds.leftBottom().offset(0, -1)
-        pageContext.contentsBounds = new DBounds(pageContext.currentLocation.y, pageContext.contentsBounds.right, pageContext.contentsBounds.bottom, pageContext.contentsBounds.left)
+        float newTop = previousElementDetails.containingBounds.bottom - 1
+        DBounds contentsBounds = pageContext.contentsBounds
+        pageContext.contentsBounds = new DBounds(newTop, contentsBounds.right, contentsBounds.bottom, contentsBounds.left)
     }
 
 }

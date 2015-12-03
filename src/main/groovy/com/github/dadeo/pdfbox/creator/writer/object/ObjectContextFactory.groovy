@@ -10,7 +10,6 @@ class ObjectContextFactory {
         childContext.containingBounds = parentContext.contentsBounds
         childContext.borderBounds = parentContext.contentsBounds
         childContext.contentsBounds = parentContext.contentsBounds
-        childContext.currentLocation = parentContext.contentsBounds.leftTop()
         childContext
     }
 
