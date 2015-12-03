@@ -35,6 +35,10 @@ class DBounds {
         new DBounds((float) (top + offsets.top), (float) (right + offsets.right), (float) (bottom + offsets.bottom), (float) (left + offsets.left))
     }
 
+    DBounds offset(float offsetX, float offsetY) {
+        new DBounds((float) (top + offsetY), (float) (right + offsetX), (float) (bottom + offsetY), (float) (left + offsetX))
+    }
+
     DBounds offset(float topOffset, float rightOffset, float bottomOffset, float leftOffset) {
         new DBounds((float) (top + topOffset), (float) (right + rightOffset), (float) (bottom + bottomOffset), (float) (left + leftOffset))
     }

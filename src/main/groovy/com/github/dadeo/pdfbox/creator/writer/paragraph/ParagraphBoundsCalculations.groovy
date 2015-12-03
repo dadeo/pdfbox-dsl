@@ -13,10 +13,10 @@ class ParagraphBoundsCalculations {
         float paddingAdjustment = paragraph.paddingTop + paragraph.paddingBottom
         float descentOffset = paragraph.borderBottom ? textBlock.lastLineDescent : 0
 
-        new DBounds(paragraphContext.currentLocation.y,
-                    paragraphContext.parent.contentsBounds.right,
-                    (float) (paragraphContext.currentLocation.y - textBlock.height - marginAdjustment - borderAdjustment - paddingAdjustment + descentOffset),
-                    paragraphContext.currentLocation.x)
+        new DBounds(paragraphContext.containingBounds.top,
+                    paragraphContext.containingBounds.right,
+                    (float) (paragraphContext.containingBounds.top - textBlock.height - marginAdjustment - borderAdjustment - paddingAdjustment + descentOffset),
+                    paragraphContext.containingBounds.left)
     }
 
     DBounds calculateBorderBounds(DContext paragraphContext, DParagraph paragraph) {

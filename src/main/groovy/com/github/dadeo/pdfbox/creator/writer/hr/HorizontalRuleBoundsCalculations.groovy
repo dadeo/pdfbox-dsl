@@ -11,10 +11,10 @@ class HorizontalRuleBoundsCalculations {
         float borderAdjustment = horizontalRule.borderTop + horizontalRule.borderBottom
         float paddingAdjustment = horizontalRule.paddingTop + horizontalRule.paddingBottom
 
-        new DBounds(context.currentLocation.y,
-                    context.parent.contentsBounds.right,
-                    (float) (context.currentLocation.y - horizontalRule.thickness - marginAdjustment - borderAdjustment - paddingAdjustment),
-                    context.currentLocation.x)
+        new DBounds(context.containingBounds.top,
+                    context.containingBounds.right,
+                    (float) (context.containingBounds.top - horizontalRule.thickness - marginAdjustment - borderAdjustment - paddingAdjustment),
+                    context.containingBounds.left)
     }
 
     DBounds calculateBorderBounds(DContext context, DHorizontalRule horizontalRule) {

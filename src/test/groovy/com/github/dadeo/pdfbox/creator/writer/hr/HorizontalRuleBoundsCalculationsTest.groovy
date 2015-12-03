@@ -3,19 +3,16 @@ package com.github.dadeo.pdfbox.creator.writer.hr
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DHorizontalRule
-import com.github.dadeo.pdfbox.model.DPoint
 import spock.lang.Specification
 
 class HorizontalRuleBoundsCalculationsTest extends Specification {
     private HorizontalRuleBoundsCalculations calculations = new HorizontalRuleBoundsCalculations()
-    private DContext parentContext = new DContext()
-    private DContext horizontalRuleContext = new DContext(parent: parentContext)
+    private DContext horizontalRuleContext = new DContext()
     private DHorizontalRule horizontalRule = new DHorizontalRule()
 
     def "containing bounds when no margin, no border, and no padding"() {
         given:
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        horizontalRuleContext.currentLocation = new DPoint(72, 500)
+        horizontalRuleContext.containingBounds = new DBounds(500, 600, 100, 72)
         horizontalRule.thickness = 150
 
         expect:
@@ -29,8 +26,7 @@ class HorizontalRuleBoundsCalculationsTest extends Specification {
         horizontalRule.marginBottom = 15
         horizontalRule.marginLeft = 20
 
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        horizontalRuleContext.currentLocation = new DPoint(72, 500)
+        horizontalRuleContext.containingBounds = new DBounds(500, 600, 100, 72)
         horizontalRule.thickness = 150
 
         expect:
@@ -44,8 +40,7 @@ class HorizontalRuleBoundsCalculationsTest extends Specification {
         horizontalRule.borderBottom = 15
         horizontalRule.borderLeft = 20
 
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        horizontalRuleContext.currentLocation = new DPoint(72, 500)
+        horizontalRuleContext.containingBounds = new DBounds(500, 600, 100, 72)
         horizontalRule.thickness = 150
 
         expect:
@@ -59,8 +54,7 @@ class HorizontalRuleBoundsCalculationsTest extends Specification {
         horizontalRule.paddingBottom = 15
         horizontalRule.paddingLeft = 20
 
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        horizontalRuleContext.currentLocation = new DPoint(72, 500)
+        horizontalRuleContext.containingBounds = new DBounds(500, 600, 100, 72)
         horizontalRule.thickness = 150
 
         expect:
@@ -73,8 +67,7 @@ class HorizontalRuleBoundsCalculationsTest extends Specification {
         horizontalRule.border = 20
         horizontalRule.padding = 20
 
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        horizontalRuleContext.currentLocation = new DPoint(72, 500)
+        horizontalRuleContext.containingBounds = new DBounds(500, 600, 100, 72)
         horizontalRule.thickness = 150
 
         expect:

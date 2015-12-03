@@ -1,18 +1,21 @@
 package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
+import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DFont
 import com.github.dadeo.pdfbox.model.DParagraph
 import com.github.dadeo.pdfbox.model.Justification
 import spock.lang.Specification
 
 class ParagraphContextFactoryTest extends Specification {
+    private static final DBounds PARENT_CONTENTS_BOUNDS = new DBounds(1, 2, 3, 4)
     private static final DFont PAGE_FONT = new DFont()
     private static final DFont PARAGRAPH_FONT = new DFont()
 
     private ParagraphContextFactory factory = new ParagraphContextFactory()
     private DContext clonedContext = new DContext(font: PAGE_FONT)
     private DContext parentContext = Mock(DContext) {
+        getContentsBounds() >> PARENT_CONTENTS_BOUNDS
         1 * clone() >> clonedContext
     }
 
@@ -61,4 +64,23 @@ class ParagraphContextFactoryTest extends Specification {
 
         factory.createContextFrom(parentContext, new DParagraph()).parent.is parentContext
     }
+
+    def "new context's containingBounds, borderBounds, and contentsBounds are initialized to parent context's contentsBounds"() {
+        when:
+        DContext childContext = factory.createContextFrom(parentContext)
+
+        then:
+        childContext.containingBounds == PARENT_CONTENTS_BOUNDS
+        childContext.borderBounds == PARENT_CONTENTS_BOUNDS
+        childContext.contentsBounds == PARENT_CONTENTS_BOUNDS
+    }
+
+    def "new context's currentLocation is initialized to the top-left of the parent context's contentsBounds"() {
+        when:
+        DContext childContext = factory.createContextFrom(parentContext)
+
+        then:
+        childContext.currentLocation == PARENT_CONTENTS_BOUNDS.leftTop()
+    }
+
 }

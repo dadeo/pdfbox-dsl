@@ -7,11 +7,13 @@ import spock.lang.Specification
 
 
 class PageContentsCurrentLocationAdjusterTest extends Specification {
+    private static final DBounds CONTENTS_BOUNDS = new DBounds(500, 600, 150, 120)
+    private static final DBounds UPDATED_CONTENTS_BOUNDS = new DBounds(349, 600, 150, 120)
     private PageContentsCurrentLocationAdjuster adjuster = new PageContentsCurrentLocationAdjuster()
 
     def "adjusts the current location to the bottom bounds of the previous element"() {
         given:
-        DContext pageContext = new DContext()
+        DContext pageContext = new DContext(contentsBounds: CONTENTS_BOUNDS)
         ElementDetails previousElementDetails = Mock(ElementDetails)
         1 * previousElementDetails.containingBounds >> new DBounds(500, 600, 350, 120)
 
@@ -19,7 +21,8 @@ class PageContentsCurrentLocationAdjusterTest extends Specification {
         adjuster.adjust(pageContext, previousElementDetails)
 
         then:
-        pageContext.currentLocation == new DPoint(120, 350)
+        pageContext.currentLocation == new DPoint(120, 349)
+        pageContext.contentsBounds == UPDATED_CONTENTS_BOUNDS
     }
 
 }

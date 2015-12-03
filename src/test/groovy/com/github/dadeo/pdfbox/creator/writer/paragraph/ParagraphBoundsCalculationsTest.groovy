@@ -3,22 +3,18 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DParagraph
-import com.github.dadeo.pdfbox.model.DPoint
 import spock.lang.Specification
 import spock.lang.Unroll
 
-
 class ParagraphBoundsCalculationsTest extends Specification {
     private ParagraphBoundsCalculations calculations = new ParagraphBoundsCalculations()
-    private DContext parentContext = new DContext()
-    private DContext paragraphContext = new DContext(parent: parentContext)
+    private DContext paragraphContext = new DContext()
     private DParagraph paragraph = new DParagraph()
     private BoundedTextBlock textBlock = Mock(BoundedTextBlock)
 
     def "containing bounds when no margin, no border, and no padding"() {
         given:
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        paragraphContext.currentLocation = new DPoint(72, 500)
+        paragraphContext.containingBounds = new DBounds(500, 600, 100, 72)
         textBlock.height >> 150
 
         expect:
@@ -32,8 +28,7 @@ class ParagraphBoundsCalculationsTest extends Specification {
         paragraph.marginBottom = 15
         paragraph.marginLeft = 20
 
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        paragraphContext.currentLocation = new DPoint(72, 500)
+        paragraphContext.containingBounds = new DBounds(500, 600, 100, 72)
         textBlock.height >> 150
 
         expect:
@@ -47,8 +42,7 @@ class ParagraphBoundsCalculationsTest extends Specification {
         paragraph.borderBottom = 15
         paragraph.borderLeft = 20
 
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        paragraphContext.currentLocation = new DPoint(72, 500)
+        paragraphContext.containingBounds = new DBounds(500, 600, 100, 72)
         textBlock.height >> 150
 
         expect:
@@ -63,8 +57,7 @@ class ParagraphBoundsCalculationsTest extends Specification {
         paragraph.borderBottom = borderBottom
         paragraph.borderLeft = borderLeft
 
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        paragraphContext.currentLocation = new DPoint(72, 500)
+        paragraphContext.containingBounds = new DBounds(500, 600, 100, 72)
         textBlock.height >> 150
         textBlock.lastLineDescent >> -10
 
@@ -90,8 +83,7 @@ class ParagraphBoundsCalculationsTest extends Specification {
         paragraph.paddingBottom = 15
         paragraph.paddingLeft = 20
 
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        paragraphContext.currentLocation = new DPoint(72, 500)
+        paragraphContext.containingBounds = new DBounds(500, 600, 100, 72)
         textBlock.height >> 150
 
         expect:
@@ -104,8 +96,7 @@ class ParagraphBoundsCalculationsTest extends Specification {
         paragraph.border = 20
         paragraph.padding = 20
 
-        parentContext.contentsBounds = new DBounds(800, 600, 100, 72)
-        paragraphContext.currentLocation = new DPoint(72, 500)
+        paragraphContext.containingBounds = new DBounds(500, 600, 100, 72)
         textBlock.height >> 150
 
         expect:
