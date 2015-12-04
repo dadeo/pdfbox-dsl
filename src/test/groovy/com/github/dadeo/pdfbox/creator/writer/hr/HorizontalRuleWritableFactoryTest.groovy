@@ -1,6 +1,7 @@
 package com.github.dadeo.pdfbox.creator.writer.hr
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
+import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
@@ -8,13 +9,14 @@ import com.github.dadeo.pdfbox.model.DHorizontalRule
 import spock.lang.Specification
 
 class HorizontalRuleWritableFactoryTest extends Specification {
+    private static final float THICKNESS = 150
     private ObjectContextFactory contextFactory = Mock(ObjectContextFactory)
     private CurrentLocationAdjuster<DHorizontalRule> currentLocationAdjuster = Mock(CurrentLocationAdjuster)
-    private HorizontalRuleBoundsCalculator boundsCalculator = Mock(HorizontalRuleBoundsCalculator)
     private HorizontalRuleElementDetailsFactory elementDetailsFactory = Mock(HorizontalRuleElementDetailsFactory)
+    private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
     private HorizontalRuleWritableFactory horizontalRuleWritableFactory = new HorizontalRuleWritableFactory(contextFactory: contextFactory,
                                                                                                             currentLocationAdjuster: currentLocationAdjuster,
-                                                                                                            boundsCalculator: boundsCalculator,
+                                                                                                            objectBoundsCalculator: objectBoundsCalculator,
                                                                                                             elementDetailsFactory: elementDetailsFactory)
     private DContext parentContext = Mock(DContext)
     private DHorizontalRule horizontalRule = new DHorizontalRule()
@@ -24,6 +26,7 @@ class HorizontalRuleWritableFactoryTest extends Specification {
     def "createFor returns a configured writable"() {
         given:
         DContext horizontalRuleContext = Mock(DContext)
+        horizontalRule.thickness = THICKNESS
 
         when:
         HorizontalRuleWritable elementDetails = horizontalRuleWritableFactory.createFor(parentContext, horizontalRule, previousElementDetails) as HorizontalRuleWritable
@@ -33,9 +36,9 @@ class HorizontalRuleWritableFactoryTest extends Specification {
         elementDetails.context.is horizontalRuleContext
         elementDetails.elementDetails.is currentElementDetails
 
-        1 * contextFactory.createContextFrom(parentContext) >> horizontalRuleContext
+        1 * contextFactory.createContextFrom(parentContext, horizontalRule) >> horizontalRuleContext
         1 * currentLocationAdjuster.adjustFor(horizontalRuleContext, horizontalRule, previousElementDetails)
-        1 * boundsCalculator.addCalculationsTo(horizontalRuleContext, horizontalRule)
+        1 * objectBoundsCalculator.calculateActualBounds(horizontalRuleContext, THICKNESS)
         1 * elementDetailsFactory.createFor(horizontalRule, horizontalRuleContext) >> currentElementDetails
         0 * _
     }

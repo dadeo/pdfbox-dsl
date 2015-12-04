@@ -31,6 +31,10 @@ class DBounds {
         right - left
     }
 
+    float getHeight() {
+        top - bottom
+    }
+
     DBounds offset(DBounds offsets) {
         new DBounds((float) (top + offsets.top), (float) (right + offsets.right), (float) (bottom + offsets.bottom), (float) (left + offsets.left))
     }

@@ -67,7 +67,7 @@ class ParagraphContextFactoryTest extends Specification {
 
     def "new context's containingBounds, borderBounds, and contentsBounds are initialized to parent context's contentsBounds"() {
         when:
-        DContext childContext = factory.createContextFrom(parentContext)
+        DContext childContext = factory.createContextFrom(parentContext, new DParagraph())
 
         then:
         childContext.containingBounds == PARENT_CONTENTS_BOUNDS
