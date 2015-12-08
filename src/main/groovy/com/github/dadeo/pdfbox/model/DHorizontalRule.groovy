@@ -4,7 +4,7 @@ import java.awt.*
 
 class DHorizontalRule implements DObject, Margined, Bordered, Padded {
 
-    float thickness
-    Color color
+    float thickness = 1
+    Color color = Color.black
 
 }
