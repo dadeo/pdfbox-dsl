@@ -1,4 +1,13 @@
 - add table support
+- cell vertical justification
+- background colors
+- headers (with page number resolution?)
+- footers (with page number resolution?)
 - add list support
 - add inline-canvas
 - add positional-canvas
+- columns? does borderless table work for this?
+- underline text
+- allow Paragraphs to use \n to force text to next line
+- allow table to have empty cell
+- allow table to have fewer cells than columns in the table
