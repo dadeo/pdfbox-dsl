@@ -14,7 +14,7 @@ class PageContentsWriterTest extends Specification {
     private DContext pageContext = Mock(DContext)
     private PageContentsCurrentLocationAdjuster currentLocationAdjuster = Mock(PageContentsCurrentLocationAdjuster)
     private ObjectWritableFactoryFactory factoryFactory = Mock(ObjectWritableFactoryFactory)
-    private PageContentsWriter writer = new PageContentsWriter(writerFactoryFactory: factoryFactory, currentLocationAdjuster: currentLocationAdjuster)
+    private PageContentsWriter writer = new PageContentsWriter(writableFactoryFactory: factoryFactory, currentLocationAdjuster: currentLocationAdjuster)
     private DPage dPage = new DPage()
 
     def "passes null in to first child writer"() {

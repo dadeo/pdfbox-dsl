@@ -6,7 +6,7 @@ import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DObject
 import com.github.dadeo.pdfbox.model.DParagraph
 
-class ParagraphContentsSizeCalculator {
+class ParagraphContentsDimensionsCalculator {
     ObjectContentsWidthCalculator objectContentsWidthCalculator
     DescentMultiplier descentMultiplier
 
@@ -14,7 +14,7 @@ class ParagraphContentsSizeCalculator {
         objectContentsWidthCalculator.calculateFor(object, areaBounds)
     }
 
-    float calculateHeight(DParagraph dParagraph, BoundedTextBlock textBlock) {
+    float calculateHeightFor(DParagraph dParagraph, BoundedTextBlock textBlock) {
         dParagraph.borderBottom ? textBlock.height - descentMultiplier.apply(textBlock.lastLineDescent) : textBlock.height
     }
 }

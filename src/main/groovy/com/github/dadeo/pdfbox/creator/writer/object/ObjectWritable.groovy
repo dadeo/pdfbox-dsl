@@ -12,8 +12,6 @@ trait ObjectWritable {
     abstract DContext getContext()
 
     void offset(float x, float y) {
-        println "<<< ObjectWritable offset"
-
         DContext context = getContext()
         context.containingBounds = context.containingBounds.offset(y, x, y, x)
         context.borderBounds = context.borderBounds.offset(y, x, y, x)

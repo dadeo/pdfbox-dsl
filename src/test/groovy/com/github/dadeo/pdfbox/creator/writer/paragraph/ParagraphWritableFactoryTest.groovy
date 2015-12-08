@@ -13,13 +13,13 @@ class ParagraphWritableFactoryTest extends Specification {
     private static final float CONTENT_WIDTH = 600
     private static final DBounds PAGE_CONTENT_BOUNDS = new DBounds(1, 2, 3, 4)
     private static final DBounds PARAGRAPH_CONTAINING_BOUNDS = new DBounds(1, 2, 3, 4)
-    private ParagraphContentsSizeCalculator contentsSizeCalculator = Mock(ParagraphContentsSizeCalculator)
+    private ParagraphContentsDimensionsCalculator contentsSizeCalculator = Mock(ParagraphContentsDimensionsCalculator)
     private ParagraphContextFactory paragraphContextFactory = Mock(ParagraphContextFactory)
     private BoundedTextBlockFactory boundedTextBlockFactory = Mock(BoundedTextBlockFactory)
     private CurrentLocationAdjuster currentLocationAdjuster = Mock(CurrentLocationAdjuster)
     private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
     private ParagraphElementDetailsFactory elementDetailsFactory = Mock(ParagraphElementDetailsFactory)
-    private ParagraphWritableFactory paragraphWritableFactory = new ParagraphWritableFactory(contentsSizeCalculator: contentsSizeCalculator,
+    private ParagraphWritableFactory paragraphWritableFactory = new ParagraphWritableFactory(contentsDimensionsCalculator: contentsSizeCalculator,
                                                                                              paragraphContextFactory: paragraphContextFactory,
                                                                                              boundedTextBlockFactory: boundedTextBlockFactory,
                                                                                              currentLocationAdjuster: currentLocationAdjuster,
@@ -50,7 +50,7 @@ class ParagraphWritableFactoryTest extends Specification {
         1 * paragraphContextFactory.createContextFrom(pageContext, paragraph) >> paragraphContext
         1 * boundedTextBlockFactory.createFrom(paragraphContext, paragraph, CONTENT_WIDTH) >> textBlock
         1 * currentLocationAdjuster.adjustFor(paragraphContext, paragraph, previousElementDetails)
-        1 * contentsSizeCalculator.calculateHeight(paragraph, textBlock) >> TEXT_BLOCK_HEIGHT
+        1 * contentsSizeCalculator.calculateHeightFor(paragraph, textBlock) >> TEXT_BLOCK_HEIGHT
         1 * objectBoundsCalculator.calculateActualBounds(paragraphContext, TEXT_BLOCK_HEIGHT)
         1 * elementDetailsFactory.createFor(paragraphContext, paragraph, textBlock) >> elementDetails
         0 * _

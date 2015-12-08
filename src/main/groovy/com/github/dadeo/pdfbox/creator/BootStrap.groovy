@@ -52,10 +52,10 @@ class BootStrap {
     static final PageBoundsCalculations pageBoundsCalculations
     static final PageBoundsCalculator pageBoundsCalculator
     static final PageContentsWriter pageContentsWriter
-    static final ParagraphContentsSizeCalculator paragraphContentsSizeCalculator
+    static final ParagraphContentsDimensionsCalculator paragraphContentsDimensionsCalculator
     static final ParagraphContextFactory paragraphContextFactory
     static final BoundedTextBlockFactory boundedTextBlockFactory
-    static final ParagraphWritableFactory paragraphWriter
+    static final ParagraphWritableFactory paragraphWritableFactory
     static final HorizontalRuleWritableFactory horizontalRuleWritableFactory
     static final PageWriter pageWriter
 
@@ -99,18 +99,18 @@ class BootStrap {
         objectContextFactory = new ObjectContextFactory(objectBoundsCalculator: objectBoundsCalculator)
         objectContentsWidthCalculator = new ObjectContentsWidthCalculator()
 
-        paragraphContentsSizeCalculator = new ParagraphContentsSizeCalculator(objectContentsWidthCalculator: objectContentsWidthCalculator,
-                                                                              descentMultiplier: descentMultiplier)
+        paragraphContentsDimensionsCalculator = new ParagraphContentsDimensionsCalculator(objectContentsWidthCalculator: objectContentsWidthCalculator,
+                                                                                          descentMultiplier: descentMultiplier)
 
         paragraphContextFactory = new ParagraphContextFactory(objectBoundsCalculator: objectBoundsCalculator)
         boundedTextBlockFactory = new BoundedTextBlockFactory()
 
-        paragraphWriter = new ParagraphWritableFactory(contentsSizeCalculator: paragraphContentsSizeCalculator,
-                                                       paragraphContextFactory: paragraphContextFactory,
-                                                       boundedTextBlockFactory: boundedTextBlockFactory,
-                                                       currentLocationAdjuster: paragraphCurrentLocationAdjuster,
-                                                       objectBoundsCalculator: objectBoundsCalculator,
-                                                       elementDetailsFactory: paragraphElementDetailsFactory)
+        paragraphWritableFactory = new ParagraphWritableFactory(contentsDimensionsCalculator: paragraphContentsDimensionsCalculator,
+                                                                paragraphContextFactory: paragraphContextFactory,
+                                                                boundedTextBlockFactory: boundedTextBlockFactory,
+                                                                currentLocationAdjuster: paragraphCurrentLocationAdjuster,
+                                                                objectBoundsCalculator: objectBoundsCalculator,
+                                                                elementDetailsFactory: paragraphElementDetailsFactory)
 
         pageBoundsCalculations = new PageBoundsCalculations()
 
@@ -119,7 +119,7 @@ class BootStrap {
         pagePdfBoxHelper = new PagePdfBoxHelper()
         pageBoundsCalculator = new PageBoundsCalculator(pageBoundsCalculations: pageBoundsCalculations)
         pageContentsWriter = new PageContentsWriter(currentLocationAdjuster: pageCurrentLocationAdjuster,
-                                                    writerFactoryFactory: writerFactoryFactory)
+                                                    writableFactoryFactory: writerFactoryFactory)
 
         horizontalRuleElementDetailsFactory = new HorizontalRuleElementDetailsFactory()
         horizontalRuleWritableFactory = new HorizontalRuleWritableFactory(contextFactory: objectContextFactory,
@@ -139,9 +139,9 @@ class BootStrap {
                                     pageContentsWriter: pageContentsWriter,
                                     pageBorderDrawer: borderDrawer)
 
-        writerFactoryFactory.paragraphWriter = paragraphWriter
+        writerFactoryFactory.paragraphWritableFactory = paragraphWritableFactory
         writerFactoryFactory.tableWritableFactory = tableWritableFactory
-        writerFactoryFactory.horizontalRuleWriter = horizontalRuleWritableFactory
+        writerFactoryFactory.horizontalRuleWritableFactory = horizontalRuleWritableFactory
     }
 
 

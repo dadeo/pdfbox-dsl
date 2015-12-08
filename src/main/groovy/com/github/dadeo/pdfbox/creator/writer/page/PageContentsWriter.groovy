@@ -9,15 +9,15 @@ import com.github.dadeo.pdfbox.model.DPage
 
 class PageContentsWriter {
     PageContentsCurrentLocationAdjuster currentLocationAdjuster
-    ObjectWritableFactoryFactory writerFactoryFactory
+    ObjectWritableFactoryFactory writableFactoryFactory
 
     void writeContents(DPage dPage, DContext pageContext) {
         dPage.contents.inject((ElementDetails) null) { ElementDetails previousElementDetails, DObject dObject ->
             if (previousElementDetails)
                 currentLocationAdjuster.adjust(pageContext, previousElementDetails)
 
-            ObjectWritableFactory<? extends DObject> writerFactory = writerFactoryFactory.createWriter(dObject)
-            ObjectWritable writable = writerFactory.createFor(pageContext, dObject, previousElementDetails)
+            ObjectWritableFactory<? extends DObject> writableFactory = writableFactoryFactory.createWriter(dObject)
+            ObjectWritable writable = writableFactory.createFor(pageContext, dObject, previousElementDetails)
             writable.write()
 
             writable.elementDetails

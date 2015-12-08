@@ -9,17 +9,17 @@ import com.github.dadeo.pdfbox.model.DParagraph
 import com.github.dadeo.pdfbox.model.Table
 
 class ObjectWritableFactoryFactory {
-    ParagraphWritableFactory paragraphWriter
-    HorizontalRuleWritableFactory horizontalRuleWriter
+    ParagraphWritableFactory paragraphWritableFactory
+    HorizontalRuleWritableFactory horizontalRuleWritableFactory
     TableWritableFactory tableWritableFactory
 
     ObjectWritableFactory<? extends DObject> createWriter(DObject dObject) {
         switch (dObject) {
             case DParagraph:
-                paragraphWriter
+                paragraphWritableFactory
                 break
             case DHorizontalRule:
-                horizontalRuleWriter
+                horizontalRuleWritableFactory
                 break
             case Table:
                 tableWritableFactory

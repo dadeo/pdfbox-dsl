@@ -10,7 +10,7 @@ import com.github.dadeo.pdfbox.model.Bordered
 import com.github.dadeo.pdfbox.model.DParagraph
 
 class ParagraphWritableFactory implements ObjectWritableFactory<DParagraph> {
-    ParagraphContentsSizeCalculator contentsSizeCalculator
+    ParagraphContentsDimensionsCalculator contentsDimensionsCalculator
     ParagraphContextFactory paragraphContextFactory
     BoundedTextBlockFactory boundedTextBlockFactory
     CurrentLocationAdjuster<Bordered> currentLocationAdjuster
@@ -20,11 +20,11 @@ class ParagraphWritableFactory implements ObjectWritableFactory<DParagraph> {
     @Override
     ObjectWritable createFor(DContext pageContext, DParagraph dParagraph, ElementDetails previousElementDetails) {
         // todo: is the following needed? or should boundedTextBlockFactory calculate width from contentsBounds
-        float width = contentsSizeCalculator.calculateWidthFor(dParagraph, pageContext.contentsBounds)
+        float width = contentsDimensionsCalculator.calculateWidthFor(dParagraph, pageContext.contentsBounds)
         DContext paragraphContext = paragraphContextFactory.createContextFrom(pageContext, dParagraph)
         BoundedTextBlock textBlock = boundedTextBlockFactory.createFrom(paragraphContext, dParagraph, width)
         currentLocationAdjuster.adjustFor(paragraphContext, dParagraph, previousElementDetails)
-        float height = contentsSizeCalculator.calculateHeight(dParagraph, textBlock)
+        float height = contentsDimensionsCalculator.calculateHeightFor(dParagraph, textBlock)
         objectBoundsCalculator.calculateActualBounds(paragraphContext, height)
         ElementDetails currentElementDetails = elementDetailsFactory.createFor(paragraphContext, dParagraph, textBlock)
         new ParagraphWritable(dParagraph, textBlock, paragraphContext, currentElementDetails)
