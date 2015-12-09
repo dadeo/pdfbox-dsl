@@ -76,10 +76,11 @@ class DashedBorder implements DBorder {
     }
 
     void drawBorder(Bordered bordered, DWriter writer, DBounds bounds) {
-        float top = bounds.top
-        float right = bounds.right
-        float bottom = bounds.bottom
-        float left = bounds.left
+        // the 0.5f adjustment is to make up for line centering
+        float top = bounds.top + 0.5f
+        float right = bounds.right + 0.5f
+        float bottom = bounds.bottom - 0.5f
+        float left = bounds.left - 0.5f
 
         DBounds borderOffsets = bordered.borderLineOffsets
 

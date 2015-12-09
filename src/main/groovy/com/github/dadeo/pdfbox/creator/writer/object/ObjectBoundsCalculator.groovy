@@ -15,10 +15,6 @@ class ObjectBoundsCalculator {
             context.borderBounds = context.borderBounds
                                           .offset(object.marginOffsets)
 
-        if (object instanceof Bordered && object.borderBottom)
-            context.borderBounds = context.borderBounds
-                                          .offset(0, 0, -1, 0)
-
         context.contentsBounds = context.borderBounds
 
         if (object instanceof Bordered)
@@ -32,7 +28,7 @@ class ObjectBoundsCalculator {
 
     void calculateActualBounds(DContext context, float height) {
         float oldHeight = context.contentsBounds.height
-        float adjustment = oldHeight - height
+        float adjustment = oldHeight - (height - 1)
         context.containingBounds = context.containingBounds.offset(0, 0, adjustment, 0)
         context.borderBounds = context.borderBounds.offset(0, 0, adjustment, 0)
         context.contentsBounds = context.contentsBounds.offset(0, 0, adjustment, 0)

@@ -25,10 +25,10 @@ class DashedBorderTest extends Specification {
         dashedBorder.drawBorder(bordered, writer, new DBounds(800, 600, 100, 200))
 
         then:
-        1 * calculator.calculate(400, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
-        1 * writer.drawLine(new DPoint(200, 797), new DPoint(220, 797), 6, Color.red)
-        1 * writer.drawLine(new DPoint(250, 797), new DPoint(270, 797), 6, Color.red)
-        1 * writer.drawLine(new DPoint(300, 797), new DPoint(320, 797), 6, Color.red)
+        1 * calculator.calculate(401, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
+        1 * writer.drawLine(new DPoint(199.5f, 797.5f), new DPoint(219.5f, 797.5f), 6, Color.red)
+        1 * writer.drawLine(new DPoint(249.5f, 797.5f), new DPoint(269.5f, 797.5f), 6, Color.red)
+        1 * writer.drawLine(new DPoint(299.5f, 797.5f), new DPoint(319.5f, 797.5f), 6, Color.red)
         0 * _
     }
 
@@ -45,10 +45,10 @@ class DashedBorderTest extends Specification {
         dashedBorder.drawBorder(bordered, writer, new DBounds(800, 600, 100, 200))
 
         then:
-        1 * calculator.calculate(700, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
-        1 * writer.drawLine(new DPoint(597, 800), new DPoint(597, 780), 6, Color.red)
-        1 * writer.drawLine(new DPoint(597, 750), new DPoint(597, 730), 6, Color.red)
-        1 * writer.drawLine(new DPoint(597, 700), new DPoint(597, 680), 6, Color.red)
+        1 * calculator.calculate(701, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
+        1 * writer.drawLine(new DPoint(597.5f, 800.5f), new DPoint(597.5f, 780.5f), 6, Color.red)
+        1 * writer.drawLine(new DPoint(597.5f, 750.5f), new DPoint(597.5f, 730.5f), 6, Color.red)
+        1 * writer.drawLine(new DPoint(597.5f, 700.5f), new DPoint(597.5f, 680.5f), 6, Color.red)
         0 * _
     }
 
@@ -65,10 +65,10 @@ class DashedBorderTest extends Specification {
         dashedBorder.drawBorder(bordered, writer, new DBounds(800, 600, 100, 200))
 
         then:
-        1 * calculator.calculate(400, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
-        1 * writer.drawLine(new DPoint(200, 103), new DPoint(220, 103), 6, Color.red)
-        1 * writer.drawLine(new DPoint(250, 103), new DPoint(270, 103), 6, Color.red)
-        1 * writer.drawLine(new DPoint(300, 103), new DPoint(320, 103), 6, Color.red)
+        1 * calculator.calculate(401, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
+        1 * writer.drawLine(new DPoint(199.5f, 102.5f), new DPoint(219.5f, 102.5f), 6, Color.red)
+        1 * writer.drawLine(new DPoint(249.5f, 102.5f), new DPoint(269.5f, 102.5f), 6, Color.red)
+        1 * writer.drawLine(new DPoint(299.5f, 102.5f), new DPoint(319.5f, 102.5f), 6, Color.red)
         0 * _
     }
 
@@ -85,10 +85,10 @@ class DashedBorderTest extends Specification {
         dashedBorder.drawBorder(bordered, writer, new DBounds(800, 600, 100, 200))
 
         then:
-        1 * calculator.calculate(700, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
-        1 * writer.drawLine(new DPoint(203, 800), new DPoint(203, 780), 6, Color.red)
-        1 * writer.drawLine(new DPoint(203, 750), new DPoint(203, 730), 6, Color.red)
-        1 * writer.drawLine(new DPoint(203, 700), new DPoint(203, 680), 6, Color.red)
+        1 * calculator.calculate(701, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
+        1 * writer.drawLine(new DPoint(202.5f, 800.5f), new DPoint(202.5f, 780.5f), 6, Color.red)
+        1 * writer.drawLine(new DPoint(202.5f, 750.5f), new DPoint(202.5f, 730.5f), 6, Color.red)
+        1 * writer.drawLine(new DPoint(202.5f, 700.5f), new DPoint(202.5f, 680.5f), 6, Color.red)
         0 * _
     }
 
@@ -108,25 +108,25 @@ class DashedBorderTest extends Specification {
         dashedBorder.drawBorder(bordered, writer, new DBounds(800, 600, 100, 200))
 
         then:
-        1 * calculator.calculate(400, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
-        1 * writer.drawLine(new DPoint(200, 796), new DPoint(220, 796), 8, Color.black)
-        1 * writer.drawLine(new DPoint(250, 796), new DPoint(270, 796), 8, Color.black)
-        1 * writer.drawLine(new DPoint(300, 796), new DPoint(320, 796), 8, Color.black)
+        1 * calculator.calculate(401, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
+        1 * writer.drawLine(new DPoint(199.5f, 796.5f), new DPoint(219.5f, 796.5f), 8, Color.black)
+        1 * writer.drawLine(new DPoint(249.5f, 796.5f), new DPoint(269.5f, 796.5f), 8, Color.black)
+        1 * writer.drawLine(new DPoint(299.5f, 796.5f), new DPoint(319.5f, 796.5f), 8, Color.black)
 
-        1 * calculator.calculate(700, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
-        1 * writer.drawLine(new DPoint(596, 800), new DPoint(596, 780), 8, Color.black)
-        1 * writer.drawLine(new DPoint(596, 750), new DPoint(596, 730), 8, Color.black)
-        1 * writer.drawLine(new DPoint(596, 700), new DPoint(596, 680), 8, Color.black)
+        1 * calculator.calculate(701, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
+        1 * writer.drawLine(new DPoint(596.5f, 800.5f), new DPoint(596.5f, 780.5f), 8, Color.black)
+        1 * writer.drawLine(new DPoint(596.5f, 750.5f), new DPoint(596.5f, 730.5f), 8, Color.black)
+        1 * writer.drawLine(new DPoint(596.5f, 700.5f), new DPoint(596.5f, 680.5f), 8, Color.black)
 
-        1 * calculator.calculate(400, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
-        1 * writer.drawLine(new DPoint(200, 104), new DPoint(220, 104), 8, Color.black)
-        1 * writer.drawLine(new DPoint(250, 104), new DPoint(270, 104), 8, Color.black)
-        1 * writer.drawLine(new DPoint(300, 104), new DPoint(320, 104), 8, Color.black)
+        1 * calculator.calculate(401, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
+        1 * writer.drawLine(new DPoint(199.5f, 103.5f), new DPoint(219.5f, 103.5f), 8, Color.black)
+        1 * writer.drawLine(new DPoint(249.5f, 103.5f), new DPoint(269.5f, 103.5f), 8, Color.black)
+        1 * writer.drawLine(new DPoint(299.5f, 103.5f), new DPoint(319.5f, 103.5f), 8, Color.black)
 
-        1 * calculator.calculate(700, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
-        1 * writer.drawLine(new DPoint(204, 800), new DPoint(204, 780), 8, Color.black)
-        1 * writer.drawLine(new DPoint(204, 750), new DPoint(204, 730), 8, Color.black)
-        1 * writer.drawLine(new DPoint(204, 700), new DPoint(204, 680), 8, Color.black)
+        1 * calculator.calculate(701, 3, 10, 5) >> new BorderFragmentLengthAndSpacing(20, 30)
+        1 * writer.drawLine(new DPoint(203.5f, 800.5f), new DPoint(203.5f, 780.5f), 8, Color.black)
+        1 * writer.drawLine(new DPoint(203.5f, 750.5f), new DPoint(203.5f, 730.5f), 8, Color.black)
+        1 * writer.drawLine(new DPoint(203.5f, 700.5f), new DPoint(203.5f, 680.5f), 8, Color.black)
 
         0 * _
     }

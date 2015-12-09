@@ -1,6 +1,11 @@
 package com.github.dadeo.pdfbox
 
+import com.github.dadeo.pdfbox.creator.BootStrap
 import com.github.dadeo.pdfbox.creator.PdfCreator
+import com.github.dadeo.pdfbox.creator.writer.DContext
+import com.github.dadeo.pdfbox.creator.writer.DWriter
+import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleContentsDrawer
+import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
 import com.github.dadeo.pdfbox.model.*
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage
@@ -12,7 +17,7 @@ import org.junit.Test
 import java.awt.*
 
 class VisualPlaygroundTest {
-    static final int ONE_INCH = 72
+    static final float ONE_INCH = 72f
 
     private static final String LOREM_IPSUM = """|Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                            |tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -24,6 +29,11 @@ class VisualPlaygroundTest {
         .replaceAll(/\r/, '')
         .replaceAll(/\n/, '')
 
+    private Closure<Float> toFloat = { Number number -> number.toFloat() }
+    private Closure<DPoint> point = { Number x, Number y ->
+        new DPoint(toFloat(x), toFloat(y))
+    }
+
     @Test
     void test_use_pdfbox_api_directly() {
         PDDocument document = new PDDocument()
@@ -32,6 +42,84 @@ class VisualPlaygroundTest {
         PDFont font = PDType1Font.HELVETICA_BOLD
 
         PDPageContentStream contents = new PDPageContentStream(document, page)
+
+        contents.saveGraphicsState()
+
+        Closure<Float> noopAdjust = { y, thicknesse -> y as float }
+        Closure<Float> topRightAdjust = { y, thickness -> (float) (y - (thickness / 2) + 0.5) }
+        Closure<Float> bottomLeftAdjust = { y, thickness -> (float) (y + (thickness / 2) - 0.5) }
+
+        Closure drawHLine = { Number x1, Number x2, Number y, float thickness, Color color, Closure<Float> adj ->
+            float adjustedY = adj(y, thickness)
+            contents.moveTo(x1 as float, adjustedY)
+            contents.lineTo(x2 as float, adjustedY)
+            contents.strokingColor = color
+            contents.lineWidth = thickness
+            contents.stroke()
+        }
+
+        Closure drawVLine = { Number x, Number y1, Number y2, float thickness, Color color, Closure<Float> adj ->
+            float adjustedX = adj(x, thickness)
+            contents.moveTo(adjustedX, y1 as float)
+            contents.lineTo(adjustedX, y2 as float)
+            contents.strokingColor = color
+            contents.lineWidth = thickness
+            contents.stroke()
+        }
+
+        Closure<Float> adjust = topRightAdjust
+        drawHLine(ONE_INCH, 7.5 * ONE_INCH, 9.25 * ONE_INCH, 1, Color.black, noopAdjust)
+        drawHLine(1.5 * ONE_INCH, 2 * ONE_INCH, 9.25 * ONE_INCH, 2, Color.yellow, adjust)
+        drawHLine(2.5 * ONE_INCH, 3 * ONE_INCH, 9.25 * ONE_INCH, 3, Color.yellow, adjust)
+        drawHLine(3.5 * ONE_INCH, 4 * ONE_INCH, 9.25 * ONE_INCH, 4, Color.yellow, adjust)
+        drawHLine(4.5 * ONE_INCH, 5 * ONE_INCH, 9.25 * ONE_INCH, 8, Color.yellow, adjust)
+        drawHLine(5.5 * ONE_INCH, 6 * ONE_INCH, 9.25 * ONE_INCH, 9, Color.yellow, adjust)
+
+        adjust = bottomLeftAdjust
+        drawHLine(ONE_INCH, 7.5 * ONE_INCH, 9.0 * ONE_INCH, 1, Color.black, noopAdjust)
+        drawHLine(1.5 * ONE_INCH, 2 * ONE_INCH, 9.0 * ONE_INCH, 2, Color.yellow, adjust)
+        drawHLine(2.5 * ONE_INCH, 3 * ONE_INCH, 9.0 * ONE_INCH, 3, Color.yellow, adjust)
+        drawHLine(3.5 * ONE_INCH, 4 * ONE_INCH, 9.0 * ONE_INCH, 4, Color.yellow, adjust)
+        drawHLine(4.5 * ONE_INCH, 5 * ONE_INCH, 9.0 * ONE_INCH, 8, Color.yellow, adjust)
+        drawHLine(5.5 * ONE_INCH, 6 * ONE_INCH, 9.0 * ONE_INCH, 9, Color.yellow, adjust)
+
+        adjust = bottomLeftAdjust
+        drawVLine(ONE_INCH, 9.0 * ONE_INCH, ONE_INCH, 1, Color.black, noopAdjust)
+        drawVLine(ONE_INCH, 8.5 * ONE_INCH, 8.0 * ONE_INCH, 2, Color.yellow, adjust)
+        drawVLine(ONE_INCH, 7.75 * ONE_INCH, 7.25 * ONE_INCH, 3, Color.yellow, adjust)
+        drawVLine(ONE_INCH, 7.0 * ONE_INCH, 6.5 * ONE_INCH, 4, Color.yellow, adjust)
+        drawVLine(ONE_INCH, 6.25 * ONE_INCH, 5.75 * ONE_INCH, 8, Color.yellow, adjust)
+        drawVLine(ONE_INCH, 5.5 * ONE_INCH, 5.0 * ONE_INCH, 9, Color.yellow, adjust)
+
+        adjust = topRightAdjust
+        drawVLine(1.5 * ONE_INCH, 9.0 * ONE_INCH, ONE_INCH, 1, Color.black, noopAdjust)
+        drawVLine(1.5 * ONE_INCH, 8.5 * ONE_INCH, 8.0 * ONE_INCH, 2, Color.yellow, adjust)
+        drawVLine(1.5 * ONE_INCH, 7.75 * ONE_INCH, 7.25 * ONE_INCH, 3, Color.yellow, adjust)
+        drawVLine(1.5 * ONE_INCH, 7.0 * ONE_INCH, 6.5 * ONE_INCH, 4, Color.yellow, adjust)
+        drawVLine(1.5 * ONE_INCH, 6.25 * ONE_INCH, 5.75 * ONE_INCH, 8, Color.yellow, adjust)
+        drawVLine(1.5 * ONE_INCH, 5.5 * ONE_INCH, 5.0 * ONE_INCH, 9, Color.yellow, adjust)
+
+        Bordered bordered = new Bordered() {}
+        bordered.border = 1
+        DWriter dWriter = new DWriter(contentStream: contents)
+        LineBorder lineBorder = new LineBorder()
+        lineBorder.drawBorder(bordered, dWriter, new DBounds(toFloat(9.25f), toFloat(1.75f * ONE_INCH), toFloat(9.0f * ONE_INCH), toFloat(1.70f * ONE_INCH)))
+
+        ObjectContextFactory contextFactory = BootStrap.objectContextFactory
+
+        DContext parentContext = new DContext(writer: dWriter, contentsBounds: DBounds.createFrom(point(ONE_INCH, 8.8 * ONE_INCH), point(1.5 * ONE_INCH, 8.6 * ONE_INCH)))
+        DHorizontalRule horizontalRule = new DHorizontalRule(thickness: 8, color: Color.yellow)
+        DContext horizontalRuleContext = contextFactory.createContextFrom(parentContext, horizontalRule)
+        HorizontalRuleContentsDrawer horizontalRuleContentsDrawer = new HorizontalRuleContentsDrawer()
+        horizontalRuleContentsDrawer.drawFor(horizontalRule, horizontalRuleContext)
+
+        parentContext = new DContext(writer: dWriter, contentsBounds: DBounds.createFrom(point(1.1 * ONE_INCH, 9.25 * ONE_INCH), point(1.4 * ONE_INCH, 9.0 * ONE_INCH)))
+        horizontalRule = new DHorizontalRule(thickness: toFloat(0.25 * ONE_INCH + 1), color: Color.yellow)
+        contextFactory = BootStrap.objectContextFactory
+        horizontalRuleContext = contextFactory.createContextFrom(parentContext, horizontalRule)
+        horizontalRuleContentsDrawer.drawFor(horizontalRule, horizontalRuleContext)
+
+        contents.restoreGraphicsState()
 
         int fontSize = 12
         Closure<Float> unitsToDpi = { (float) ((it / 1000) * fontSize) }

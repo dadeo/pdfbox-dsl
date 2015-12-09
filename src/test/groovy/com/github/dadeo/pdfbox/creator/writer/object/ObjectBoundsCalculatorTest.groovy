@@ -58,8 +58,8 @@ class ObjectBoundsCalculatorTest extends Specification {
 
         then:
         context.containingBounds == ORIGINAL_CONTAINING_BOUNDS
-        context.borderBounds == new DBounds(500, 600, 99, 72)
-        context.contentsBounds == new DBounds(495, 590, 114, 92)
+        context.borderBounds == new DBounds(500, 600, 100, 72)
+        context.contentsBounds == new DBounds(495, 590, 115, 92)
     }
 
     def "calculate max bounds when no margin, no border, and padding"() {
@@ -95,8 +95,8 @@ class ObjectBoundsCalculatorTest extends Specification {
 
         then:
         context.containingBounds == ORIGINAL_CONTAINING_BOUNDS
-        context.borderBounds == new DBounds(480, 580, 119, 92)
-        context.contentsBounds == new DBounds(440, 540, 159, 132)
+        context.borderBounds == new DBounds(480, 580, 120, 92)
+        context.contentsBounds == new DBounds(440, 540, 160, 132)
     }
 
     def "calculate actual bounds"() {
@@ -109,9 +109,9 @@ class ObjectBoundsCalculatorTest extends Specification {
         calculator.calculateActualBounds(context, 150)
 
         then:
-        context.containingBounds == new DBounds(500, 600, 230, 72)
-        context.borderBounds == new DBounds(480, 580, 250, 92)
-        context.contentsBounds == new DBounds(440, 540, 290, 132)
+        context.containingBounds == new DBounds(500, 600, 231, 72)
+        context.borderBounds == new DBounds(480, 580, 251, 92)
+        context.contentsBounds == new DBounds(440, 540, 291, 132)
     }
 
 }

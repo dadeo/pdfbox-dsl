@@ -17,15 +17,15 @@ class HorizontalRuleContentsDrawerTest extends Specification {
 
     def "draws line centered between contents bounds"() {
         given:
-        horizontalRuleContext.contentsBounds = new DBounds(600, 700, 500, 100)
-        horizontalRule.thickness = 4
+        horizontalRuleContext.contentsBounds = new DBounds(600f, 700f, 500f, 100f)
+        horizontalRule.thickness = 4f
         horizontalRule.color = Color.red
 
         when:
         contentsDrawer.drawFor(horizontalRule, horizontalRuleContext)
 
         then:
-        1 * dWriter.drawLine(new DPoint(100, 550), new DPoint(700, 550), 4, Color.red)
+        1 * dWriter.drawLine(new DPoint(99.5f, 550f), new DPoint(700.5f, 550f), 4, Color.red)
     }
 
 }

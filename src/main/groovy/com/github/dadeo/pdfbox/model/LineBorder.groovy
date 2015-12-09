@@ -2,15 +2,14 @@ package com.github.dadeo.pdfbox.model
 
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 
-import java.awt.Color
-
 class LineBorder implements DBorder {
 
     void drawBorder(Bordered bordered, DWriter writer, DBounds bounds) {
-        float top = bounds.top
-        float right = bounds.right
-        float bottom = bounds.bottom
-        float left = bounds.left
+        // the 0.5f adjustment is to make up for line centering
+        float top = bounds.top + 0.5f
+        float right = bounds.right + 0.5f
+        float bottom = bounds.bottom - 0.5f
+        float left = bounds.left - 0.5f
 
         DBounds borderOffsets = bordered.borderLineOffsets
 
@@ -18,6 +17,7 @@ class LineBorder implements DBorder {
         float offsetRight = right + borderOffsets.right
         float offsetBottom = bottom + borderOffsets.bottom
         float offsetLeft = left + borderOffsets.left
+
 
         if (bordered.borderLeft != 0)
             writer.drawLine(new DPoint(offsetLeft, top), new DPoint(offsetLeft, bottom), bordered.borderLeft, bordered.borderLeftColor)
@@ -30,14 +30,6 @@ class LineBorder implements DBorder {
 
         if (bordered.borderBottom != 0)
             writer.drawLine(new DPoint(left, offsetBottom), new DPoint(right, offsetBottom), bordered.borderBottom, bordered.borderBottomColor)
-
-        if(bordered.borderBottomColor == Color.orange) {
-            writer.drawLine(new DPoint(left, top), new DPoint(left, bottom), 1, Color.black)
-            writer.drawLine(new DPoint(right, top), new DPoint(right, bottom), 1, Color.black)
-            writer.drawLine(new DPoint(left, top), new DPoint(right, top), 1, Color.black)
-            writer.drawLine(new DPoint(left, bottom), new DPoint(right, bottom), 1, Color.black)
-        }
-
     }
 
 }

@@ -19,7 +19,7 @@ class LineBorderTest extends Specification {
         lineBorder.drawBorder(bordered, writer, new DBounds(100, 200, 0, 100))
 
         then:
-        1 * writer.drawLine(new DPoint(100, 97), new DPoint(200, 97), 6, Color.red)
+        1 * writer.drawLine(new DPoint(99.5f, 97.5f), new DPoint(200.5f, 97.5f), 6, Color.red)
         0 * _
     }
 
@@ -32,7 +32,7 @@ class LineBorderTest extends Specification {
         lineBorder.drawBorder(bordered, writer, new DBounds(100, 200, 0, 100))
 
         then:
-        1 * writer.drawLine(new DPoint(197, 100), new DPoint(197, 0), 6, Color.red)
+        1 * writer.drawLine(new DPoint(197.5F, 100.5F), new DPoint(197.5F, -0.5F), 6, Color.red)
         0 * _
     }
 
@@ -45,7 +45,7 @@ class LineBorderTest extends Specification {
         lineBorder.drawBorder(bordered, writer, new DBounds(100, 200, 0, 100))
 
         then:
-        1 * writer.drawLine(new DPoint(100, 3), new DPoint(200, 3), 6, Color.red)
+        1 * writer.drawLine(new DPoint(99.5f, 2.5f), new DPoint(200.5f, 2.5f), 6, Color.red)
         0 * _
     }
 
@@ -57,7 +57,7 @@ class LineBorderTest extends Specification {
         lineBorder.drawBorder(bordered, writer, new DBounds(100, 200, 0, 100))
 
         then:
-        1 * writer.drawLine(new DPoint(103, 100), new DPoint(103, 0), 6, Color.red)
+        1 * writer.drawLine(new DPoint(102.5f, 100.5f), new DPoint(102.5f, -0.5f), 6, Color.red)
         0 * _
     }
 
@@ -69,10 +69,10 @@ class LineBorderTest extends Specification {
         lineBorder.drawBorder(bordered, writer, new DBounds(100, 200, 0, 100))
 
         then:
-        1 * writer.drawLine(new DPoint(100, 96), new DPoint(200, 96), 8, Color.black)    // top
-        1 * writer.drawLine(new DPoint(196, 100), new DPoint(196, 0), 8, Color.black)    // right
-        1 * writer.drawLine(new DPoint(100, 4), new DPoint(200, 4), 8, Color.black)      // bottom
-        1 * writer.drawLine(new DPoint(104, 100), new DPoint(104, 0), 8, Color.black)    // left
+        1 * writer.drawLine(new DPoint(99.5f, 96.5f), new DPoint(200.5f, 96.5f), 8, Color.black)    // top
+        1 * writer.drawLine(new DPoint(196.5f, 100.5f), new DPoint(196.5f, -0.5f), 8, Color.black)  // right
+        1 * writer.drawLine(new DPoint(99.5f, 3.5f), new DPoint(200.5f, 3.5f), 8, Color.black)      // bottom
+        1 * writer.drawLine(new DPoint(103.5f, 100.5f), new DPoint(103.5f, -0.5f), 8, Color.black)  // left
         0 * _
     }
 
