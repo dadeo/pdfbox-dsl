@@ -112,6 +112,7 @@ class ObjectBoundsCalculatorTest extends Specification {
         context.containingBounds == new DBounds(500, 600, 231, 72)
         context.borderBounds == new DBounds(480, 580, 251, 92)
         context.contentsBounds == new DBounds(440, 540, 291, 132)
+        context.contentsBounds.height == 150
     }
 
 }

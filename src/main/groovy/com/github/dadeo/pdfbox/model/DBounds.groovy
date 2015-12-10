@@ -28,11 +28,11 @@ class DBounds {
     }
 
     float getWidth() {
-        right - left
+        right - left + 1
     }
 
     float getHeight() {
-        top - bottom
+        top - bottom + 1
     }
 
     DBounds offset(DBounds offsets) {

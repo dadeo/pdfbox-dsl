@@ -71,7 +71,7 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
             resizeHeight(cellWritable.context, rowContentHeight)
         }
 
-        float rowContainingHeight = cellWritables[0].height + 1
+        float rowContainingHeight = cellWritables[0].height  // they have all been resized so we can look at the first one
         objectBoundsCalculator.calculateActualBounds(rowContext, rowContainingHeight)
         new RowWritable((List<CellWritable>) cellWritables.clone(), rowContext, new RowElementDetails(containingBounds: rowContext.containingBounds))
     }
@@ -85,14 +85,14 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
             ObjectWritableFactory<? extends DObject> writerFactory = writerFactoryFactory.createWriter(object)
             ObjectWritable cellChildWritable = writerFactory.createFor(cellWorkContext, object, elementDetails)
             elementDetails = cellChildWritable.elementDetails
-            cellWorkContext.contentsBounds = cellWorkContext.contentsBounds.offset((float) (elementDetails.containingBounds.bottom - cellWorkContext.contentsBounds.top), 0, 0, 0)
+            cellWorkContext.contentsBounds = cellWorkContext.contentsBounds.offset((float) (elementDetails.containingBounds.bottom - cellWorkContext.contentsBounds.top + 1), 0, 0, 0)
             cellChildWritable
         }
 
-        float maxHeight = cellWritableContents.elementDetails.inject(0f) { float accum, ElementDetails details -> (float) (accum + details.containingBounds.height) }
+        float maxHeight = cellWritableContents ? cellContext.contentsBounds.top - cellWritableContents.elementDetails[-1].containingBounds.bottom + 1 : 0
         float lastLineDescent = 0
         // adjust if cell has border and tallest cell's last writable is for a borderless paragraph
-        float height = 1 + (cell.borderBottom ? maxHeight - descentMultiplier.apply(lastLineDescent) : maxHeight)
+        float height = (cell.borderBottom ? maxHeight - descentMultiplier.apply(lastLineDescent) : maxHeight)
 
         objectBoundsCalculator.calculateActualBounds(cellContext, height)
 

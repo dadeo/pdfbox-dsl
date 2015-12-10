@@ -203,6 +203,7 @@ class VisualPlaygroundTest {
                 DParagraph paragraph3 = new DParagraph(LOREM_IPSUM)
                 paragraph3.font = new DFont(PDType1Font.HELVETICA_OBLIQUE, 6)
                 paragraph3.border = 1
+//                paragraph3.borderPainter = new DashedBorder()
                 paragraph3.padding = 4
                 paragraph3.justification = Justification.RIGHT
                 DParagraph paragraph4 = new DParagraph(LOREM_IPSUM)

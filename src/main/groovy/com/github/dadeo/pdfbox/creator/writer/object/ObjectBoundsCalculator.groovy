@@ -28,7 +28,7 @@ class ObjectBoundsCalculator {
 
     void calculateActualBounds(DContext context, float height) {
         float oldHeight = context.contentsBounds.height
-        float adjustment = oldHeight - (height - 1)
+        float adjustment = oldHeight - height
         context.containingBounds = context.containingBounds.offset(0, 0, adjustment, 0)
         context.borderBounds = context.borderBounds.offset(0, 0, adjustment, 0)
         context.contentsBounds = context.contentsBounds.offset(0, 0, adjustment, 0)
