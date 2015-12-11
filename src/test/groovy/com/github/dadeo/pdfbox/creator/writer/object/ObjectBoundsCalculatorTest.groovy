@@ -99,14 +99,14 @@ class ObjectBoundsCalculatorTest extends Specification {
         context.contentsBounds == new DBounds(440, 540, 160, 132)
     }
 
-    def "calculate actual bounds"() {
+    def "resize bounds height"() {
         given:
         context.containingBounds = new DBounds(500, 600, 100, 72)
         context.borderBounds = new DBounds(480, 580, 120, 92)
         context.contentsBounds = new DBounds(440, 540, 160, 132)
 
         when:
-        calculator.calculateActualBounds(context, 150)
+        calculator.resizeBoundsToHeight(context, 150)
 
         then:
         context.containingBounds == new DBounds(500, 600, 231, 72)

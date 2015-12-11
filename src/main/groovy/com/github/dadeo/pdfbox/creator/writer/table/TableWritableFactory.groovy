@@ -56,7 +56,7 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
 
         float height = rowWritables.height.sum()
 
-        objectBoundsCalculator.calculateActualBounds(tableContext, height)
+        objectBoundsCalculator.resizeBoundsToHeight(tableContext, height)
 
         new TableWritable(table, rowWritables, tableContext, new TableElementDetails(containingBounds: tableContext.containingBounds))
     }
@@ -70,12 +70,12 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
             if (offset)
                 cellWritable.offset(0, -offset)
 
-            objectBoundsCalculator.calculateActualBounds(cellWritable.context, rowContentHeight)
+            objectBoundsCalculator.resizeBoundsToHeight(cellWritable.context, rowContentHeight)
         }
 
         float rowContainingHeight = cellWritables[0].height
         // they have all been resized so we can look at the first one
-        objectBoundsCalculator.calculateActualBounds(rowContext, rowContainingHeight)
+        objectBoundsCalculator.resizeBoundsToHeight(rowContext, rowContainingHeight)
         new RowWritable((List<CellWritable>) cellWritables.clone(), rowContext, new RowElementDetails(containingBounds: rowContext.containingBounds))
     }
 
@@ -98,7 +98,7 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
         // adjust if cell has border and tallest cell's last writable is for a borderless paragraph
         float height = (cell.borderBottom ? maxHeight - descentMultiplier.apply(lastLineDescent) : maxHeight)
 
-        objectBoundsCalculator.calculateActualBounds(cellContext, height)
+        objectBoundsCalculator.resizeBoundsToHeight(cellContext, height)
 
         new CellWritable(cell: cell, context: cellContext, contents: cellWritableContents, elementDetails: new CellElementDetails(containingBounds: cellContext.containingBounds))
     }
