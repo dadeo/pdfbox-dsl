@@ -112,7 +112,53 @@ class ObjectBoundsCalculatorTest extends Specification {
         context.containingBounds == new DBounds(500, 600, 231, 72)
         context.borderBounds == new DBounds(480, 580, 251, 92)
         context.contentsBounds == new DBounds(440, 540, 291, 132)
-        context.contentsBounds.height == 150
+        context.contentsBounds.height == 150f
+    }
+
+    def "resize bounds to content width"() {
+        given:
+        context.containingBounds = new DBounds(500, 600, 100, 72)
+        context.borderBounds = new DBounds(480, 580, 120, 92)
+        context.contentsBounds = new DBounds(440, 540, 160, 132)
+
+        when:
+        calculator.resizeBoundsToContentWidth(200, context)
+
+        then:
+        context.containingBounds == new DBounds(500, 391, 100, 72)
+        context.borderBounds == new DBounds(480, 371, 120, 92)
+        context.contentsBounds == new DBounds(440, 331, 160, 132)
+        context.contentsBounds.width == 200f
+    }
+
+    def "move bounds horizontally"() {
+        given:
+        context.containingBounds = new DBounds(500, 600, 100, 72)
+        context.borderBounds = new DBounds(480, 580, 120, 92)
+        context.contentsBounds = new DBounds(440, 540, 160, 132)
+
+        when:
+        calculator.moveBoundsHorizontally(200, context)
+
+        then:
+        context.containingBounds == new DBounds(500, 800, 100, 272)
+        context.borderBounds == new DBounds(480, 780, 120, 292)
+        context.contentsBounds == new DBounds(440, 740, 160, 332)
+    }
+
+    def "shrink bounds vertically"() {
+        given:
+        context.containingBounds = new DBounds(500, 600, 100, 72)
+        context.borderBounds = new DBounds(480, 580, 120, 92)
+        context.contentsBounds = new DBounds(440, 540, 160, 132)
+
+        when:
+        calculator.shrinkBoundsVertically(200, context)
+
+        then:
+        context.containingBounds == new DBounds(300, 600, 100, 72)
+        context.borderBounds == new DBounds(280, 580, 120, 92)
+        context.contentsBounds == new DBounds(240, 540, 160, 132)
     }
 
 }

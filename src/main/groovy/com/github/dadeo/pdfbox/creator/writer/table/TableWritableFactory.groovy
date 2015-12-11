@@ -6,13 +6,17 @@ import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
 import com.github.dadeo.pdfbox.creator.writer.positioning.DescentMultiplier
 import com.github.dadeo.pdfbox.creator.writer.util.VerticalAlignmentCalculator
-import com.github.dadeo.pdfbox.model.*
+import com.github.dadeo.pdfbox.model.Bordered
+import com.github.dadeo.pdfbox.model.Cell
+import com.github.dadeo.pdfbox.model.DObject
+import com.github.dadeo.pdfbox.model.Table
 
 class TableWritableFactory implements ObjectWritableFactory<Table> {
     ObjectContextFactory objectContextFactory
     CurrentLocationAdjuster<Bordered> currentLocationAdjuster
     ObjectWritableFactoryFactory writerFactoryFactory
     ObjectBoundsCalculator objectBoundsCalculator
+    TableColumnWidthCalculator columnWidthCalculator
     DescentMultiplier descentMultiplier
     VerticalAlignmentCalculator verticalAlignmentCalculator
 
@@ -22,7 +26,7 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
         tableContext.verticalAlignment = table.verticalAlignment
         currentLocationAdjuster.adjustFor(tableContext, table, previousElementDetails)
 
-        List<Float> columnWidths = calculateColumnWidths(table, tableContext)
+        List<Float> columnWidths = columnWidthCalculator.calculateFor(table, tableContext)
 
         createTableWriter(tableContext, columnWidths, table)
     }
@@ -34,23 +38,23 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
         DContext rowContext = objectContextFactory.createContextFrom(tableContext, null)
 
         int index = 0
-        float widthOffset = 0
+        float lastColumnWidth = 0
         while (cellsToPlace) {
-            float width = columnWidths[index]
+            float currentColumnWidth = columnWidths[index]
             DContext columnContext = objectContextFactory.createContextFrom(rowContext, null)
-            moveBoundsByContentWidthOf(widthOffset, columnContext)
-            adjustBoundsForContentWidthOf(width, columnContext)
-            rowCellWritables << createCellWritable(columnContext, (Cell) cellsToPlace.head(), width)
+            objectBoundsCalculator.moveBoundsHorizontally(lastColumnWidth, columnContext)
+            objectBoundsCalculator.resizeBoundsToContentWidth(currentColumnWidth, columnContext)
+            rowCellWritables << createCellWritable(columnContext, (Cell) cellsToPlace.head(), currentColumnWidth)
             cellsToPlace = cellsToPlace.tail()
-            widthOffset += width
+            lastColumnWidth += currentColumnWidth
             ++index
             if (index == columnWidths.size()) {
                 rowWritables << createRowWritable(rowCellWritables, rowContext)
                 rowContext = rowContext.clone()
-                moveBoundsDown(rowContext, rowWritables[-1])
+                objectBoundsCalculator.shrinkBoundsVertically(rowWritables[-1].height, rowContext)
                 rowCellWritables.clear()
                 index = 0
-                widthOffset = 0
+                lastColumnWidth = 0
             }
         }
 
@@ -64,7 +68,6 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
     RowWritable createRowWritable(List<CellWritable> cellWritables, DContext rowContext) {
         float rowContentHeight = cellWritables.context.contentsBounds.height.max()
         cellWritables.each { CellWritable cellWritable ->
-            // vertical justification -- middle
             float cellWritableHeight = cellWritable.context.contentsBounds.height
             float offset = verticalAlignmentCalculator.calculateOffsetFor(cellWritable.context.verticalAlignment, cellWritableHeight, rowContentHeight)
             if (offset)
@@ -103,41 +106,5 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
         new CellWritable(cell: cell, context: cellContext, contents: cellWritableContents, elementDetails: new CellElementDetails(containingBounds: cellContext.containingBounds))
     }
 
-    protected void adjustBoundsForContentWidthOf(float width, DContext context) {
-        float currentWidth = context.contentsBounds.width
-        float adjustment = currentWidth - width
-        context.containingBounds = context.containingBounds.offset(0, -adjustment, 0, 0)
-        context.borderBounds = context.borderBounds.offset(0, -adjustment, 0, 0)
-        context.contentsBounds = context.contentsBounds.offset(0, -adjustment, 0, 0)
-    }
-
-    protected void moveBoundsByContentWidthOf(float width, DContext context) {
-        context.containingBounds = context.containingBounds.offset(0, 0, 0, width)
-        context.borderBounds = context.borderBounds.offset(0, 0, 0, width)
-        context.contentsBounds = context.contentsBounds.offset(0, 0, 0, width)
-    }
-
-    protected void moveBoundsDown(DContext context, RowWritable rowWritable) {
-        float height = rowWritable.elementDetails.containingBounds.height
-        context.containingBounds = context.containingBounds.offset(-height, 0, 0, 0)
-        context.borderBounds = context.borderBounds.offset(-height, 0, 0, 0)
-        context.contentsBounds = context.contentsBounds.offset(-height, 0, 0, 0)
-    }
-
-    protected void resizeHeight(DContext context, float height) {
-        float currentHeight = context.contentsBounds.height
-        float adjustment = currentHeight - height
-        context.containingBounds = context.containingBounds.offset(0, 0, adjustment, 0)
-        context.borderBounds = context.borderBounds.offset(0, 0, adjustment, 0)
-        context.contentsBounds = context.contentsBounds.offset(0, 0, adjustment, 0)
-    }
-
-    protected List<Float> calculateColumnWidths(Table table, DContext tableContext) {
-        Float ratioSum = table.columnRatios.sum()
-        float totalContentWidth = tableContext.contentsBounds.width
-
-        List<Float> columnWidths = table.columnRatios.collect { (float) (totalContentWidth / ratioSum * it) }
-        columnWidths
-    }
 
 }

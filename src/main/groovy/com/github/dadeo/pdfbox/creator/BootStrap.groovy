@@ -13,6 +13,7 @@ import com.github.dadeo.pdfbox.creator.writer.page.*
 import com.github.dadeo.pdfbox.creator.writer.paragraph.*
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
 import com.github.dadeo.pdfbox.creator.writer.positioning.DescentMultiplier
+import com.github.dadeo.pdfbox.creator.writer.table.TableColumnWidthCalculator
 import com.github.dadeo.pdfbox.creator.writer.table.TableWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.text.StringTokenizer
 import com.github.dadeo.pdfbox.creator.writer.text.StringWidthCalculator
@@ -130,8 +131,11 @@ class BootStrap {
                                                                           objectBoundsCalculator: objectBoundsCalculator,
                                                                           elementDetailsFactory: horizontalRuleElementDetailsFactory)
 
+        TableColumnWidthCalculator tableColumnWidthCalculator = new TableColumnWidthCalculator()
+
         tableWritableFactory = new TableWritableFactory(objectContextFactory: objectContextFactory,
                                                         objectBoundsCalculator: objectBoundsCalculator,
+                                                        columnWidthCalculator: tableColumnWidthCalculator,
                                                         writerFactoryFactory: writerFactoryFactory,
                                                         currentLocationAdjuster: tableCurrentLocationAdjuster,
                                                         verticalAlignmentCalculator: verticalAlignmentCalculator,
