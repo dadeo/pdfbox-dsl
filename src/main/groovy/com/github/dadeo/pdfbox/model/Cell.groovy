@@ -3,6 +3,7 @@ package com.github.dadeo.pdfbox.model
 
 class Cell implements DObject, Margined, Bordered, Padded {
     List<DObject> contents = []
+    VerticalAlignment verticalAlignment
 
     Cell() {}
 

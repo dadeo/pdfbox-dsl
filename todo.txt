@@ -1,5 +1,3 @@
-- add table support
-- cell vertical justification
 - background colors
 - headers (with page number resolution?)
 - footers (with page number resolution?)

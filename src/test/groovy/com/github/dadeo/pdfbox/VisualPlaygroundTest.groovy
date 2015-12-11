@@ -234,16 +234,22 @@ class VisualPlaygroundTest {
 
                 Cell cell3 = new Cell()
                 cell3.border = 3
-                cell1.borderColor = Color.red
+                cell3.borderColor = Color.red
                 cell3 << paragraph3
+
+                Cell cell4 = new Cell()
+                cell4.border = 3
+                cell4.borderColor = Color.red
+                cell4 << paragraph3
 
                 Table table = new Table([3, 2, 1.5])
                 table.border = 5
                 table.borderColor = Color.orange
+                table.verticalAlignment = VerticalAlignment.MIDDLE
                 table << cell1
                 table << cell2
                 table << cell3
-                table << cell3
+                table << cell4
                 table << cell3
                 table << cell3
 

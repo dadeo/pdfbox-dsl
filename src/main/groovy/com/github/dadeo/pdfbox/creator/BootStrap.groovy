@@ -17,6 +17,7 @@ import com.github.dadeo.pdfbox.creator.writer.table.TableWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.text.StringTokenizer
 import com.github.dadeo.pdfbox.creator.writer.text.StringWidthCalculator
 import com.github.dadeo.pdfbox.creator.writer.text.TokensToLineAssigner
+import com.github.dadeo.pdfbox.creator.writer.util.VerticalAlignmentCalculator
 import com.github.dadeo.pdfbox.model.Bordered
 import com.github.dadeo.pdfbox.model.DHorizontalRule
 import com.github.dadeo.pdfbox.model.LineBorder
@@ -26,6 +27,7 @@ class BootStrap {
     static final StringWidthCalculator stringWidthCalculator
     static final TokensToLineAssigner tokensToLineAssigner
     static final StringTokenizer stringTokenizer
+    static final VerticalAlignmentCalculator verticalAlignmentCalculator
     static final LineBorder lineBorder
     static final BorderDrawer borderDrawer
     static final ObjectBoundsCalculator objectBoundsCalculator
@@ -66,6 +68,7 @@ class BootStrap {
         stringWidthCalculator = new StringWidthCalculator()
         tokensToLineAssigner = new TokensToLineAssigner()
         stringTokenizer = new StringTokenizer(calculator: stringWidthCalculator)
+        verticalAlignmentCalculator = new VerticalAlignmentCalculator()
         writerFactoryFactory = new ObjectWritableFactoryFactory()
         paragraphElementDetailsFactory = new ParagraphElementDetailsFactory()
         topLeftRightBorderParagraphAdjustmentRule = new TopLeftRightBorderParagraphAdjustmentRule(descentMultiplier: descentMultiplier)
@@ -131,6 +134,7 @@ class BootStrap {
                                                         objectBoundsCalculator: objectBoundsCalculator,
                                                         writerFactoryFactory: writerFactoryFactory,
                                                         currentLocationAdjuster: tableCurrentLocationAdjuster,
+                                                        verticalAlignmentCalculator: verticalAlignmentCalculator,
                                                         descentMultiplier: descentMultiplier)
 
         pageWriter = new PageWriter(pageContextFactory: pageContextFactory,

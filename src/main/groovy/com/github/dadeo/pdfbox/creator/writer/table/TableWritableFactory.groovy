@@ -5,10 +5,8 @@ import com.github.dadeo.pdfbox.creator.writer.object.*
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
 import com.github.dadeo.pdfbox.creator.writer.positioning.DescentMultiplier
-import com.github.dadeo.pdfbox.model.Bordered
-import com.github.dadeo.pdfbox.model.Cell
-import com.github.dadeo.pdfbox.model.DObject
-import com.github.dadeo.pdfbox.model.Table
+import com.github.dadeo.pdfbox.creator.writer.util.VerticalAlignmentCalculator
+import com.github.dadeo.pdfbox.model.*
 
 class TableWritableFactory implements ObjectWritableFactory<Table> {
     ObjectContextFactory objectContextFactory
@@ -16,10 +14,12 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
     ObjectWritableFactoryFactory writerFactoryFactory
     ObjectBoundsCalculator objectBoundsCalculator
     DescentMultiplier descentMultiplier
+    VerticalAlignmentCalculator verticalAlignmentCalculator
 
     @Override
     ObjectWritable createFor(DContext pageContext, Table table, ElementDetails previousElementDetails) {
         DContext tableContext = objectContextFactory.createContextFrom(pageContext, table)
+        tableContext.verticalAlignment = table.verticalAlignment
         currentLocationAdjuster.adjustFor(tableContext, table, previousElementDetails)
 
         List<Float> columnWidths = calculateColumnWidths(table, tableContext)
@@ -65,19 +65,23 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
         float rowContentHeight = cellWritables.context.contentsBounds.height.max()
         cellWritables.each { CellWritable cellWritable ->
             // vertical justification -- middle
-            float offset = (rowContentHeight - cellWritable.context.contentsBounds.height) / 2
-            cellWritable.offset(0, -offset)
+            float cellWritableHeight = cellWritable.context.contentsBounds.height
+            float offset = verticalAlignmentCalculator.calculateOffsetFor(cellWritable.context.verticalAlignment, cellWritableHeight, rowContentHeight)
+            if (offset)
+                cellWritable.offset(0, -offset)
 
-            resizeHeight(cellWritable.context, rowContentHeight)
+            objectBoundsCalculator.calculateActualBounds(cellWritable.context, rowContentHeight)
         }
 
-        float rowContainingHeight = cellWritables[0].height  // they have all been resized so we can look at the first one
+        float rowContainingHeight = cellWritables[0].height
+        // they have all been resized so we can look at the first one
         objectBoundsCalculator.calculateActualBounds(rowContext, rowContainingHeight)
         new RowWritable((List<CellWritable>) cellWritables.clone(), rowContext, new RowElementDetails(containingBounds: rowContext.containingBounds))
     }
 
     protected CellWritable createCellWritable(DContext columnContext, Cell cell, float cellWidth) {
         DContext cellContext = objectContextFactory.createContextFrom(columnContext, cell)
+        cellContext.verticalAlignment = cell.verticalAlignment
         DContext cellWorkContext = cellContext.clone()
 
         ElementDetails elementDetails = null
