@@ -19,7 +19,7 @@ class HorizontalRuleWritableFactory implements ObjectWritableFactory<DHorizontal
     ObjectWritable createFor(DContext pageContext, DHorizontalRule horizontalRule, ElementDetails previousElementDetails) {
         DContext horizontalRuleContext = contextFactory.createContextFrom(pageContext, horizontalRule)
         currentLocationAdjuster.adjustFor(horizontalRuleContext, horizontalRule, previousElementDetails)
-        objectBoundsCalculator.resizeBoundsToHeight(horizontalRuleContext, horizontalRule.thickness)
+        objectBoundsCalculator.resizeBoundsToHeight(horizontalRule.thickness, horizontalRuleContext)
         ElementDetails currentElementDetails = elementDetailsFactory.createFor(horizontalRule, horizontalRuleContext)
         new HorizontalRuleWritable(horizontalRule, horizontalRuleContext, currentElementDetails)
     }

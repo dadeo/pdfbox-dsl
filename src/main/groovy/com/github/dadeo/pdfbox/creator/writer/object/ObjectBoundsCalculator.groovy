@@ -26,7 +26,7 @@ class ObjectBoundsCalculator {
                                             .offset(object.paddingOffsets)
     }
 
-    void resizeBoundsToHeight(DContext context, float height) {
+    void resizeBoundsToHeight(float height, DContext context) {
         float oldHeight = context.contentsBounds.height
         float adjustment = oldHeight - height
         context.containingBounds = context.containingBounds.offset(0, 0, adjustment, 0)

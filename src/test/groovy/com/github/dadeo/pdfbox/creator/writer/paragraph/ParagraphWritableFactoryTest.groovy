@@ -51,7 +51,7 @@ class ParagraphWritableFactoryTest extends Specification {
         1 * boundedTextBlockFactory.createFrom(paragraphContext, paragraph, CONTENT_WIDTH) >> textBlock
         1 * currentLocationAdjuster.adjustFor(paragraphContext, paragraph, previousElementDetails)
         1 * contentsSizeCalculator.calculateHeightFor(paragraph, textBlock) >> TEXT_BLOCK_HEIGHT
-        1 * objectBoundsCalculator.resizeBoundsToHeight(paragraphContext, TEXT_BLOCK_HEIGHT)
+        1 * objectBoundsCalculator.resizeBoundsToHeight(TEXT_BLOCK_HEIGHT, paragraphContext)
         1 * elementDetailsFactory.createFor(paragraphContext, paragraph, textBlock) >> elementDetails
         0 * _
     }

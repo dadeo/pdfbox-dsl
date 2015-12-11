@@ -38,7 +38,7 @@ class HorizontalRuleWritableFactoryTest extends Specification {
 
         1 * contextFactory.createContextFrom(parentContext, horizontalRule) >> horizontalRuleContext
         1 * currentLocationAdjuster.adjustFor(horizontalRuleContext, horizontalRule, previousElementDetails)
-        1 * objectBoundsCalculator.resizeBoundsToHeight(horizontalRuleContext, THICKNESS)
+        1 * objectBoundsCalculator.resizeBoundsToHeight(THICKNESS, horizontalRuleContext)
         1 * elementDetailsFactory.createFor(horizontalRule, horizontalRuleContext) >> currentElementDetails
         0 * _
     }

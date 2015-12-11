@@ -25,7 +25,7 @@ class ParagraphWritableFactory implements ObjectWritableFactory<DParagraph> {
         BoundedTextBlock textBlock = boundedTextBlockFactory.createFrom(paragraphContext, dParagraph, width)
         currentLocationAdjuster.adjustFor(paragraphContext, dParagraph, previousElementDetails)
         float height = contentsDimensionsCalculator.calculateHeightFor(dParagraph, textBlock)
-        objectBoundsCalculator.resizeBoundsToHeight(paragraphContext, height)
+        objectBoundsCalculator.resizeBoundsToHeight(height, paragraphContext)
         ElementDetails currentElementDetails = elementDetailsFactory.createFor(paragraphContext, dParagraph, textBlock)
         new ParagraphWritable(dParagraph, textBlock, paragraphContext, currentElementDetails)
     }

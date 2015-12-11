@@ -106,7 +106,7 @@ class ObjectBoundsCalculatorTest extends Specification {
         context.contentsBounds = new DBounds(440, 540, 160, 132)
 
         when:
-        calculator.resizeBoundsToHeight(context, 150)
+        calculator.resizeBoundsToHeight(150, context)
 
         then:
         context.containingBounds == new DBounds(500, 600, 231, 72)
