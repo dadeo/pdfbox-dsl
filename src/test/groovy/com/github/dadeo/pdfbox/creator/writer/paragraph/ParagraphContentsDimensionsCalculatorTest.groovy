@@ -11,6 +11,7 @@ class ParagraphContentsDimensionsCalculatorTest extends Specification {
     private static final float CALCULATED_WIDTH = 27f
     private static final float DESCENT_ORIGINAL = -10f
     private static final float DESCENT_MODIFIED = -20f
+    private static final float DESCENT_MODIFIER = 2f
     private ObjectContentsWidthCalculator objectContentsWidthCalculator = Mock(ObjectContentsWidthCalculator)
     private DescentMultiplier descentMultiplier = Mock(DescentMultiplier)
     private ParagraphContentsDimensionsCalculator paragraphContentsDimensionsCalculator = new ParagraphContentsDimensionsCalculator()
@@ -30,10 +31,11 @@ class ParagraphContentsDimensionsCalculatorTest extends Specification {
         paragraphContentsDimensionsCalculator.calculateWidthFor(paragraph, bounds) == CALCULATED_WIDTH
     }
 
-    def "calculateHeight for paragraph with bottom border"() {
+    def "calculateHeight for paragraph"() {
         given:
         DParagraph paragraph = Mock(DParagraph) {
             getBorderBottom() >> 1f
+            getParagraphBottomDescentMultiplier() >> DESCENT_MODIFIER
         }
 
         BoundedTextBlock textBlock = Mock(BoundedTextBlock) {
@@ -41,26 +43,10 @@ class ParagraphContentsDimensionsCalculatorTest extends Specification {
             getLastLineDescent() >> DESCENT_ORIGINAL
         }
 
-        1 * descentMultiplier.apply(DESCENT_ORIGINAL) >> DESCENT_MODIFIED
+        1 * descentMultiplier.apply(DESCENT_ORIGINAL, DESCENT_MODIFIER) >> DESCENT_MODIFIED
 
         expect:
         paragraphContentsDimensionsCalculator.calculateHeightFor(paragraph, textBlock) == (float) (TEXT_BLOCK_HEIGHT - DESCENT_MODIFIED)
     }
 
-    def "calculateHeight for paragraph with no bottom border"() {
-        given:
-        DParagraph paragraph = Mock(DParagraph) {
-            getBorderBottom() >> 0f
-        }
-
-        BoundedTextBlock textBlock = Mock(BoundedTextBlock) {
-            getHeight() >> TEXT_BLOCK_HEIGHT
-            getLastLineDescent() >> DESCENT_ORIGINAL
-        }
-
-        descentMultiplier.apply(DESCENT_ORIGINAL) >> DESCENT_MODIFIED
-
-        expect:
-        paragraphContentsDimensionsCalculator.calculateHeightFor(paragraph, textBlock) == TEXT_BLOCK_HEIGHT
-    }
 }

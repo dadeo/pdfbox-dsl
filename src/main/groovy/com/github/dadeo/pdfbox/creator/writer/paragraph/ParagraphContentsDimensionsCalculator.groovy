@@ -15,6 +15,6 @@ class ParagraphContentsDimensionsCalculator {
     }
 
     float calculateHeightFor(DParagraph dParagraph, BoundedTextBlock textBlock) {
-        dParagraph.borderBottom ? textBlock.height - descentMultiplier.apply(textBlock.lastLineDescent) : textBlock.height
+        textBlock.height - descentMultiplier.apply(textBlock.lastLineDescent, dParagraph.paragraphBottomDescentMultiplier)
     }
 }

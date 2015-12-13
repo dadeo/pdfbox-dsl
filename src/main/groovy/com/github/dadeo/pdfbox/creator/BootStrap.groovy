@@ -1,7 +1,6 @@
 package com.github.dadeo.pdfbox.creator
 
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
-import com.github.dadeo.pdfbox.creator.writer.hr.BottomBorderHorizontalAdjustmentRule
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleContentsDrawer
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleElementDetailsFactory
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleWritableFactory
@@ -11,7 +10,6 @@ import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactoryFactory
 import com.github.dadeo.pdfbox.creator.writer.page.*
 import com.github.dadeo.pdfbox.creator.writer.paragraph.*
-import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
 import com.github.dadeo.pdfbox.creator.writer.positioning.DescentMultiplier
 import com.github.dadeo.pdfbox.creator.writer.table.TableColumnWidthCalculator
 import com.github.dadeo.pdfbox.creator.writer.table.TableWritableFactory
@@ -19,8 +17,6 @@ import com.github.dadeo.pdfbox.creator.writer.text.StringTokenizer
 import com.github.dadeo.pdfbox.creator.writer.text.StringWidthCalculator
 import com.github.dadeo.pdfbox.creator.writer.text.TokensToLineAssigner
 import com.github.dadeo.pdfbox.creator.writer.util.VerticalAlignmentCalculator
-import com.github.dadeo.pdfbox.model.Bordered
-import com.github.dadeo.pdfbox.model.DHorizontalRule
 import com.github.dadeo.pdfbox.model.LineBorder
 
 class BootStrap {
@@ -38,11 +34,6 @@ class BootStrap {
     static final TableWritableFactory tableWritableFactory
     static final ParagraphElementDetailsFactory paragraphElementDetailsFactory
     static final BoundedTextBlockWriter boundedTextBlockWriter
-    static final TopLeftRightBorderParagraphAdjustmentRule topLeftRightBorderParagraphAdjustmentRule
-    static final CurrentLocationAdjuster<Bordered> paragraphCurrentLocationAdjuster
-    static final CurrentLocationAdjuster<Bordered> tableCurrentLocationAdjuster
-    static final BottomBorderHorizontalAdjustmentRule borderHorizontalAdjustmentRule
-    static final CurrentLocationAdjuster<DHorizontalRule> horizontalRuleCurrentLocationAdjuster
     static final BoundedTextBlockLineWriter leftJustifiedTextBlockLineWriter
     static final BoundedTextBlockLineWriter rightJustifiedTextBlockLineWriter
     static final BoundedTextBlockLineWriter centerJustifiedTextBlockLineWriter
@@ -72,21 +63,6 @@ class BootStrap {
         verticalAlignmentCalculator = new VerticalAlignmentCalculator()
         writerFactoryFactory = new ObjectWritableFactoryFactory()
         paragraphElementDetailsFactory = new ParagraphElementDetailsFactory()
-        topLeftRightBorderParagraphAdjustmentRule = new TopLeftRightBorderParagraphAdjustmentRule(descentMultiplier: descentMultiplier)
-        borderHorizontalAdjustmentRule = new BottomBorderHorizontalAdjustmentRule(descentMultiplier: descentMultiplier)
-        paragraphCurrentLocationAdjuster = new CurrentLocationAdjuster(
-            adjustmentRules: [
-                topLeftRightBorderParagraphAdjustmentRule,
-            ])
-        tableCurrentLocationAdjuster = new CurrentLocationAdjuster(
-            adjustmentRules: [
-                topLeftRightBorderParagraphAdjustmentRule,
-            ])
-        horizontalRuleCurrentLocationAdjuster = new CurrentLocationAdjuster(
-            adjustmentRules: [
-                borderHorizontalAdjustmentRule
-            ])
-
         horizontalRuleContentsDrawer = new HorizontalRuleContentsDrawer()
 
         leftJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new LeftJustifiedTextBlockCurrentLocationPositioner())
@@ -112,7 +88,6 @@ class BootStrap {
         paragraphWritableFactory = new ParagraphWritableFactory(contentsDimensionsCalculator: paragraphContentsDimensionsCalculator,
                                                                 paragraphContextFactory: paragraphContextFactory,
                                                                 boundedTextBlockFactory: boundedTextBlockFactory,
-                                                                currentLocationAdjuster: paragraphCurrentLocationAdjuster,
                                                                 objectBoundsCalculator: objectBoundsCalculator,
                                                                 elementDetailsFactory: paragraphElementDetailsFactory)
 
@@ -127,7 +102,6 @@ class BootStrap {
 
         horizontalRuleElementDetailsFactory = new HorizontalRuleElementDetailsFactory()
         horizontalRuleWritableFactory = new HorizontalRuleWritableFactory(contextFactory: objectContextFactory,
-                                                                          currentLocationAdjuster: horizontalRuleCurrentLocationAdjuster,
                                                                           objectBoundsCalculator: objectBoundsCalculator,
                                                                           elementDetailsFactory: horizontalRuleElementDetailsFactory)
 
@@ -137,7 +111,6 @@ class BootStrap {
                                                         objectBoundsCalculator: objectBoundsCalculator,
                                                         columnWidthCalculator: tableColumnWidthCalculator,
                                                         writerFactoryFactory: writerFactoryFactory,
-                                                        currentLocationAdjuster: tableCurrentLocationAdjuster,
                                                         verticalAlignmentCalculator: verticalAlignmentCalculator,
                                                         descentMultiplier: descentMultiplier)
 

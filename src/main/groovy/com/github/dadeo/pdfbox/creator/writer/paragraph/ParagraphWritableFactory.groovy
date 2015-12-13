@@ -5,15 +5,12 @@ import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
-import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
-import com.github.dadeo.pdfbox.model.Bordered
 import com.github.dadeo.pdfbox.model.DParagraph
 
 class ParagraphWritableFactory implements ObjectWritableFactory<DParagraph> {
     ParagraphContentsDimensionsCalculator contentsDimensionsCalculator
     ParagraphContextFactory paragraphContextFactory
     BoundedTextBlockFactory boundedTextBlockFactory
-    CurrentLocationAdjuster<Bordered> currentLocationAdjuster
     ObjectBoundsCalculator objectBoundsCalculator
     ParagraphElementDetailsFactory elementDetailsFactory
 
@@ -23,7 +20,6 @@ class ParagraphWritableFactory implements ObjectWritableFactory<DParagraph> {
         float width = contentsDimensionsCalculator.calculateWidthFor(dParagraph, pageContext.contentsBounds)
         DContext paragraphContext = paragraphContextFactory.createContextFrom(pageContext, dParagraph)
         BoundedTextBlock textBlock = boundedTextBlockFactory.createFrom(paragraphContext, dParagraph, width)
-        currentLocationAdjuster.adjustFor(paragraphContext, dParagraph, previousElementDetails)
         float height = contentsDimensionsCalculator.calculateHeightFor(dParagraph, textBlock)
         objectBoundsCalculator.resizeBoundsToHeight(height, paragraphContext)
         ElementDetails currentElementDetails = elementDetailsFactory.createFor(paragraphContext, dParagraph, textBlock)

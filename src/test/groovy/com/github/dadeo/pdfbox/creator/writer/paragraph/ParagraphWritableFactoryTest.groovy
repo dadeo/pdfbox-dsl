@@ -3,7 +3,6 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
-import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
 import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DParagraph
 import spock.lang.Specification
@@ -16,13 +15,11 @@ class ParagraphWritableFactoryTest extends Specification {
     private ParagraphContentsDimensionsCalculator contentsSizeCalculator = Mock(ParagraphContentsDimensionsCalculator)
     private ParagraphContextFactory paragraphContextFactory = Mock(ParagraphContextFactory)
     private BoundedTextBlockFactory boundedTextBlockFactory = Mock(BoundedTextBlockFactory)
-    private CurrentLocationAdjuster currentLocationAdjuster = Mock(CurrentLocationAdjuster)
     private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
     private ParagraphElementDetailsFactory elementDetailsFactory = Mock(ParagraphElementDetailsFactory)
     private ParagraphWritableFactory paragraphWritableFactory = new ParagraphWritableFactory(contentsDimensionsCalculator: contentsSizeCalculator,
                                                                                              paragraphContextFactory: paragraphContextFactory,
                                                                                              boundedTextBlockFactory: boundedTextBlockFactory,
-                                                                                             currentLocationAdjuster: currentLocationAdjuster,
                                                                                              objectBoundsCalculator: objectBoundsCalculator,
                                                                                              elementDetailsFactory: elementDetailsFactory)
     private DContext pageContext = new DContext()
@@ -49,7 +46,6 @@ class ParagraphWritableFactoryTest extends Specification {
         1 * contentsSizeCalculator.calculateWidthFor(paragraph, PAGE_CONTENT_BOUNDS) >> CONTENT_WIDTH
         1 * paragraphContextFactory.createContextFrom(pageContext, paragraph) >> paragraphContext
         1 * boundedTextBlockFactory.createFrom(paragraphContext, paragraph, CONTENT_WIDTH) >> textBlock
-        1 * currentLocationAdjuster.adjustFor(paragraphContext, paragraph, previousElementDetails)
         1 * contentsSizeCalculator.calculateHeightFor(paragraph, textBlock) >> TEXT_BLOCK_HEIGHT
         1 * objectBoundsCalculator.resizeBoundsToHeight(TEXT_BLOCK_HEIGHT, paragraphContext)
         1 * elementDetailsFactory.createFor(paragraphContext, paragraph, textBlock) >> elementDetails

@@ -186,6 +186,14 @@ class VisualPlaygroundTest {
         use(PdfMeasurements) {
             DDocument document = new DocumentBuilder().document {
                 page margin: 1.inch, {
+                    paragraph text: LOREM_IPSUM
+                    paragraph text: LOREM_IPSUM
+                    paragraph text: LOREM_IPSUM
+                    paragraph text: LOREM_IPSUM, border: 1
+                    paragraph text: LOREM_IPSUM, border: 1
+                    paragraph text: LOREM_IPSUM, border: 1
+                }
+                page margin: 1.inch, {
                     table(columnRatios: [1, 1]) {
                         cell('2 adjacent tables, both with borders')
                         cell {
@@ -368,6 +376,7 @@ class VisualPlaygroundTest {
         Cell emptyCell = new Cell()
 
         Cell containerCell = new Cell(personTable)
+        containerCell.verticalAlignment = VerticalAlignment.MIDDLE
 
         Cell loremCell = new Cell(new DParagraph(LOREM_IPSUM))
 
