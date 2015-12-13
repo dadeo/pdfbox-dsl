@@ -7,6 +7,7 @@ import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleContentsDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
 import com.github.dadeo.pdfbox.dsl.DocumentBuilder
+import com.github.dadeo.pdfbox.dsl.PdfMeasurements
 import com.github.dadeo.pdfbox.model.*
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage
@@ -182,22 +183,50 @@ class VisualPlaygroundTest {
 
     @Test
     void test_dsl_document() {
-        DDocument document = new DocumentBuilder().document {
-            page {
-                table(columnRatios: [3, 2, 1.5]) {
-                    cell('a')
-                    cell('b')
-                    cell('c')
-                }
-                table(columnRatios: [3, 2]) {
-                    cell('d')
-                    cell('e')
+        use(PdfMeasurements) {
+            DDocument document = new DocumentBuilder().document {
+                page margin: 1.inch, {
+                    table(columnRatios: [1, 1]) {
+                        cell('2 adjacent tables, both with borders')
+                        cell {
+                            2.times { index ->
+                                int tableNumber = index + 1
+                                table columnRatios: [1], border: 3, borderColor: Color.red, {
+                                    cell border: 2, borderColor: Color.blue, {
+                                        paragraph "this is table $tableNumber, cell 1, paragraph 1", border: 1
+                                        paragraph "this is table $tableNumber, cell 1, paragraph 2", border: 1
+                                    }
+                                    cell border: 2, borderColor: Color.blue, {
+                                        paragraph "this is table $tableNumber, cell 2, paragraph 1", border: 1
+                                        paragraph "this is table $tableNumber, cell 2, paragraph 2", border: 1
+                                    }
+                                }
+                            }
+                        }
+                        cell '2 adjacent tables, both without borders', marginTop: 1.cm
+                        cell marginTop: 1.cm, {
+                            2.times { index ->
+                                int tableNumber = index + 1
+                                table columnRatios: [1], {
+                                    cell {
+                                        paragraph "this 1s table $tableNumber,\ncell 1 ggggg,\nparagraph 1"
+                                        paragraph "this 1s table $tableNumber,\ncell 1 ggggg,\nparagraph 2"
+                                    }
+                                    cell {
+                                        paragraph "this 1s table $tableNumber,\ncell 2 ggggg,\nparagraph 1"
+                                        paragraph "this 1s table $tableNumber,\ncell 2 ggggg,\nparagraph 2", border: 1
+                                    }
+                                }
+                            }
+                        }
+                    }
 
+                    paragraph LOREM_IPSUM, border: 1
                 }
             }
-        }
 
-        new File('target/DslDocumentPdf.pdf').bytes = new PdfCreator().createFor(document)
+            new File('target/DslDocumentPdf.pdf').bytes = new PdfCreator().createFor(document)
+        }
     }
 
     @Test
