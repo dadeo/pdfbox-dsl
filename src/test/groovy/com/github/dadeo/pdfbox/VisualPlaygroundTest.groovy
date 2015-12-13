@@ -6,6 +6,7 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleContentsDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
+import com.github.dadeo.pdfbox.dsl.DocumentBuilder
 import com.github.dadeo.pdfbox.model.*
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage
@@ -180,6 +181,26 @@ class VisualPlaygroundTest {
     }
 
     @Test
+    void test_dsl_document() {
+        DDocument document = new DocumentBuilder().document {
+            page {
+                table(columnRatios: [3, 2, 1.5]) {
+                    cell('a')
+                    cell('b')
+                    cell('c')
+                }
+                table(columnRatios: [3, 2]) {
+                    cell('d')
+                    cell('e')
+
+                }
+            }
+        }
+
+        new File('target/DslDocumentPdf.pdf').bytes = new PdfCreator().createFor(document)
+    }
+
+    @Test
     void test_build_DDocument() {
 
         Closure timer = { String description, Closure timed ->
@@ -268,6 +289,7 @@ class VisualPlaygroundTest {
 //                page.addContent(new DHorizontalRule(thickness: 1, color: Color.BLACK, marginTop: 0, marginBottom: 0, marginLeft: 124, marginRight: 124))
 //                page.addContent(new DHorizontalRule(thickness: 10, color: Color.BLUE, marginTop: 0, marginBottom: 0, marginLeft: 144, marginRight: 144))
 //                page.addContent(new DHorizontalRule(thickness: 1, color: Color.BLACK, marginTop: 0, marginBottom: 10, marginLeft: 144, marginRight: 144))
+                page.addContent(paragraph3)
                 page.addContent(paragraph3)
                 page.addContent(table)
                 page.addContent(paragraph3)

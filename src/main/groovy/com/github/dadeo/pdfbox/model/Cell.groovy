@@ -1,6 +1,9 @@
 package com.github.dadeo.pdfbox.model
 
+import groovy.transform.Canonical
 
+
+@Canonical
 class Cell implements DObject, Margined, Bordered, Padded {
     List<DObject> contents = []
     VerticalAlignment verticalAlignment

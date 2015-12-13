@@ -1,7 +1,9 @@
 package com.github.dadeo.pdfbox.model
 
+import groovy.transform.Canonical
 import org.apache.pdfbox.pdmodel.font.PDFont
 
+@Canonical
 class DParagraph implements DObject, Margined, Bordered, Padded {
     List<DPart> contents = []
     DFont font

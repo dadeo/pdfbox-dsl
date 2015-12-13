@@ -1,5 +1,8 @@
 package com.github.dadeo.pdfbox.model
 
+import groovy.transform.Canonical
+
+@Canonical
 class DPage implements Margined, Bordered, Padded {
     static final float ONE_INCH = 72f
 

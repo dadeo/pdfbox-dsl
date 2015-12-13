@@ -6,6 +6,9 @@ class Table implements DObject, Margined, Bordered, Padded {
     List<Cell> contents = []
     VerticalAlignment verticalAlignment
 
+    Table() {
+    }
+
     Table(List<Float> columnRatios) {
         this.columnRatios = columnRatios
     }

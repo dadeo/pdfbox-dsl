@@ -10,4 +10,8 @@ class DDocument {
         pages << page
         this
     }
+
+    DDocument leftShift(DPage page) {
+        addPage page
+    }
 }
