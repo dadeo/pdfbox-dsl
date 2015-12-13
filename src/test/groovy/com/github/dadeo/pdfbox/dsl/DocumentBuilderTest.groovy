@@ -77,6 +77,46 @@ class DocumentBuilderTest extends Specification {
         paragraph == new DParagraph(justification: Justification.CENTER, font: FONT_1, contents: [new DPart("yo dog")])
     }
 
+    def "creates paragraph text specified with text, justification, and font attributes"() {
+        when:
+        DParagraph paragraph = builder.paragraph(text: "yo dog", justification: Justification.CENTER, font: FONT_1)
+
+        then:
+        paragraph == new DParagraph(justification: Justification.CENTER, font: FONT_1, contents: [new DPart("yo dog")])
+    }
+
+    def "creates paragraph where text attribute is an Object"() {
+        given:
+        Object textObject = new Object() {
+            @Override
+            String toString() {
+                "yo dog"
+            }
+        }
+
+        when:
+        DParagraph paragraph = builder.paragraph(text: textObject, justification: Justification.CENTER, font: FONT_1)
+
+        then:
+        paragraph == new DParagraph(justification: Justification.CENTER, font: FONT_1, contents: [new DPart("yo dog")])
+    }
+
+    def "creates paragraph where text parameter is an Object"() {
+        given:
+        Object textObject = new Object() {
+            @Override
+            String toString() {
+                "yo dog"
+            }
+        }
+
+        when:
+        DParagraph paragraph = builder.paragraph(textObject, justification: Justification.CENTER, font: FONT_1)
+
+        then:
+        paragraph == new DParagraph(justification: Justification.CENTER, font: FONT_1, contents: [new DPart("yo dog")])
+    }
+
     def "creates paragraph with multiple parts"() {
         when:
         DParagraph paragraph = builder.paragraph {
@@ -96,7 +136,7 @@ class DocumentBuilderTest extends Specification {
         part == new DPart()
     }
 
-    def "creates part with text"() {
+    def "creates part with text parameter (String)"() {
         when:
         DPart part = builder.part("yo dog")
 
@@ -104,9 +144,41 @@ class DocumentBuilderTest extends Specification {
         part == new DPart(text: "yo dog")
     }
 
-    def "creates part with text specified with text attribute"() {
+    def "creates part with text parameter (Object)"() {
+        given:
+        Object textObject = new Object() {
+            @Override
+            String toString() {
+                "yo dog"
+            }
+        }
+
+        when:
+        DPart part = builder.part(textObject)
+
+        then:
+        part == new DPart(text: "yo dog")
+    }
+
+    def "creates part with text specified with text attribute (String)"() {
         when:
         DPart part = builder.part(text: "yo dog")
+
+        then:
+        part == new DPart(text: "yo dog")
+    }
+
+    def "creates part with text specified with text attribute (Object)"() {
+        given:
+        Object textObject = new Object() {
+            @Override
+            String toString() {
+                "yo dog"
+            }
+        }
+
+        when:
+        DPart part = builder.part(text: textObject)
 
         then:
         part == new DPart(text: "yo dog")
@@ -187,7 +259,7 @@ class DocumentBuilderTest extends Specification {
         cell.contents == [new DParagraph(), new DHorizontalRule(), new DParagraph()]
     }
 
-    def "creates cell with paragraph when text passed in"() {
+    def "creates cell with paragraph with text parameter (String)"() {
         when:
         Cell cell = builder.cell("yo dog", verticalAlignment: VerticalAlignment.MIDDLE)
 
@@ -196,9 +268,43 @@ class DocumentBuilderTest extends Specification {
         cell.contents == [new DParagraph("yo dog")]
     }
 
-    def "creates cell with paragraph when text passed in with text attribute"() {
+    def "creates cell with paragraph with text parameter (Object)"() {
+        given:
+        Object textObject = new Object() {
+            @Override
+            String toString() {
+                "yo dog"
+            }
+        }
+
+        when:
+        Cell cell = builder.cell(textObject, verticalAlignment: VerticalAlignment.MIDDLE)
+
+        then:
+        cell.verticalAlignment == VerticalAlignment.MIDDLE
+        cell.contents == [new DParagraph("yo dog")]
+    }
+
+    def "creates cell with paragraph when text (String) passed in with text attribute"() {
         when:
         Cell cell = builder.cell(text: "yo dog", verticalAlignment: VerticalAlignment.MIDDLE)
+
+        then:
+        cell.verticalAlignment == VerticalAlignment.MIDDLE
+        cell.contents == [new DParagraph("yo dog")]
+    }
+
+    def "creates cell with paragraph when text (Object) passed in with text attribute"() {
+        given:
+        Object textObject = new Object() {
+            @Override
+            String toString() {
+                "yo dog"
+            }
+        }
+
+        when:
+        Cell cell = builder.cell(text: textObject, verticalAlignment: VerticalAlignment.MIDDLE)
 
         then:
         cell.verticalAlignment == VerticalAlignment.MIDDLE

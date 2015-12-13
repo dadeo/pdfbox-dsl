@@ -60,13 +60,13 @@ class DocumentBuilder extends FactoryBuilderSupport {
 
     static class CellBuilderFactory extends AbstractFactory {
 
-        Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object o, Object o1, Map map) throws InstantiationException, IllegalAccessException {
+        Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object o, Object text, Map map) throws InstantiationException, IllegalAccessException {
             Cell cell = new Cell()
-            if (o1 instanceof String) {
-                cell << new DParagraph(o1)
+            if (text) {
+                cell << new DParagraph(text.toString())
             }
             if (map.containsKey('text')) {
-                cell << new DParagraph(map.text)
+                cell << new DParagraph(map.text.toString())
                 map.remove('text')
             }
             cell
@@ -80,7 +80,15 @@ class DocumentBuilder extends FactoryBuilderSupport {
     static class ParagraphBuilderFactory extends AbstractFactory {
 
         Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object objectType, Object text, Map map) throws InstantiationException, IllegalAccessException {
-            text ? new DParagraph(text) : new DParagraph()
+            DParagraph paragraph = new DParagraph()
+            if (text) {
+                paragraph << new DPart(text.toString())
+            }
+            if (map.containsKey('text')) {
+                paragraph << new DPart(map.text.toString())
+                map.remove('text')
+            }
+            paragraph
         }
 
         void setParent(FactoryBuilderSupport builder, Object parent, Object child) {
