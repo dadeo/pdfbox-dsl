@@ -11,14 +11,14 @@ class StringTokenizer {
         List<StringToken> result = []
         int startPos = 0
         for (int i = 0; i < text.length(); ++i) {
-            if (text.charAt(i) == ' ' as char) {
+            char ch = text.charAt(i)
+            if (ch == ' ' as char || ch == '\n' as char) {
                 if (startPos == i) {
-                    String fragment = ' '
-                    result << new StringToken(fragment, calculator.calculateFor(fragment, font), font)
+                    result << createTokenFor(ch as String, font)
                 } else {
                     String fragment = text.substring(startPos, i)
-                    result << new StringToken(fragment, calculator.calculateFor(fragment, font), font)
-                    result << new StringToken(' ', calculator.calculateFor(' ', font), font)
+                    result << createTokenFor(fragment, font)
+                    result << createTokenFor(ch as String, font)
                 }
                 startPos = i + 1
             }
@@ -26,9 +26,14 @@ class StringTokenizer {
 
         if (startPos != text.length()) {
             String fragment = text.substring(startPos)
-            result << new StringToken(fragment, calculator.calculateFor(fragment, font), font)
+            result << createTokenFor(fragment, font)
         }
 
         result
+    }
+
+    private StringToken createTokenFor(String text, DFont font) {
+        float width = text == '\n' ? 0 : calculator.calculateFor(text, font)
+        new StringToken(text, width, font)
     }
 }

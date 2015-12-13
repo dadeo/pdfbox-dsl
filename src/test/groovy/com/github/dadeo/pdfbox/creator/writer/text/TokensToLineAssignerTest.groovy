@@ -89,6 +89,61 @@ class TokensToLineAssignerTest {
     }
 
     @Test
+    void test_assignToLine_newline_character_forces_following_tokens_to_a_new_line() {
+        StringToken newLine = new StringToken(text: '\n', size: 1000)
+        StringToken token1 = new StringToken(size: 10)
+        StringToken token2 = new StringToken(size: 10)
+        StringToken token3 = new StringToken(size: 10)
+        StringToken token4 = new StringToken(size: 10)
+        StringToken token5 = new StringToken(size: 10)
+        List<AssignedLine> actualAssignments = assigner.assignToLine([
+                                                                         token1,
+                                                                         newLine,
+                                                                         token2,
+                                                                         token3,
+                                                                         token4,
+                                                                         token5,
+                                                                     ],
+                                                                     29,
+                                                                     false)
+
+        assert actualAssignments == [
+            new AssignedLine([token1]),
+            new AssignedLine([token2, token3]),
+            new AssignedLine([token4, token5]),
+        ]
+    }
+
+    @Test
+    void test_assignToLine_spaces_before_newline_are_discarded() {
+        StringToken space = new StringToken(size: 5, text: ' ')
+        StringToken newLine = new StringToken(text: '\n', size: 1000)
+        StringToken token1 = new StringToken(size: 10)
+        StringToken token2 = new StringToken(size: 10)
+        StringToken token3 = new StringToken(size: 10)
+        StringToken token4 = new StringToken(size: 10)
+        StringToken token5 = new StringToken(size: 10)
+        List<AssignedLine> actualAssignments = assigner.assignToLine([
+                                                                         token1,
+                                                                         space,
+                                                                         space,
+                                                                         newLine,
+                                                                         token2,
+                                                                         token3,
+                                                                         token4,
+                                                                         token5
+                                                                     ],
+                                                                     29,
+                                                                     false)
+
+        assert actualAssignments == [
+            new AssignedLine([token1]),
+            new AssignedLine([token2, token3]),
+            new AssignedLine([token4, token5]),
+        ]
+    }
+
+    @Test
     void test_assignToLine_word_doesnt_fit_first_line() {
         StringToken token1 = new StringToken(size: 30)
 

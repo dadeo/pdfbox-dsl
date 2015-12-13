@@ -22,6 +22,9 @@ class TokensToLineAssigner {
 
                 if (token.text == ' ') {
                     spacesBuffer << token
+                } else if (token.text == '\n') {
+                    spacesBuffer.clear()
+                    lineComplete()
                 } else if (currentLineLength < width) {
                     if (spacesBuffer) {
                         currentLine.tokens.addAll spacesBuffer
