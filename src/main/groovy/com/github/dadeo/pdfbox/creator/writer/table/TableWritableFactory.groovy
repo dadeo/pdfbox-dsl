@@ -3,6 +3,7 @@ package com.github.dadeo.pdfbox.creator.writer.table
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.*
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
+import com.github.dadeo.pdfbox.creator.writer.paragraph.ParagraphWritable
 import com.github.dadeo.pdfbox.creator.writer.positioning.CurrentLocationAdjuster
 import com.github.dadeo.pdfbox.creator.writer.positioning.DescentMultiplier
 import com.github.dadeo.pdfbox.creator.writer.util.VerticalAlignmentCalculator
@@ -92,19 +93,29 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
             ObjectWritableFactory<? extends DObject> writerFactory = writerFactoryFactory.createWriter(object)
             ObjectWritable cellChildWritable = writerFactory.createFor(cellWorkContext, object, elementDetails)
             elementDetails = cellChildWritable.elementDetails
-            cellWorkContext.contentsBounds = cellWorkContext.contentsBounds.offset((float) (elementDetails.containingBounds.bottom - cellWorkContext.contentsBounds.top + 1), 0, 0, 0)
+            objectBoundsCalculator.shrinkBoundsVertically(cellChildWritable.context.containingBounds.height, cellWorkContext)
             cellChildWritable
         }
 
-        float maxHeight = cellWritableContents ? cellContext.contentsBounds.top - cellWritableContents.elementDetails[-1].containingBounds.bottom + 1 : 0
-        float lastLineDescent = 0
+        float maxHeight = cellWritableContents ? cellWritableContents.context.containingBounds.height.sum() : 0
+        float heightAdjustment = calculateCellHeightAdjustmentFor(cellWritableContents)
         // adjust if cell has border and tallest cell's last writable is for a borderless paragraph
-        float height = (cell.borderBottom ? maxHeight - descentMultiplier.apply(lastLineDescent) : maxHeight)
+        float height = (cell.borderBottom ? maxHeight - heightAdjustment : maxHeight)
 
         objectBoundsCalculator.resizeBoundsToHeight(height, cellContext)
 
         new CellWritable(cell: cell, context: cellContext, contents: cellWritableContents, elementDetails: new CellElementDetails(containingBounds: cellContext.containingBounds))
     }
 
+    float calculateCellHeightAdjustmentFor(List<ObjectWritable> cellWritableContents) {
+        if(!cellWritableContents) return 0
+        ObjectWritable objectWritable = cellWritableContents[-1]
+        switch(objectWritable) {
+            case ParagraphWritable:
+//                return descentMultiplier.apply(objectWritable.elementDetails.lastLineDescent)
+            default:
+                return 0
+        }
+    }
 
 }
