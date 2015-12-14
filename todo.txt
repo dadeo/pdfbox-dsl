@@ -1,7 +1,6 @@
 - headers (with page number resolution?)
 - footers (with page number resolution?)
 - add list support
-- add inline-canvas
 - add positional-canvas
 - columns? does borderless table work for this?
 - underline text
@@ -12,3 +11,4 @@ completed:
 - allow table to have empty cell
 - background colors
 - line leading
+- add inline-canvas

@@ -326,6 +326,23 @@ class VisualPlaygroundTest {
                 table << cell3
                 table << cell3
 
+                InlineCanvas xCanvas = new InlineCanvas() {
+                    {
+                        border = 3
+                        borderColor = Color.darkGray
+                        backgroundColor = Color.orange
+                    }
+
+                    float getHeight() {
+                        20
+                    }
+
+                    void draw(DBounds bounds, DWriter writer) {
+                        writer.drawLine(bounds.leftTop(), bounds.rightBottom())
+                        writer.drawLine(bounds.leftBottom(), bounds.rightTop())
+                    }
+                }
+
                 DPage page = new DPage()
                 page.border = 5
                 page.borderLeftColor = Color.darkGray
@@ -342,6 +359,7 @@ class VisualPlaygroundTest {
 //                page.addContent(new DHorizontalRule(thickness: 10, color: Color.BLUE, marginTop: 0, marginBottom: 0, marginLeft: 144, marginRight: 144))
 //                page.addContent(new DHorizontalRule(thickness: 1, color: Color.BLACK, marginTop: 0, marginBottom: 10, marginLeft: 144, marginRight: 144))
                 page.addContent(paragraph3)
+                page.addContent(xCanvas)
                 page.addContent(paragraph3)
                 page.addContent(table)
                 page.addContent(paragraph3)

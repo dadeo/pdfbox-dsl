@@ -12,18 +12,21 @@
  */
 package com.github.dadeo.pdfbox.creator.writer.object
 
+import com.github.dadeo.pdfbox.creator.writer.canvas.InlineCanvasWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.paragraph.ParagraphWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.table.TableWritableFactory
 import com.github.dadeo.pdfbox.model.DHorizontalRule
 import com.github.dadeo.pdfbox.model.DObject
 import com.github.dadeo.pdfbox.model.DParagraph
+import com.github.dadeo.pdfbox.model.InlineCanvas
 import com.github.dadeo.pdfbox.model.Table
 
 class ObjectWritableFactoryFactory {
     ParagraphWritableFactory paragraphWritableFactory
     HorizontalRuleWritableFactory horizontalRuleWritableFactory
     TableWritableFactory tableWritableFactory
+    InlineCanvasWritableFactory inlineCanvasWritableFactory
 
     ObjectWritableFactory<? extends DObject> createWriter(DObject dObject) {
         switch (dObject) {
@@ -35,6 +38,9 @@ class ObjectWritableFactoryFactory {
                 break
             case Table:
                 tableWritableFactory
+                break
+            case InlineCanvas:
+                inlineCanvasWritableFactory
                 break
             default:
                 throw new RuntimeException("ObjectWritable for ${dObject.class} is not supported.")
