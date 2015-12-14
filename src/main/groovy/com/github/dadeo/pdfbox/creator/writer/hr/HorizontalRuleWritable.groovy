@@ -17,7 +17,6 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
-import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.DHorizontalRule
 
 class HorizontalRuleWritable implements ObjectWritable {
@@ -26,12 +25,10 @@ class HorizontalRuleWritable implements ObjectWritable {
     private BorderDrawer borderDrawer = BootStrap.borderDrawer
     private DHorizontalRule horizontalRule
     private DContext context
-    private ElementDetails elementDetails
 
-    HorizontalRuleWritable(DHorizontalRule horizontalRule, DContext context, ElementDetails elementDetails) {
+    HorizontalRuleWritable(DHorizontalRule horizontalRule, DContext context) {
         this.horizontalRule = horizontalRule
         this.context = context
-        this.elementDetails = elementDetails
     }
 
     @Override
@@ -39,11 +36,6 @@ class HorizontalRuleWritable implements ObjectWritable {
         backgroundPainter.paintFor(context)
         contentsDrawer.drawFor(horizontalRule, context)
         borderDrawer.drawFor(horizontalRule, context)
-    }
-
-    @Override
-    ElementDetails getElementDetails() {
-        elementDetails
     }
 
     @Override

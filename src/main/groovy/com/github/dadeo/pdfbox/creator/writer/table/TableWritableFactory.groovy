@@ -14,7 +14,6 @@ package com.github.dadeo.pdfbox.creator.writer.table
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.*
-import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.creator.writer.positioning.DescentMultiplier
 import com.github.dadeo.pdfbox.creator.writer.util.VerticalAlignmentCalculator
 import com.github.dadeo.pdfbox.model.Cell
@@ -30,7 +29,7 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
     VerticalAlignmentCalculator verticalAlignmentCalculator
 
     @Override
-    ObjectWritable createFor(DContext pageContext, Table table, ElementDetails previousElementDetails) {
+    ObjectWritable createFor(DContext pageContext, Table table) {
         DContext tableContext = objectContextFactory.createContextFrom(pageContext, table)
         tableContext.verticalAlignment = table.verticalAlignment
 
@@ -70,7 +69,7 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
 
         objectBoundsCalculator.resizeBoundsToHeight(height, tableContext)
 
-        new TableWritable(table, rowWritables, tableContext, new TableElementDetails(containingBounds: tableContext.containingBounds))
+        new TableWritable(table, rowWritables, tableContext)
     }
 
     RowWritable createRowWritable(List<CellWritable> cellWritables, DContext rowContext) {
@@ -87,7 +86,7 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
         float rowContainingHeight = cellWritables[0].height
         // they have all been resized so we can look at the first one
         objectBoundsCalculator.resizeBoundsToHeight(rowContainingHeight, rowContext)
-        new RowWritable((List<CellWritable>) cellWritables.clone(), rowContext, new RowElementDetails(containingBounds: rowContext.containingBounds))
+        new RowWritable((List<CellWritable>) cellWritables.clone(), rowContext)
     }
 
     protected CellWritable createCellWritable(DContext columnContext, Cell cell, float cellWidth) {
@@ -95,11 +94,9 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
         cellContext.verticalAlignment = cell.verticalAlignment
         DContext cellWorkContext = cellContext.clone()
 
-        ElementDetails elementDetails = null
         List<ObjectWritable> cellWritableContents = cell.contents.collect { DObject object ->
             ObjectWritableFactory<? extends DObject> writerFactory = writerFactoryFactory.createWriter(object)
-            ObjectWritable cellChildWritable = writerFactory.createFor(cellWorkContext, object, elementDetails)
-            elementDetails = cellChildWritable.elementDetails
+            ObjectWritable cellChildWritable = writerFactory.createFor(cellWorkContext, object)
             objectBoundsCalculator.shrinkBoundsVertically(cellChildWritable.context.containingBounds.height, cellWorkContext)
             cellChildWritable
         }
@@ -108,7 +105,7 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
 
         objectBoundsCalculator.resizeBoundsToHeight(maxHeight, cellContext)
 
-        new CellWritable(cell: cell, context: cellContext, contents: cellWritableContents, elementDetails: new CellElementDetails(containingBounds: cellContext.containingBounds))
+        new CellWritable(cell: cell, context: cellContext, contents: cellWritableContents)
     }
 
 }

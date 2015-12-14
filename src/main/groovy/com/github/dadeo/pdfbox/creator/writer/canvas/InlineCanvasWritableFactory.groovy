@@ -17,17 +17,16 @@ import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactory
-import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.InlineCanvas
 
 class InlineCanvasWritableFactory implements ObjectWritableFactory<InlineCanvas> {
     ObjectContextFactory objectContextFactory
     ObjectBoundsCalculator objectBoundsCalculator
 
-    ObjectWritable createFor(DContext parentContext, InlineCanvas canvas, ElementDetails previousElementDetails) {
+    ObjectWritable createFor(DContext parentContext, InlineCanvas canvas) {
         DContext canvasContext = objectContextFactory.createContextFrom(parentContext, canvas)
         objectBoundsCalculator.resizeBoundsToHeight(canvas.height, canvasContext)
-        new InlineCanvasWritable(canvas, canvasContext, new InlineCanvasElementDetails(containingBounds: canvasContext.containingBounds))
+        new InlineCanvasWritable(canvas, canvasContext)
     }
 
 }

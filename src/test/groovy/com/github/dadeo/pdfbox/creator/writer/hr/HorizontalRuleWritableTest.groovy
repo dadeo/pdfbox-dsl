@@ -15,7 +15,6 @@ package com.github.dadeo.pdfbox.creator.writer.hr
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
-import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.DHorizontalRule
 import spock.lang.Specification
 
@@ -25,11 +24,10 @@ class HorizontalRuleWritableTest extends Specification {
     private BorderDrawer borderDrawer = Mock(BorderDrawer)
     private DContext context = new DContext()
     private DHorizontalRule horizontalRule = new DHorizontalRule()
-    private ElementDetails elementDetails = Mock(ElementDetails)
 
     def "write paragraph orchestration"() {
         given:
-        HorizontalRuleWritable horizontalRuleWritable = new HorizontalRuleWritable(horizontalRule, context, elementDetails)
+        HorizontalRuleWritable horizontalRuleWritable = new HorizontalRuleWritable(horizontalRule, context)
         horizontalRuleWritable.backgroundPainter = backgroundPainter
         horizontalRuleWritable.contentsDrawer = contentsDrawer
         horizontalRuleWritable.borderDrawer = borderDrawer

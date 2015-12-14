@@ -14,7 +14,6 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
-import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DParagraph
 import spock.lang.Specification
@@ -28,17 +27,13 @@ class ParagraphWritableFactoryTest extends Specification {
     private ParagraphContextFactory paragraphContextFactory = Mock(ParagraphContextFactory)
     private BoundedTextBlockFactory boundedTextBlockFactory = Mock(BoundedTextBlockFactory)
     private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
-    private ParagraphElementDetailsFactory elementDetailsFactory = Mock(ParagraphElementDetailsFactory)
     private ParagraphWritableFactory paragraphWritableFactory = new ParagraphWritableFactory(contentsDimensionsCalculator: contentsSizeCalculator,
                                                                                              paragraphContextFactory: paragraphContextFactory,
                                                                                              boundedTextBlockFactory: boundedTextBlockFactory,
-                                                                                             objectBoundsCalculator: objectBoundsCalculator,
-                                                                                             elementDetailsFactory: elementDetailsFactory)
+                                                                                             objectBoundsCalculator: objectBoundsCalculator)
     private DContext pageContext = new DContext()
     private DContext paragraphContext = new DContext()
     private DParagraph paragraph = new DParagraph()
-    private ElementDetails previousElementDetails = Mock(ElementDetails)
-    private ElementDetails elementDetails = Mock(ElementDetails)
     private BoundedTextBlock textBlock = Mock(BoundedTextBlock)
 
     def "write paragraph orchestration"() {
@@ -47,20 +42,18 @@ class ParagraphWritableFactoryTest extends Specification {
         paragraphContext.containingBounds = PARAGRAPH_CONTAINING_BOUNDS
 
         when:
-        ParagraphWritable writable = paragraphWritableFactory.createFor(pageContext, paragraph, previousElementDetails)
+        ParagraphWritable writable = paragraphWritableFactory.createFor(pageContext, paragraph)
 
         then:
         writable.dParagraph.is paragraph
         writable.textBlock.is textBlock
         writable.context.is paragraphContext
-        writable.elementDetails.is elementDetails
 
         1 * contentsSizeCalculator.calculateWidthFor(paragraph, PAGE_CONTENT_BOUNDS) >> CONTENT_WIDTH
         1 * paragraphContextFactory.createContextFrom(pageContext, paragraph) >> paragraphContext
         1 * boundedTextBlockFactory.createFrom(paragraphContext, paragraph, CONTENT_WIDTH) >> textBlock
         1 * contentsSizeCalculator.calculateHeightFor(paragraph, textBlock) >> TEXT_BLOCK_HEIGHT
         1 * objectBoundsCalculator.resizeBoundsToHeight(TEXT_BLOCK_HEIGHT, paragraphContext)
-        1 * elementDetailsFactory.createFor(paragraphContext, paragraph, textBlock) >> elementDetails
         0 * _
     }
 

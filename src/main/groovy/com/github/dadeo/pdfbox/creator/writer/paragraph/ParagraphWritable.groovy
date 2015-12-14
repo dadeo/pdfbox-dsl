@@ -17,7 +17,6 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
-import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.DParagraph
 
 class ParagraphWritable implements ObjectWritable {
@@ -27,13 +26,11 @@ class ParagraphWritable implements ObjectWritable {
     private DParagraph dParagraph
     private BoundedTextBlock textBlock
     private DContext context
-    private ElementDetails elementDetails
 
-    ParagraphWritable(DParagraph paragraph, BoundedTextBlock textBlock, DContext context, ElementDetails elementDetails) {
+    ParagraphWritable(DParagraph paragraph, BoundedTextBlock textBlock, DContext context) {
         this.dParagraph = paragraph
         this.textBlock = textBlock
         this.context = context
-        this.elementDetails = elementDetails
     }
 
     @Override
@@ -41,11 +38,6 @@ class ParagraphWritable implements ObjectWritable {
         backgroundPainter.paintFor(context)
         boundedTextBlockWriter.write(textBlock, context)
         borderDrawer.drawFor(dParagraph, context)
-    }
-
-    @Override
-    ElementDetails getElementDetails() {
-        elementDetails
     }
 
     @Override

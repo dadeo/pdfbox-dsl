@@ -18,8 +18,8 @@ import com.github.dadeo.pdfbox.model.DBounds
 
 class PageContentsCurrentLocationAdjuster {
 
-    void adjust(DContext pageContext, ElementDetails previousElementDetails) {
-        float newTop = previousElementDetails.containingBounds.bottom - 1
+    void adjust(DContext pageContext, DContext childContext) {
+        float newTop = childContext.containingBounds.bottom - 1
         DBounds contentsBounds = pageContext.contentsBounds
         pageContext.contentsBounds = new DBounds(newTop, contentsBounds.right, contentsBounds.bottom, contentsBounds.left)
     }

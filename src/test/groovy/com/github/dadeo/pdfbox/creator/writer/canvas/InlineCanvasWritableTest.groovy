@@ -16,11 +16,9 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
-import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.InlineCanvas
 import spock.lang.Specification
-
 
 class InlineCanvasWritableTest extends Specification {
     private static final DBounds CONTENTS_BOUNDS = new DBounds(1, 2, 3, 4)
@@ -29,10 +27,8 @@ class InlineCanvasWritableTest extends Specification {
     private InlineCanvas canvas = Mock(InlineCanvas)
     private DContext context = new DContext()
     private DWriter writer = Mock(DWriter)
-    private ElementDetails elementDetails = Mock(InlineCanvasElementDetails)
     private InlineCanvasWritable writable = new InlineCanvasWritable(canvas: canvas,
                                                                      context: context,
-                                                                     elementDetails: elementDetails,
                                                                      backgroundPainter: backgroundPainter,
                                                                      borderDrawer: borderDrawer)
 

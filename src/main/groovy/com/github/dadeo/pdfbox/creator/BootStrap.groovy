@@ -15,7 +15,6 @@ package com.github.dadeo.pdfbox.creator
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.canvas.InlineCanvasWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleContentsDrawer
-import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleElementDetailsFactory
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.object.*
 import com.github.dadeo.pdfbox.creator.writer.page.*
@@ -43,14 +42,12 @@ class BootStrap {
     static final ObjectContextFactory objectContextFactory
     static final ObjectWritableFactoryFactory writerFactoryFactory
     static final TableWritableFactory tableWritableFactory
-    static final ParagraphElementDetailsFactory paragraphElementDetailsFactory
     static final BoundedTextBlockWriter boundedTextBlockWriter
     static final BoundedTextBlockLineWriter leftJustifiedTextBlockLineWriter
     static final BoundedTextBlockLineWriter rightJustifiedTextBlockLineWriter
     static final BoundedTextBlockLineWriter centerJustifiedTextBlockLineWriter
     static final TextBlockLineWriterFactory textBlockLineWriterFactory
     static final HorizontalRuleContentsDrawer horizontalRuleContentsDrawer
-    static final HorizontalRuleElementDetailsFactory horizontalRuleElementDetailsFactory
     static final PageContentsCurrentLocationAdjuster pageCurrentLocationAdjuster
     static final PageContextFactory pageContextFactory
     static final PagePdfBoxHelper pagePdfBoxHelper
@@ -75,7 +72,6 @@ class BootStrap {
         stringTokenizer = new StringTokenizer(calculator: stringWidthCalculator)
         verticalAlignmentCalculator = new VerticalAlignmentCalculator()
         writerFactoryFactory = new ObjectWritableFactoryFactory()
-        paragraphElementDetailsFactory = new ParagraphElementDetailsFactory()
         horizontalRuleContentsDrawer = new HorizontalRuleContentsDrawer()
 
         leftJustifiedTextBlockLineWriter = createJustifiedTextBlockWriter(new LeftJustifiedTextBlockCurrentLocationPositioner())
@@ -101,8 +97,7 @@ class BootStrap {
         paragraphWritableFactory = new ParagraphWritableFactory(contentsDimensionsCalculator: paragraphContentsDimensionsCalculator,
                                                                 paragraphContextFactory: paragraphContextFactory,
                                                                 boundedTextBlockFactory: boundedTextBlockFactory,
-                                                                objectBoundsCalculator: objectBoundsCalculator,
-                                                                elementDetailsFactory: paragraphElementDetailsFactory)
+                                                                objectBoundsCalculator: objectBoundsCalculator)
 
         pageBoundsCalculations = new PageBoundsCalculations()
 
@@ -113,10 +108,8 @@ class BootStrap {
         pageContentsWriter = new PageContentsWriter(currentLocationAdjuster: pageCurrentLocationAdjuster,
                                                     writableFactoryFactory: writerFactoryFactory)
 
-        horizontalRuleElementDetailsFactory = new HorizontalRuleElementDetailsFactory()
         horizontalRuleWritableFactory = new HorizontalRuleWritableFactory(contextFactory: objectContextFactory,
-                                                                          objectBoundsCalculator: objectBoundsCalculator,
-                                                                          elementDetailsFactory: horizontalRuleElementDetailsFactory)
+                                                                          objectBoundsCalculator: objectBoundsCalculator)
 
         TableColumnWidthCalculator tableColumnWidthCalculator = new TableColumnWidthCalculator()
 

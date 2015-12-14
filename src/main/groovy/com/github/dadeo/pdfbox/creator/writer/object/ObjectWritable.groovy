@@ -13,13 +13,10 @@
 package com.github.dadeo.pdfbox.creator.writer.object
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 
 trait ObjectWritable {
 
     abstract void write()
-
-    abstract ElementDetails getElementDetails()
 
     abstract DContext getContext()
 

@@ -24,15 +24,15 @@ class PageContentsWriter {
     ObjectWritableFactoryFactory writableFactoryFactory
 
     void writeContents(DPage dPage, DContext pageContext) {
-        dPage.contents.inject((ElementDetails) null) { ElementDetails previousElementDetails, DObject dObject ->
-            if (previousElementDetails)
-                currentLocationAdjuster.adjust(pageContext, previousElementDetails)
+        dPage.contents.inject((ObjectWritable) null) { ObjectWritable objectWritable, DObject dObject ->
+            if (objectWritable)
+                currentLocationAdjuster.adjust(pageContext, objectWritable.context)
 
             ObjectWritableFactory<? extends DObject> writableFactory = writableFactoryFactory.createWriter(dObject)
-            ObjectWritable writable = writableFactory.createFor(pageContext, dObject, previousElementDetails)
+            ObjectWritable writable = writableFactory.createFor(pageContext, dObject)
             writable.write()
 
-            writable.elementDetails
+            writable
         }
     }
 

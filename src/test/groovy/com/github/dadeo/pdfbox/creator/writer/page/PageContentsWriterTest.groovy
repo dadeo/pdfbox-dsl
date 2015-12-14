@@ -46,9 +46,8 @@ class PageContentsWriterTest extends Specification {
         then:
 
         1 * factoryFactory.createWriter(contents1) >> factory1
-        1 * factory1.createFor(sameInstance(pageContext), contents1, null) >> objectWritable1
+        1 * factory1.createFor(sameInstance(pageContext), contents1) >> objectWritable1
         1 * objectWritable1.write()
-        1 * objectWritable1.elementDetails
         0 * _
     }
 
@@ -62,9 +61,9 @@ class PageContentsWriterTest extends Specification {
         ObjectWritableFactory factory1 = Mock(ObjectWritableFactory)
         ObjectWritableFactory factory2 = Mock(ObjectWritableFactory)
         ObjectWritableFactory factory3 = Mock(ObjectWritableFactory)
-        ElementDetails elementDetails1 = Mock(ElementDetails)
-        ElementDetails elementDetails2 = Mock(ElementDetails)
-        ElementDetails elementDetails3 = Mock(ElementDetails)
+        DContext childContext1 = Mock(DContext)
+        DContext childContext2 = Mock(DContext)
+        DContext childContext3 = Mock(DContext)
 
         given:
 
@@ -77,21 +76,20 @@ class PageContentsWriterTest extends Specification {
         then:
 
         1 * factoryFactory.createWriter(sameInstance(contents1)) >> factory1
-        1 * factory1.createFor(sameInstance(pageContext), contents1, null) >> objectWritable1
+        1 * factory1.createFor(sameInstance(pageContext), contents1) >> objectWritable1
         1 * objectWritable1.write()
-        1 * objectWritable1.elementDetails >> elementDetails1
+        1 * objectWritable1.context >> childContext1
 
         1 * factoryFactory.createWriter(sameInstance(contents2)) >> factory2
-        1 * currentLocationAdjuster.adjust(pageContext, elementDetails1)
-        1 * factory2.createFor(sameInstance(pageContext), contents2, elementDetails1) >> objectWritable2
+        1 * currentLocationAdjuster.adjust(pageContext, childContext1)
+        1 * factory2.createFor(sameInstance(pageContext), contents2) >> objectWritable2
         1 * objectWritable2.write()
-        1 * objectWritable2.elementDetails >> elementDetails2
+        1 * objectWritable2.context >> childContext2
 
         1 * factoryFactory.createWriter(sameInstance(contents3)) >> factory3
-        1 * currentLocationAdjuster.adjust(pageContext, elementDetails2)
-        1 * factory3.createFor(sameInstance(pageContext), contents3, elementDetails2) >> objectWritable3
+        1 * currentLocationAdjuster.adjust(pageContext, childContext2)
+        1 * factory3.createFor(sameInstance(pageContext), contents3) >> objectWritable3
         1 * objectWritable3.write()
-        1 * objectWritable3.elementDetails >> elementDetails3
 
         0 * _
     }

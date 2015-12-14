@@ -15,12 +15,10 @@ package com.github.dadeo.pdfbox.creator.writer.canvas
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
-import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.InlineCanvas
 import spock.lang.Specification
 
 class InlineCanvasWritableFactoryTest extends Specification {
-    private static final DBounds CONTAINING_BOUNDS = new DBounds(1, 2, 3, 4)
     private ObjectContextFactory objectContextFactory = Mock(ObjectContextFactory)
     private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
     private InlineCanvasWritableFactory writableFactory = new InlineCanvasWritableFactory(objectContextFactory: objectContextFactory,
@@ -31,18 +29,16 @@ class InlineCanvasWritableFactoryTest extends Specification {
 
     def "createFor"() {
         given:
-        childContext.containingBounds >> CONTAINING_BOUNDS
         canvas.height >> 10
         1 * objectContextFactory.createContextFrom(parentContext, canvas) >> childContext
         1 * objectBoundsCalculator.resizeBoundsToHeight(10, childContext)
 
         when:
-        InlineCanvasWritable writable = writableFactory.createFor(parentContext, canvas, null)
+        InlineCanvasWritable writable = writableFactory.createFor(parentContext, canvas)
 
         then:
         writable.canvas == canvas
         writable.context == childContext
-        writable.elementDetails.containingBounds == CONTAINING_BOUNDS
     }
 
 }

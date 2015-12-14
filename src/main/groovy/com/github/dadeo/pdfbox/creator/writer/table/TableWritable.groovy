@@ -17,9 +17,7 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
-import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.Table
-
 
 class TableWritable implements ObjectWritable {
     BackgroundPainter backgroundPainter = BootStrap.backgroundPainter
@@ -27,13 +25,11 @@ class TableWritable implements ObjectWritable {
     private Table table
     private List<RowWritable> contents
     private DContext context
-    private ElementDetails elementDetails
 
-    TableWritable(Table table, List<RowWritable> contents, DContext context, ElementDetails elementDetails) {
+    TableWritable(Table table, List<RowWritable> contents, DContext context) {
         this.table = table
         this.contents = contents
         this.context = context
-        this.elementDetails = elementDetails
     }
 
     @Override
@@ -41,11 +37,6 @@ class TableWritable implements ObjectWritable {
         backgroundPainter.paintFor(context)
         contents*.write()
         borderDrawer.drawFor(table, context)
-    }
-
-    @Override
-    ElementDetails getElementDetails() {
-        elementDetails
     }
 
     @Override
