@@ -12,7 +12,6 @@
  */
 package com.github.dadeo.pdfbox.model
 
-
 trait Padded {
 
     float paddingTop = 0

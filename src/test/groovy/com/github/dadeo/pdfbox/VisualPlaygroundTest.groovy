@@ -211,7 +211,7 @@ class VisualPlaygroundTest {
                         cell {
                             2.times { index ->
                                 int tableNumber = index + 1
-                                table columnRatios: [1], border: 3, borderColor: Color.red, {
+                                table columnRatios: [1], border: 3, borderColor: Color.red, backgroundColor: new Color(210, 210, 210), {
                                     cell border: 2, borderColor: Color.blue, {
                                         paragraph "this is table $tableNumber, cell 1, paragraph 1", border: 1
                                         paragraph "this is table $tableNumber, cell 1, paragraph 2", border: 1
@@ -234,7 +234,7 @@ class VisualPlaygroundTest {
                                     }
                                     cell {
                                         paragraph "this 1s table $tableNumber,\ncell 2 ggggg,\nparagraph 1"
-                                        paragraph "this 1s table $tableNumber,\ncell 2 ggggg,\nparagraph 2", border: 1
+                                        paragraph "this 1s table $tableNumber,\ncell 2 ggggg,\nparagraph 2", border: 1, backgroundColor: Color.pink
                                     }
                                 }
                             }
@@ -276,6 +276,7 @@ class VisualPlaygroundTest {
 //                paragraph3.borderPainter = new DashedBorder()
                 paragraph3.padding = 4
                 paragraph3.justification = Justification.RIGHT
+                paragraph3.backgroundColor = Color.lightGray
                 DParagraph paragraph4 = new DParagraph(LOREM_IPSUM)
                 paragraph4.font = new DFont(PDType1Font.HELVETICA_BOLD, 18, Color.BLUE)
                 paragraph4.border = 1
@@ -300,6 +301,7 @@ class VisualPlaygroundTest {
                 Cell cell2 = new Cell()
                 cell2.border = 3
                 cell2.borderColor = Color.red
+                cell2.backgroundColor = Color.pink
                 cell2 << paragraph3
 
                 Cell cell3 = new Cell()
@@ -315,6 +317,7 @@ class VisualPlaygroundTest {
                 Table table = new Table([3, 2, 1.5])
                 table.border = 5
                 table.borderColor = Color.orange
+                table.backgroundColor = Color.cyan
                 table.verticalAlignment = VerticalAlignment.MIDDLE
                 table << cell1
                 table << cell2
@@ -330,7 +333,7 @@ class VisualPlaygroundTest {
                 page.padding = ONE_INCH
                 page.addContent(paragraph1)
                 page.addContent(paragraph4)
-                page.addContent(new DHorizontalRule(thickness: 10, color: Color.red, border: 2, borderColor: Color.blue, marginLeft: 124, marginRight: 124))
+                page.addContent(new DHorizontalRule(thickness: 10, color: Color.red, border: 2, borderColor: Color.blue, marginLeft: 124, marginRight: 124, padding: 3, backgroundColor: Color.green))
 //                page.addContent(new DHorizontalRule(thickness: 1, color: Color.BLACK, marginTop: 10, marginBottom: 0, marginLeft: 144, marginRight: 144))
 //                page.addContent(new DHorizontalRule(thickness: 10, color: Color.BLUE, marginTop: 0, marginBottom: 0, marginLeft: 144, marginRight: 144))
 //                page.addContent(new DHorizontalRule(thickness: 1, color: Color.BLACK, marginTop: 0, marginBottom: 0, marginLeft: 124, marginRight: 124))

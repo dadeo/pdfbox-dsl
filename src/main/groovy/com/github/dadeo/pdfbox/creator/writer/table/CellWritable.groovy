@@ -15,12 +15,14 @@ package com.github.dadeo.pdfbox.creator.writer.table
 import com.github.dadeo.pdfbox.creator.BootStrap
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
+import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.page.ElementDetails
 import com.github.dadeo.pdfbox.model.Cell
 
 
 class CellWritable implements ObjectWritable {
+    BackgroundPainter backgroundPainter = BootStrap.backgroundPainter
     BorderDrawer borderDrawer = BootStrap.borderDrawer
     Cell cell
     DContext context
@@ -29,6 +31,8 @@ class CellWritable implements ObjectWritable {
 
     @Override
     void write() {
+        backgroundPainter.paintFor(context)
+
         contents.each {
             it.write()
         }

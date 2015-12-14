@@ -10,12 +10,20 @@
  * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package com.github.dadeo.pdfbox.model
+package com.github.dadeo.pdfbox.creator.writer.object
 
-import java.awt.*
+import com.github.dadeo.pdfbox.creator.writer.DContext
+import com.github.dadeo.pdfbox.model.DBounds
 
-trait DObject {
 
-    Color backgroundColor
+class BackgroundPainter {
+
+    void paintFor(DContext context) {
+        if (context.backgroundColor) {
+            DBounds bounds = context.borderBounds.offset(-0.5f, -0.5f, -0.5f, -0.5f)
+
+            context.writer.fillRectangle(bounds, context.backgroundColor)
+        }
+    }
 
 }

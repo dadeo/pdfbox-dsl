@@ -26,7 +26,7 @@ class DWriter {
 
     void writeText(String text, DPoint location, DFont font) {
         contentStream.beginText()
-        contentStream.nonStrokingColor = font.color
+        contentStream.setNonStrokingColor font.color
         contentStream.setFont(font.font, font.size)
         contentStream.newLineAtOffset(location.x, location.y)
         contentStream.showText(text)
@@ -35,16 +35,17 @@ class DWriter {
 
     void drawLine(DPoint start, DPoint end, float lineWidth = 1, Color color = Color.black) {
         contentStream.lineWidth = lineWidth
-        contentStream.strokingColor = color
+        contentStream.setStrokingColor color
         contentStream.moveTo(start.x, start.y)
         contentStream.lineTo(end.x, end.y)
         contentStream.stroke()
     }
 
-    void drawRectangle(DBounds dBounds, float lineWidth = 1) {
-        drawLine(dBounds.leftTop(), dBounds.rightTop(), lineWidth)
-        drawLine(dBounds.leftTop(), dBounds.leftBottom(), lineWidth)
-        drawLine(dBounds.leftBottom(), dBounds.rightBottom(), lineWidth)
-        drawLine(dBounds.rightTop(), dBounds.rightBottom(), lineWidth)
+    void fillRectangle(DBounds bounds, Color color) {
+        float width = bounds.width
+        float height = bounds.height
+        contentStream.setNonStrokingColor color
+        contentStream.addRect(bounds.left, bounds.bottom, width, height)
+        contentStream.fill()
     }
 }

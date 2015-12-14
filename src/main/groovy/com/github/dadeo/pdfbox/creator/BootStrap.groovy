@@ -16,10 +16,7 @@ import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleContentsDrawer
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleElementDetailsFactory
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleWritableFactory
-import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
-import com.github.dadeo.pdfbox.creator.writer.object.ObjectContentsWidthCalculator
-import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
-import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactoryFactory
+import com.github.dadeo.pdfbox.creator.writer.object.*
 import com.github.dadeo.pdfbox.creator.writer.page.*
 import com.github.dadeo.pdfbox.creator.writer.paragraph.*
 import com.github.dadeo.pdfbox.creator.writer.positioning.DescentMultiplier
@@ -38,6 +35,7 @@ class BootStrap {
     static final StringTokenizer stringTokenizer
     static final VerticalAlignmentCalculator verticalAlignmentCalculator
     static final LineBorder lineBorder
+    static final BackgroundPainter backgroundPainter
     static final BorderDrawer borderDrawer
     static final ObjectBoundsCalculator objectBoundsCalculator
     static final ObjectContentsWidthCalculator objectContentsWidthCalculator
@@ -68,6 +66,7 @@ class BootStrap {
     static {
         descentMultiplier = new DescentMultiplier()
         lineBorder = new LineBorder()
+        backgroundPainter = new BackgroundPainter()
         borderDrawer = new BorderDrawer()
         stringWidthCalculator = new StringWidthCalculator()
         tokensToLineAssigner = new TokensToLineAssigner()

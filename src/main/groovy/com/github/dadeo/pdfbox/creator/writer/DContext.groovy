@@ -22,6 +22,8 @@ import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage
 import org.apache.pdfbox.pdmodel.PDPageContentStream
 
+import java.awt.Color
+
 @Canonical
 @AutoClone
 class DContext implements Cloneable {
@@ -33,6 +35,7 @@ class DContext implements Cloneable {
     DBounds containingBounds
     DBounds contentsBounds
     DBounds borderBounds
+    Color backgroundColor
     DFont font
     Justification textJustification = Justification.LEFT
     VerticalAlignment verticalAlignment = VerticalAlignment.TOP

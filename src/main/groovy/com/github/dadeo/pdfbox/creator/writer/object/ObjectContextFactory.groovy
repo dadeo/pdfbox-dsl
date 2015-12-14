@@ -23,6 +23,9 @@ class ObjectContextFactory {
         childContext.parent = parentContext
         childContext.containingBounds = parentContext.contentsBounds
         objectBoundsCalculator.calculateMaxBounds(object, childContext)
+        if (object?.backgroundColor) {
+            childContext.backgroundColor = object.backgroundColor
+        }
         childContext
     }
 

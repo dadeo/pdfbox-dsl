@@ -17,18 +17,21 @@ import com.github.dadeo.pdfbox.model.DBounds
 import com.github.dadeo.pdfbox.model.DObject
 import spock.lang.Specification
 
+import java.awt.*
+
 class ObjectContextFactoryTest extends Specification {
     private static final DBounds PARENT_CONTENTS_BOUNDS = new DBounds(1, 2, 3, 4)
     private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
     private ObjectContextFactory factory = new ObjectContextFactory(objectBoundsCalculator: objectBoundsCalculator)
     private DContext clonedContext = new DContext()
-    private DContext parentContext = Mock(DContext) {
-        getContentsBounds() >> PARENT_CONTENTS_BOUNDS
-        1 * clone() >> clonedContext
-    }
+    private DContext parentContext
 
-    def "page context is cloned and returned"() {
+    def "parent context is cloned and returned"() {
         given:
+        parentContext = Mock(DContext) {
+            getContentsBounds() >> PARENT_CONTENTS_BOUNDS
+            1 * clone() >> clonedContext
+        }
         DObject object = new DObject() {}
 
         expect:
@@ -37,6 +40,10 @@ class ObjectContextFactoryTest extends Specification {
 
     def "new context contains parent context as parent"() {
         given:
+        parentContext = Mock(DContext) {
+            getContentsBounds() >> PARENT_CONTENTS_BOUNDS
+            1 * clone() >> clonedContext
+        }
         DObject object = new DObject() {}
 
         expect:
@@ -45,6 +52,10 @@ class ObjectContextFactoryTest extends Specification {
 
     def "new context's containingBounds, borderBounds, and contentsBounds are initialized to parent context's contentsBounds"() {
         given:
+        parentContext = Mock(DContext) {
+            getContentsBounds() >> PARENT_CONTENTS_BOUNDS
+            1 * clone() >> clonedContext
+        }
         DObject object = new DObject() {}
 
         when:
@@ -53,6 +64,58 @@ class ObjectContextFactoryTest extends Specification {
         then:
         childContext.containingBounds == PARENT_CONTENTS_BOUNDS
         1 * objectBoundsCalculator.calculateMaxBounds(object, clonedContext)
+    }
+
+    def "child context retains parent context's backgroundColor when child does not have a backgroundColor"() {
+        given:
+        parentContext = new DContext()
+        parentContext.backgroundColor = Color.red
+        DObject object = new DObject() {}
+
+        when:
+        DContext childContext = factory.createContextFrom(parentContext, object)
+
+        then:
+        childContext.backgroundColor == Color.red
+    }
+
+    def "child context retains parent context's backgroundColor when child does not specify a backgroundColor"() {
+        given:
+        parentContext = new DContext()
+        parentContext.backgroundColor = Color.red
+        DObject object = new DObject() {}
+
+        when:
+        DContext childContext = factory.createContextFrom(parentContext, object)
+
+        then:
+        childContext.backgroundColor == Color.red
+    }
+
+    def "child's backgroundColor overrides value in parent context"() {
+        given:
+        parentContext = new DContext()
+        parentContext.backgroundColor = Color.red
+        DObject object = new DObject() {}
+        object.backgroundColor = Color.blue
+
+        when:
+        DContext childContext = factory.createContextFrom(parentContext, object)
+
+        then:
+        childContext.backgroundColor == Color.blue
+    }
+
+    def "cloned context retains parent context's backgroundColor when no child"() {
+        given:
+        parentContext = new DContext()
+        parentContext.backgroundColor = Color.red
+
+        when:
+        DContext childContext = factory.createContextFrom(parentContext, null)
+
+        then:
+        childContext.backgroundColor == Color.red
     }
 
 }
