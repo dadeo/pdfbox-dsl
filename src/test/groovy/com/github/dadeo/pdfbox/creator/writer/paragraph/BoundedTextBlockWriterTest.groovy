@@ -23,10 +23,15 @@ import spock.lang.Specification
 class BoundedTextBlockWriterTest extends Specification {
     private static final DBounds CONTENTS_BOUNDS = new DBounds(800, 0, 0, 100)
     private static final DPoint STARTING_LOCATION = new DPoint(100, 800)
+    private static final DPoint STARTING_LOCATION_LEADING_ADJUSTED = new DPoint(100, 795)
     private static final DPoint END_LOCATION_1 = new DPoint(100, 775)
+    private static final DPoint END_LOCATION_1_LEADING_ADJUSTED = new DPoint(100, 772)
     private static final DPoint END_LOCATION_2 = new DPoint(100, 750)
+    private static final DPoint END_LOCATION_2_LEADING_ADJUSTED = new DPoint(100, 747)
     private static final DPoint END_LOCATION_3 = new DPoint(100, 700)
+    private static final DPoint END_LOCATION_3_LEADING_ADJUSTED = new DPoint(100, 697)
     private static final DPoint END_LOCATION_4 = new DPoint(100, 675)
+    private static final DPoint END_LOCATION_4_LEADING_ADJUSTED = new DPoint(100, 672)
 
     private BoundedTextBlockLineWriter lineWriter = Mock(BoundedTextBlockLineWriter)
     private TextBlockLineWriterFactory lineWriterFactory = Mock(TextBlockLineWriterFactory)
@@ -52,6 +57,27 @@ class BoundedTextBlockWriterTest extends Specification {
         1 * lineWriter.write(assignedLines[1], CONTENTS_BOUNDS, END_LOCATION_1, dWriter) >> END_LOCATION_2
         1 * lineWriter.write(assignedLines[2], CONTENTS_BOUNDS, END_LOCATION_2, dWriter) >> END_LOCATION_3
         1 * lineWriter.write(assignedLines[3], CONTENTS_BOUNDS, END_LOCATION_3, dWriter) >> END_LOCATION_4
+        0 * _
+    }
+
+    def "location is adjusted by the amount of leading"() {
+        given:
+
+        context.contentsBounds = CONTENTS_BOUNDS
+        context.writer = dWriter
+        textBlock.assignedLines = assignedLines
+        textBlock.firstLineLeading = 5
+        textBlock.lineLeading = 3
+
+        when:
+        textBlockWriter.write(textBlock, context)
+
+        then:
+        1 * lineWriterFactory.createWriterFor(context) >> lineWriter
+        1 * lineWriter.write(assignedLines[0], CONTENTS_BOUNDS, STARTING_LOCATION_LEADING_ADJUSTED, dWriter) >> END_LOCATION_1
+        1 * lineWriter.write(assignedLines[1], CONTENTS_BOUNDS, END_LOCATION_1_LEADING_ADJUSTED, dWriter) >> END_LOCATION_2
+        1 * lineWriter.write(assignedLines[2], CONTENTS_BOUNDS, END_LOCATION_2_LEADING_ADJUSTED, dWriter) >> END_LOCATION_3
+        1 * lineWriter.write(assignedLines[3], CONTENTS_BOUNDS, END_LOCATION_3_LEADING_ADJUSTED, dWriter) >> END_LOCATION_4
         0 * _
     }
 

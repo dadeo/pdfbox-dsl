@@ -19,9 +19,18 @@ import groovy.transform.Canonical
 class BoundedTextBlock {
     List<AssignedLine> assignedLines = []
     float width
+    float firstLineLeading
+    float lineLeading
 
     float getHeight() {
-        assignedLines.inject(0f) { a, b -> a + b.height }
+        if (assignedLines) {
+            float line1Leading = firstLineLeading
+            float otherLinesLeading = (assignedLines.size() - 1) * lineLeading
+            float lineHeights = assignedLines.inject(0) { a, b -> a + b.height }
+            lineHeights + line1Leading + otherLinesLeading
+        } else {
+            0
+        }
     }
 
     float getLastLineDescent() {

@@ -28,8 +28,11 @@ class BoundedTextBlockWriter {
 
         BoundedTextBlockLineWriter lineWriter = textBlockLineWriterFactory.createWriterFor(context)
 
+        float leading = textBlock.firstLineLeading
         textBlock.assignedLines.inject(currentLocation) { DPoint location, AssignedLine line ->
-            lineWriter.write(line, contentsBounds, location, writer)
+            DPoint leadingAdjustedLocation = location.offset(0, -leading)
+            leading = textBlock.lineLeading
+            lineWriter.write(line, contentsBounds, leadingAdjustedLocation, writer)
         }
     }
 

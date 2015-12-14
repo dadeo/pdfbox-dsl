@@ -26,15 +26,18 @@ class BoundedTextBlockFactory {
     StringTokenizer stringTokenizer = BootStrap.stringTokenizer
     TokensToLineAssigner tokensToLineAssigner = BootStrap.tokensToLineAssigner
 
-    BoundedTextBlock createFrom(DContext paragraphContext, DParagraph dParagraph, float width) {
+    BoundedTextBlock createFrom(DContext paragraphContext, DParagraph paragraph, float width) {
         List<StringToken> tokens = []
 
-        dParagraph.contents.each { DPart part ->
+        paragraph.contents.each { DPart part ->
             tokens.addAll(stringTokenizer.tokenize(part.text, part.font ?: paragraphContext.font))
         }
 
         List<AssignedLine> assignedLines = tokensToLineAssigner.assignToLine(tokens, width, false)
 
-        new BoundedTextBlock(assignedLines: assignedLines, width: width)
+        new BoundedTextBlock(assignedLines: assignedLines,
+                             width: width,
+                             firstLineLeading: paragraph.firstLineLeading ?: paragraph.lineLeading,
+                             lineLeading: paragraph.lineLeading)
     }
 }

@@ -20,6 +20,8 @@ class DParagraph implements DObject, Margined, Bordered, Padded {
     List<DPart> contents = []
     DFont font
     Justification justification
+    Float firstLineLeading = null
+    float lineLeading = 0
     float paragraphBottomDescentMultiplier = 2
 
     DParagraph() {

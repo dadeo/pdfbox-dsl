@@ -35,9 +35,29 @@ class BoundedTextBlockTest extends Specification {
         boundedTextBlock.height == 27
     }
 
+    def "height includes lineLeading"() {
+        given:
+        AssignedLine line1 = Mock(AssignedLine)
+        AssignedLine line2 = Mock(AssignedLine)
+        AssignedLine line3 = Mock(AssignedLine)
+        boundedTextBlock.assignedLines = [line1, line2, line3]
+        boundedTextBlock.firstLineLeading = 5
+        boundedTextBlock.lineLeading = 3
+
+        when:
+        line1.height >> 10
+        line2.height >> 5
+        line3.height >> 12
+
+        then:
+        boundedTextBlock.height == 38
+    }
+
     def "height is 0 when no assigned lines"() {
         given:
         boundedTextBlock.assignedLines = []
+        boundedTextBlock.firstLineLeading = 5
+        boundedTextBlock.lineLeading = 5
 
         expect:
         boundedTextBlock.height == 0

@@ -122,4 +122,37 @@ class BoundedTextBlockFactoryTest extends Specification {
         result.width == 100f
     }
 
+    def "bounded text block contains leading"() {
+        final List<AssignedLine> assignedLines = []
+
+        given:
+        paragraph.contents = [new DPart()]
+        paragraph.firstLineLeading = 4
+        paragraph.lineLeading = 5
+        stringTokenizer.tokenize(*_) >> []
+
+        when:
+        BoundedTextBlock result = factory.createFrom(paragraphContext, paragraph, 100)
+
+        then:
+        result.firstLineLeading == 4
+        result.lineLeading == 5
+    }
+
+    def "first line leading defaults to lineLeading when first line leading is not specified"() {
+        final List<AssignedLine> assignedLines = []
+
+        given:
+        paragraph.contents = [new DPart()]
+        paragraph.lineLeading = 5
+        stringTokenizer.tokenize(*_) >> []
+
+        when:
+        BoundedTextBlock result = factory.createFrom(paragraphContext, paragraph, 100)
+
+        then:
+        result.firstLineLeading == 5
+        result.lineLeading == 5
+    }
+
 }

@@ -229,12 +229,12 @@ class VisualPlaygroundTest {
                                 int tableNumber = index + 1
                                 table columnRatios: [1], {
                                     cell {
-                                        paragraph "this 1s table $tableNumber,\ncell 1 ggggg,\nparagraph 1"
-                                        paragraph "this 1s table $tableNumber,\ncell 1 ggggg,\nparagraph 2"
+                                        paragraph "this 1s table $tableNumber,\ncell 1 ggggg,\nparagraph 1", lineLeading: 2
+                                        paragraph "this 1s table $tableNumber,\ncell 1 ggggg,\nparagraph 2", lineLeading: 2
                                     }
                                     cell {
-                                        paragraph "this 1s table $tableNumber,\ncell 2 ggggg,\nparagraph 1"
-                                        paragraph "this 1s table $tableNumber,\ncell 2 ggggg,\nparagraph 2", border: 1, backgroundColor: Color.pink
+                                        paragraph "this 1s table $tableNumber,\ncell 2 ggggg,\nparagraph 1", lineLeading: 2
+                                        paragraph "this 1s table $tableNumber,\ncell 2 ggggg,\nparagraph 2", border: 1, backgroundColor: Color.pink, firstLineLeading: -2, lineLeading: 5
                                     }
                                 }
                             }
