@@ -10,24 +10,9 @@
  * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and limitations under the License.
  */
-package com.github.dadeo.pdfbox.model
+package com.github.dadeo.pdfbox.creator.writer.object
 
-import com.github.dadeo.pdfbox.creator.writer.object.PositionType
 
-import java.awt.*
-
-trait DObject {
-
-    Color backgroundColor
-
-    /**
-     * Specifies whether an object should be positioned relative to other objects or at an absolute position.
-     */
-    PositionType positionType = PositionType.RELATIVE
-
-    /**
-     * Specifies the position to place this object when positionType is set to ABSOLUTE.
-     */
-    DBounds position
-
+enum PositionType {
+    RELATIVE, ABSOlUTE
 }

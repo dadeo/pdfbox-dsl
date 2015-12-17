@@ -17,7 +17,9 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
+import com.github.dadeo.pdfbox.creator.writer.object.PositionType
 import com.github.dadeo.pdfbox.model.DParagraph
+
 
 class ParagraphWritable implements ObjectWritable {
     private BoundedTextBlockWriter boundedTextBlockWriter = BootStrap.boundedTextBlockWriter
@@ -43,5 +45,10 @@ class ParagraphWritable implements ObjectWritable {
     @Override
     DContext getContext() {
         context
+    }
+
+    @Override
+    PositionType getPositionType() {
+        dParagraph.positionType
     }
 }

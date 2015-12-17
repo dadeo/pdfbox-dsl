@@ -16,6 +16,7 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactoryFactory
+import com.github.dadeo.pdfbox.creator.writer.object.PositionType
 import com.github.dadeo.pdfbox.model.DObject
 import com.github.dadeo.pdfbox.model.DPage
 
@@ -25,7 +26,7 @@ class PageContentsWriter {
 
     void writeContents(DPage dPage, DContext pageContext) {
         dPage.contents.inject((ObjectWritable) null) { ObjectWritable objectWritable, DObject dObject ->
-            if (objectWritable)
+            if (objectWritable && objectWritable.positionType == PositionType.RELATIVE)
                 currentLocationAdjuster.adjust(pageContext, objectWritable.context)
 
             ObjectWritableFactory<? extends DObject> writableFactory = writableFactoryFactory.createWriter(dObject)

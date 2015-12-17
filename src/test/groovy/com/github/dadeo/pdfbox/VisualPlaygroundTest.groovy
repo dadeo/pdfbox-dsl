@@ -18,6 +18,7 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleContentsDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
+import com.github.dadeo.pdfbox.creator.writer.object.PositionType
 import com.github.dadeo.pdfbox.dsl.DocumentBuilder
 import com.github.dadeo.pdfbox.dsl.PdfMeasurements
 import com.github.dadeo.pdfbox.model.*
@@ -241,6 +242,16 @@ class VisualPlaygroundTest {
                         }
                     }
 
+                    table columnRatios: [1],
+                          positionType: PositionType.ABSOlUTE,
+                          position: DBounds.createFrom(new DPoint(0.5.inch, 2.75.inch), new DPoint(1.5.inch, 1.75.inch)),
+                          {
+                              cell border: 2, {
+                                  paragraph text: 'Confirmation\nCode:', font: new DFont(PDType1Font.HELVETICA_BOLD_OBLIQUE, 10), justification: Justification.CENTER
+                                  paragraph text: '4321', font: new DFont(PDType1Font.HELVETICA_BOLD, 14), justification: Justification.CENTER
+                              }
+                          }
+
                     paragraph LOREM_IPSUM, border: 1
                 }
             }
@@ -264,6 +275,25 @@ class VisualPlaygroundTest {
 
             timer("create pdf") {
                 DDocument document = new DDocument()
+
+                DocumentBuilder builder = new DocumentBuilder()
+
+                Table confirmationCodeTable = builder.table columnRatios: [1],
+                                                            positionType: PositionType.ABSOlUTE,
+                                                            position: new DBounds((float) (1.5 * ONE_INCH), (float) (1.5 * ONE_INCH), (float) (0.5 * ONE_INCH), (float) (0.5 * ONE_INCH)),
+                                                            {
+                                                                cell border: 2, {
+                                                                    paragraph font: new DFont(PDType1Font.HELVETICA_BOLD_OBLIQUE, 10), justification: Justification.CENTER, {
+                                                                        part text: 'Confirmation'
+                                                                    }
+                                                                    paragraph font: new DFont(PDType1Font.HELVETICA_BOLD_OBLIQUE, 10), justification: Justification.CENTER, {
+                                                                        part text: "Code:"
+                                                                    }
+                                                                    paragraph font: new DFont(PDType1Font.HELVETICA_BOLD, 14), justification: Justification.CENTER, {
+                                                                        part text: '4321'
+                                                                    }
+                                                                }
+                                                            }
 
                 DParagraph paragraph1 = new DParagraph(LOREM_IPSUM)
                 paragraph1.font = new DFont(PDType1Font.HELVETICA_OBLIQUE, 6)
@@ -363,6 +393,7 @@ class VisualPlaygroundTest {
                 page.addContent(paragraph3)
                 page.addContent(table)
                 page.addContent(paragraph3)
+                page << confirmationCodeTable
 
                 document.addPage(page)
                 document.addPage(createPageTwo())

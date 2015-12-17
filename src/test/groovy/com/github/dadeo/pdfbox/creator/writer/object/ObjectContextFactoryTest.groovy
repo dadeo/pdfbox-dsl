@@ -21,6 +21,7 @@ import java.awt.*
 
 class ObjectContextFactoryTest extends Specification {
     private static final DBounds PARENT_CONTENTS_BOUNDS = new DBounds(1, 2, 3, 4)
+    private static final DBounds CHILD_CONTENTS_BOUNDS = new DBounds(4, 3, 2, 1)
     private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
     private ObjectContextFactory factory = new ObjectContextFactory(objectBoundsCalculator: objectBoundsCalculator)
     private DContext clonedContext = new DContext()
@@ -50,7 +51,43 @@ class ObjectContextFactoryTest extends Specification {
         factory.createContextFrom(parentContext, object).parent.is parentContext
     }
 
-    def "new context's containingBounds, borderBounds, and contentsBounds are initialized to parent context's contentsBounds"() {
+    def "new context's containingBounds is parent's contentsBounds when positioning is relative"() {
+        given:
+        parentContext = Mock(DContext) {
+            getContentsBounds() >> PARENT_CONTENTS_BOUNDS
+            1 * clone() >> clonedContext
+        }
+        DObject object = Mock(DObject) {
+            getPositionType() >> PositionType.RELATIVE
+            getPosition() >> CHILD_CONTENTS_BOUNDS
+        }
+
+        when:
+        DContext childContext = factory.createContextFrom(parentContext, object)
+
+        then:
+        childContext.containingBounds == PARENT_CONTENTS_BOUNDS
+    }
+
+    def "new context's containingBounds is specified by child when positioning is absolute"() {
+        given:
+        parentContext = Mock(DContext) {
+            getContentsBounds() >> PARENT_CONTENTS_BOUNDS
+            1 * clone() >> clonedContext
+        }
+        DObject object = Mock(DObject) {
+            getPositionType() >> PositionType.ABSOlUTE
+            getPosition() >> CHILD_CONTENTS_BOUNDS
+        }
+
+        when:
+        DContext childContext = factory.createContextFrom(parentContext, object)
+
+        then:
+        childContext.containingBounds == CHILD_CONTENTS_BOUNDS
+    }
+
+    def "passes the object and its context to the bounds calculator"() {
         given:
         parentContext = Mock(DContext) {
             getContentsBounds() >> PARENT_CONTENTS_BOUNDS
@@ -59,10 +96,9 @@ class ObjectContextFactoryTest extends Specification {
         DObject object = new DObject() {}
 
         when:
-        DContext childContext = factory.createContextFrom(parentContext, object)
+        factory.createContextFrom(parentContext, object)
 
         then:
-        childContext.containingBounds == PARENT_CONTENTS_BOUNDS
         1 * objectBoundsCalculator.calculateMaxBounds(object, clonedContext)
     }
 

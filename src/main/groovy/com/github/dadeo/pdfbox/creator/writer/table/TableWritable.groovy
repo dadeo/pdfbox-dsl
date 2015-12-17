@@ -17,6 +17,7 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
+import com.github.dadeo.pdfbox.creator.writer.object.PositionType
 import com.github.dadeo.pdfbox.model.Table
 
 class TableWritable implements ObjectWritable {
@@ -48,5 +49,10 @@ class TableWritable implements ObjectWritable {
     void offset(float x, float y) {
         ObjectWritable.super.offset(x, y)
         contents*.offset(x, y)
+    }
+
+    @Override
+    PositionType getPositionType() {
+        table.positionType
     }
 }

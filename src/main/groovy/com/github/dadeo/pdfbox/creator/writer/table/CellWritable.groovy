@@ -17,6 +17,7 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
+import com.github.dadeo.pdfbox.creator.writer.object.PositionType
 import com.github.dadeo.pdfbox.model.Cell
 
 class CellWritable implements ObjectWritable {
@@ -39,8 +40,16 @@ class CellWritable implements ObjectWritable {
 
     @Override
     void offset(float x, float y) {
-//        ObjectWritable.super.offset(x, y)
         contents*.offset(x, y)
+    }
+
+    /**
+     * Currently a cell is not a standalone object so it is always relative to the table it belongs to. Although in
+     * reality this method will never be called on a cell.
+     */
+    @Override
+    PositionType getPositionType() {
+        PositionType.RELATIVE
     }
 
     float getHeight() {

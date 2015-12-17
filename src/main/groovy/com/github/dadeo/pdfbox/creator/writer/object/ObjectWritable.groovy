@@ -20,10 +20,13 @@ trait ObjectWritable {
 
     abstract DContext getContext()
 
+    abstract PositionType getPositionType()
+
     void offset(float x, float y) {
         DContext context = getContext()
         context.containingBounds = context.containingBounds.offset(y, x, y, x)
         context.borderBounds = context.borderBounds.offset(y, x, y, x)
         context.contentsBounds = context.contentsBounds.offset(y, x, y, x)
     }
+
 }

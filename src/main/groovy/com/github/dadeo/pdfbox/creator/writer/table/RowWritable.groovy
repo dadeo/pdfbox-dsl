@@ -14,6 +14,8 @@ package com.github.dadeo.pdfbox.creator.writer.table
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
+import com.github.dadeo.pdfbox.creator.writer.object.PositionType
+
 
 class RowWritable implements ObjectWritable {
     List<CellWritable> contents
@@ -29,6 +31,15 @@ class RowWritable implements ObjectWritable {
         contents.each {
             it.write()
         }
+    }
+
+    /**
+     * Currently a row is not a standalone object so it is always relative to the table it belongs to. Although in
+     * reality this method will never be called on a row.
+     */
+    @Override
+    PositionType getPositionType() {
+        PositionType.RELATIVE
     }
 
     @Override

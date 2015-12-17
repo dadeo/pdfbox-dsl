@@ -17,6 +17,7 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
+import com.github.dadeo.pdfbox.creator.writer.object.PositionType
 import com.github.dadeo.pdfbox.model.InlineCanvas
 import groovy.transform.Canonical
 
@@ -27,6 +28,7 @@ class InlineCanvasWritable implements ObjectWritable {
     private BackgroundPainter backgroundPainter = BootStrap.backgroundPainter
     private BorderDrawer borderDrawer = BootStrap.borderDrawer
 
+    @Override
     void write() {
         backgroundPainter.paintFor(context)
 
@@ -35,4 +37,8 @@ class InlineCanvasWritable implements ObjectWritable {
         borderDrawer.drawFor(canvas, context)
     }
 
+    @Override
+    PositionType getPositionType() {
+        canvas.positionType
+    }
 }

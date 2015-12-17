@@ -97,7 +97,8 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
         List<ObjectWritable> cellWritableContents = cell.contents.collect { DObject object ->
             ObjectWritableFactory<? extends DObject> writerFactory = writerFactoryFactory.createWriter(object)
             ObjectWritable cellChildWritable = writerFactory.createFor(cellWorkContext, object)
-            objectBoundsCalculator.shrinkBoundsVertically(cellChildWritable.context.containingBounds.height, cellWorkContext)
+            if (cellChildWritable.positionType == PositionType.RELATIVE)
+                objectBoundsCalculator.shrinkBoundsVertically(cellChildWritable.context.containingBounds.height, cellWorkContext)
             cellChildWritable
         }
 

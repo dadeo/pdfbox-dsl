@@ -21,7 +21,7 @@ class ObjectContextFactory {
     DContext createContextFrom(DContext parentContext, DObject object) {
         DContext childContext = parentContext.clone()
         childContext.parent = parentContext
-        childContext.containingBounds = parentContext.contentsBounds
+        childContext.containingBounds = (!object || object.positionType == PositionType.RELATIVE) ? parentContext.contentsBounds : object.position
         objectBoundsCalculator.calculateMaxBounds(object, childContext)
         if (object?.backgroundColor) {
             childContext.backgroundColor = object.backgroundColor
