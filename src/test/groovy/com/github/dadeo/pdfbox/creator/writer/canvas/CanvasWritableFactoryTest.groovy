@@ -15,17 +15,17 @@ package com.github.dadeo.pdfbox.creator.writer.canvas
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
-import com.github.dadeo.pdfbox.model.InlineCanvas
+import com.github.dadeo.pdfbox.model.Canvas
 import spock.lang.Specification
 
-class InlineCanvasWritableFactoryTest extends Specification {
+class CanvasWritableFactoryTest extends Specification {
     private ObjectContextFactory objectContextFactory = Mock(ObjectContextFactory)
     private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
-    private InlineCanvasWritableFactory writableFactory = new InlineCanvasWritableFactory(objectContextFactory: objectContextFactory,
-                                                                                          objectBoundsCalculator: objectBoundsCalculator)
+    private CanvasWritableFactory writableFactory = new CanvasWritableFactory(objectContextFactory: objectContextFactory,
+                                                                              objectBoundsCalculator: objectBoundsCalculator)
     private DContext parentContext = Mock(DContext)
     private DContext childContext = Mock(DContext)
-    private InlineCanvas canvas = GroovyMock(InlineCanvas)
+    private Canvas canvas = GroovyMock(Canvas)
 
     def "createFor"() {
         given:
@@ -34,7 +34,7 @@ class InlineCanvasWritableFactoryTest extends Specification {
         1 * objectBoundsCalculator.resizeBoundsToHeight(10, childContext)
 
         when:
-        InlineCanvasWritable writable = writableFactory.createFor(parentContext, canvas)
+        CanvasWritable writable = writableFactory.createFor(parentContext, canvas)
 
         then:
         writable.canvas == canvas

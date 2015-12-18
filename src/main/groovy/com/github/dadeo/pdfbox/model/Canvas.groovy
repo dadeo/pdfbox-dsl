@@ -13,11 +13,15 @@
 package com.github.dadeo.pdfbox.model
 
 import com.github.dadeo.pdfbox.creator.writer.DWriter
+import groovy.transform.Canonical
 
-abstract class InlineCanvas implements DObject, Margined, Bordered, Padded {
+@Canonical
+class Canvas implements DObject, Margined, Bordered, Padded {
+    float height
+    Closure content
 
-    abstract float getHeight()
-
-    abstract void draw(DBounds bounds, DWriter writer)
+    void draw(DBounds bounds, DWriter writer) {
+        content bounds, writer
+    }
 
 }

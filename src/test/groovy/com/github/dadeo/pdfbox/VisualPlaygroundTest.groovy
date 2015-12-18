@@ -253,6 +253,11 @@ class VisualPlaygroundTest {
                           }
 
                     paragraph LOREM_IPSUM, border: 1
+
+                    canvas height: 10, { DBounds bounds, DWriter writer ->
+                        writer.drawLine(bounds.leftTop(), bounds.rightBottom())
+                        writer.drawLine(bounds.leftBottom(), bounds.rightTop())
+                    }
                 }
             }
 
@@ -356,22 +361,11 @@ class VisualPlaygroundTest {
                 table << cell3
                 table << cell3
 
-                InlineCanvas xCanvas = new InlineCanvas() {
-                    {
-                        border = 3
-                        borderColor = Color.darkGray
-                        backgroundColor = Color.orange
-                    }
-
-                    float getHeight() {
-                        20
-                    }
-
-                    void draw(DBounds bounds, DWriter writer) {
+                Canvas xCanvas = new Canvas(height: 20, border: 3, borderColor: Color.darkGray, backgroundColor: Color.orange, content: {
+                    DBounds bounds, DWriter writer ->
                         writer.drawLine(bounds.leftTop(), bounds.rightBottom())
                         writer.drawLine(bounds.leftBottom(), bounds.rightTop())
-                    }
-                }
+                })
 
                 DPage page = new DPage()
                 page.border = 5

@@ -323,4 +323,16 @@ class DocumentBuilderTest extends Specification {
         cell.contents == [new DParagraph("yo dog")]
     }
 
+    def "creates a canvas with height and content"() {
+        given:
+        Closure content = { -> }
+
+        when:
+        Canvas canvas = builder.canvas height: 18, content
+
+        then:
+        canvas.height == 18
+        canvas.content.is content
+    }
+
 }

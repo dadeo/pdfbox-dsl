@@ -13,7 +13,7 @@
 package com.github.dadeo.pdfbox.creator
 
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
-import com.github.dadeo.pdfbox.creator.writer.canvas.InlineCanvasWritableFactory
+import com.github.dadeo.pdfbox.creator.writer.canvas.CanvasWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleContentsDrawer
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.object.*
@@ -59,7 +59,7 @@ class BootStrap {
     static final BoundedTextBlockFactory boundedTextBlockFactory
     static final ParagraphWritableFactory paragraphWritableFactory
     static final HorizontalRuleWritableFactory horizontalRuleWritableFactory
-    static final InlineCanvasWritableFactory inlineCanvasWritableFactory
+    static final CanvasWritableFactory canvasWritableFactory
     static final PageWriter pageWriter
 
     static {
@@ -126,13 +126,13 @@ class BootStrap {
                                     pageContentsWriter: pageContentsWriter,
                                     pageBorderDrawer: borderDrawer)
 
-        inlineCanvasWritableFactory = new InlineCanvasWritableFactory(objectContextFactory: objectContextFactory,
-                                                                      objectBoundsCalculator: objectBoundsCalculator)
+        canvasWritableFactory = new CanvasWritableFactory(objectContextFactory: objectContextFactory,
+                                                          objectBoundsCalculator: objectBoundsCalculator)
 
         writerFactoryFactory.paragraphWritableFactory = paragraphWritableFactory
         writerFactoryFactory.tableWritableFactory = tableWritableFactory
         writerFactoryFactory.horizontalRuleWritableFactory = horizontalRuleWritableFactory
-        writerFactoryFactory.inlineCanvasWritableFactory = inlineCanvasWritableFactory
+        writerFactoryFactory.canvasWritableFactory = canvasWritableFactory
     }
 
 

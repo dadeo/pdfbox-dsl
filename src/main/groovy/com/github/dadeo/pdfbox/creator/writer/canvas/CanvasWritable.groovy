@@ -18,12 +18,12 @@ import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.object.PositionType
-import com.github.dadeo.pdfbox.model.InlineCanvas
+import com.github.dadeo.pdfbox.model.Canvas
 import groovy.transform.Canonical
 
 @Canonical
-class InlineCanvasWritable implements ObjectWritable {
-    InlineCanvas canvas
+class CanvasWritable implements ObjectWritable {
+    Canvas canvas
     DContext context
     private BackgroundPainter backgroundPainter = BootStrap.backgroundPainter
     private BorderDrawer borderDrawer = BootStrap.borderDrawer

@@ -16,21 +16,21 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
+import com.github.dadeo.pdfbox.model.Canvas
 import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.InlineCanvas
 import spock.lang.Specification
 
-class InlineCanvasWritableTest extends Specification {
+class CanvasWritableTest extends Specification {
     private static final DBounds CONTENTS_BOUNDS = new DBounds(1, 2, 3, 4)
     private BackgroundPainter backgroundPainter = Mock(BackgroundPainter)
     private BorderDrawer borderDrawer = Mock(BorderDrawer)
-    private InlineCanvas canvas = Mock(InlineCanvas)
+    private Canvas canvas = Mock(Canvas)
     private DContext context = new DContext()
     private DWriter writer = Mock(DWriter)
-    private InlineCanvasWritable writable = new InlineCanvasWritable(canvas: canvas,
-                                                                     context: context,
-                                                                     backgroundPainter: backgroundPainter,
-                                                                     borderDrawer: borderDrawer)
+    private CanvasWritable writable = new CanvasWritable(canvas: canvas,
+                                                         context: context,
+                                                         backgroundPainter: backgroundPainter,
+                                                         borderDrawer: borderDrawer)
 
     def "write"() {
         given:

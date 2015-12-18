@@ -35,6 +35,8 @@ class DocumentBuilder extends FactoryBuilderSupport {
                 return new PartBuilderFactory()
             case 'hr':
                 return new HorizontalRuleBuilderFactory()
+            case 'canvas':
+                return new CanvasBuilderFactory()
             default:
                 throw new UnsupportedOperationException("DocumentBuilder does not support building '$name' objects.")
         }
@@ -123,6 +125,26 @@ class DocumentBuilder extends FactoryBuilderSupport {
 
         Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object o, Object o1, Map map) throws InstantiationException, IllegalAccessException {
             new DHorizontalRule()
+        }
+
+        void setParent(FactoryBuilderSupport builder, Object parent, Object child) {
+            parent << child
+        }
+    }
+
+    static class CanvasBuilderFactory extends AbstractFactory {
+
+        Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object o, Object o1, Map map) throws InstantiationException, IllegalAccessException {
+            new Canvas()
+        }
+
+        boolean isHandlesNodeChildren() {
+            true
+        }
+
+        boolean onNodeChildren(FactoryBuilderSupport builder, Object node, Closure childContent) {
+            node.content = childContent
+            false
         }
 
         void setParent(FactoryBuilderSupport builder, Object parent, Object child) {
