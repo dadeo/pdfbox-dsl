@@ -14,8 +14,8 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.text.StringToken
-import com.github.dadeo.pdfbox.model.DFont
-import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Font
+import com.github.dadeo.pdfbox.model.Point
 import spock.lang.Specification
 
 
@@ -24,19 +24,19 @@ class BoundedTextBlockTokenWriterTest extends Specification {
     private BoundedTextBlockTokenWriter tokenWriter = new BoundedTextBlockTokenWriter(currentLocationPositioner: currentLocationRepositioner)
     private StringToken token = new StringToken()
     private DWriter dWriter = Mock(DWriter)
-    private DFont font = Mock(DFont)
+    private Font font = Mock(Font)
 
     def "writes token and returns the location to place next token"() {
         given:
-        DPoint currentLocation = new DPoint(0, 1)
-        DPoint postWriteRepositionedLocation = new DPoint(0, 3)
+        Point currentLocation = new Point(0, 1)
+        Point postWriteRepositionedLocation = new Point(0, 3)
 
         token.font = font
         token.text = "yo dog"
         token.size = 8
 
         when:
-        DPoint newLocation = tokenWriter.write(token, currentLocation, dWriter)
+        Point newLocation = tokenWriter.write(token, currentLocation, dWriter)
 
         then:
         newLocation == postWriteRepositionedLocation

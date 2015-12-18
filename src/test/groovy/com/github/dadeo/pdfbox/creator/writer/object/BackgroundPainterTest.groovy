@@ -14,14 +14,14 @@ package com.github.dadeo.pdfbox.creator.writer.object
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.DWriter
-import com.github.dadeo.pdfbox.model.DBounds
+import com.github.dadeo.pdfbox.model.Bounds
 import spock.lang.Specification
 
 import java.awt.*
 
 class BackgroundPainterTest extends Specification {
-    private static final DBounds BORDER_BOUNDS = new DBounds(1, 2, 3, 4)
-    private static final DBounds ADJUSTED_BOUNDS = new DBounds(0.5f, 1.5f, 2.5f, 3.5f)
+    private static final Bounds BORDER_BOUNDS = new Bounds(1, 2, 3, 4)
+    private static final Bounds ADJUSTED_BOUNDS = new Bounds(0.5f, 1.5f, 2.5f, 3.5f)
     private DWriter writer = Mock(DWriter)
     private DContext context = new DContext(writer: writer)
     private BackgroundPainter painter = new BackgroundPainter()

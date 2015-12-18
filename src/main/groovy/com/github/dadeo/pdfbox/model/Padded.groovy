@@ -27,7 +27,7 @@ trait Padded {
         this
     }
 
-    DBounds getPaddingOffsets() {
-        new DBounds(-paddingTop, -paddingRight, paddingBottom, paddingLeft)
+    Bounds getPaddingOffsets() {
+        new Bounds(-paddingTop, -paddingRight, paddingBottom, paddingLeft)
     }
 }

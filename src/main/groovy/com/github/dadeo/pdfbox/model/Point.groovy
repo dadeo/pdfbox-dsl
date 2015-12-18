@@ -12,10 +12,28 @@
  */
 package com.github.dadeo.pdfbox.model
 
-import groovy.transform.Canonical
+import groovy.transform.AutoClone
+import groovy.transform.Immutable
 
-@Canonical
-class DPart {
-    String text
-    DFont font
+
+@Immutable
+@AutoClone
+class Point {
+    float x, y
+
+    Point offsetX(float xAdjustment) {
+        new Point((float) (x + xAdjustment), y)
+    }
+
+    Point offsetY(float yAdjustment) {
+        new Point(x, (float) (y + yAdjustment))
+    }
+
+    Point offset(Point offsets) {
+        new Point((float) (x + offsets.x), (float) (y + offsets.y))
+    }
+
+    Point offset(float offsetX, float offsetY) {
+        new Point((float) (x + offsetX), (float) (y + offsetY))
+    }
 }

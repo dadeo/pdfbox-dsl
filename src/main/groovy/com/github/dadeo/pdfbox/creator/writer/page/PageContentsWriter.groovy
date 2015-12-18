@@ -17,19 +17,19 @@ import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactoryFactory
 import com.github.dadeo.pdfbox.creator.writer.object.PositionType
-import com.github.dadeo.pdfbox.model.DObject
-import com.github.dadeo.pdfbox.model.DPage
+import com.github.dadeo.pdfbox.model.PdfComponent
+import com.github.dadeo.pdfbox.model.Page
 
 class PageContentsWriter {
     PageContentsCurrentLocationAdjuster currentLocationAdjuster
     ObjectWritableFactoryFactory writableFactoryFactory
 
-    void writeContents(DPage dPage, DContext pageContext) {
-        dPage.contents.inject((ObjectWritable) null) { ObjectWritable objectWritable, DObject dObject ->
+    void writeContents(Page dPage, DContext pageContext) {
+        dPage.contents.inject((ObjectWritable) null) { ObjectWritable objectWritable, PdfComponent dObject ->
             if (objectWritable && objectWritable.positionType == PositionType.RELATIVE)
                 currentLocationAdjuster.adjust(pageContext, objectWritable.context)
 
-            ObjectWritableFactory<? extends DObject> writableFactory = writableFactoryFactory.createWriter(dObject)
+            ObjectWritableFactory<? extends PdfComponent> writableFactory = writableFactoryFactory.createWriter(dObject)
             ObjectWritable writable = writableFactory.createFor(pageContext, dObject)
             writable.write()
 

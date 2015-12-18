@@ -12,17 +12,17 @@
  */
 package com.github.dadeo.pdfbox.creator.writer.page
 
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPage
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Page
 
 class PageBoundsCalculations {
 
-    DBounds calculatePageBorderBounds(DPage dPage) {
+    Bounds calculatePageBorderBounds(Page dPage) {
         dPage.pageBounds
              .offset(dPage.marginOffsets)
     }
 
-    DBounds calculatePageContentBounds(DPage dPage) {
+    Bounds calculatePageContentBounds(Page dPage) {
         dPage.pageBounds
              .offset(dPage.marginOffsets)
              .offset(dPage.borderTextOffsets)

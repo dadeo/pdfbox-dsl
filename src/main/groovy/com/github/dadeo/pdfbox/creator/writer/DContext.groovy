@@ -12,8 +12,8 @@
  */
 package com.github.dadeo.pdfbox.creator.writer
 
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DFont
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Font
 import com.github.dadeo.pdfbox.model.Justification
 import com.github.dadeo.pdfbox.model.VerticalAlignment
 import groovy.transform.AutoClone
@@ -32,11 +32,11 @@ class DContext implements Cloneable {
     PDPage pdPage
     PDPageContentStream pdContentStream
     DWriter writer
-    DBounds containingBounds
-    DBounds contentsBounds
-    DBounds borderBounds
+    Bounds containingBounds
+    Bounds contentsBounds
+    Bounds borderBounds
     Color backgroundColor
-    DFont font
+    Font font
     Justification textJustification = Justification.LEFT
     VerticalAlignment verticalAlignment = VerticalAlignment.TOP
 

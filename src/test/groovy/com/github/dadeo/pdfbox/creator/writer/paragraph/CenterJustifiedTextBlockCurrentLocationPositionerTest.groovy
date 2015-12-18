@@ -14,8 +14,8 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.text.AssignedLine
 import com.github.dadeo.pdfbox.creator.writer.text.StringToken
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Point
 import spock.lang.Specification
 
 
@@ -34,16 +34,16 @@ class CenterJustifiedTextBlockCurrentLocationPositionerTest extends Specificatio
         line.width >> LINE_WIDTH
 
         expect:
-        repositioner.repositionForLine(new DPoint(225, CURRENT_Y), new DBounds(800, RIGHT, 100, LEFT), line) == new DPoint(275, (float) (CURRENT_Y - LINE_HEIGHT))
+        repositioner.repositionForLine(new Point(225, CURRENT_Y), new Bounds(800, RIGHT, 100, LEFT), line) == new Point(275, (float) (CURRENT_Y - LINE_HEIGHT))
     }
 
     def "repositioning for the next token increments the current lcoation by the width of the token"() {
         given:
-        DPoint lastLocation = new DPoint(225, 500)
+        Point lastLocation = new Point(225, 500)
         StringToken token = new StringToken(size: 15)
 
         expect:
-        repositioner.repositionForNextToken(token, lastLocation) == new DPoint(240, 500)
+        repositioner.repositionForNextToken(token, lastLocation) == new Point(240, 500)
     }
 
 }

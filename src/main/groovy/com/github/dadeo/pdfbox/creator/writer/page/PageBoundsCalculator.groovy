@@ -13,15 +13,15 @@
 package com.github.dadeo.pdfbox.creator.writer.page
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPage
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Page
 
 class PageBoundsCalculator {
     PageBoundsCalculations pageBoundsCalculations
 
-    void addCalculationsTo(DContext pageContext, DPage dPage) {
-        DBounds borderBounds = pageBoundsCalculations.calculatePageBorderBounds(dPage)
-        DBounds pageContentBounds = pageBoundsCalculations.calculatePageContentBounds(dPage)
+    void addCalculationsTo(DContext pageContext, Page dPage) {
+        Bounds borderBounds = pageBoundsCalculations.calculatePageBorderBounds(dPage)
+        Bounds pageContentBounds = pageBoundsCalculations.calculatePageContentBounds(dPage)
 
         pageContext.containingBounds = dPage.pageBounds
         pageContext.contentsBounds = pageContentBounds

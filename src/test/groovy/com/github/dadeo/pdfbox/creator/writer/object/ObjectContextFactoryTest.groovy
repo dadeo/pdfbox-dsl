@@ -13,15 +13,15 @@
 package com.github.dadeo.pdfbox.creator.writer.object
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DObject
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.PdfComponent
 import spock.lang.Specification
 
 import java.awt.*
 
 class ObjectContextFactoryTest extends Specification {
-    private static final DBounds PARENT_CONTENTS_BOUNDS = new DBounds(1, 2, 3, 4)
-    private static final DBounds CHILD_CONTENTS_BOUNDS = new DBounds(4, 3, 2, 1)
+    private static final Bounds PARENT_CONTENTS_BOUNDS = new Bounds(1, 2, 3, 4)
+    private static final Bounds CHILD_CONTENTS_BOUNDS = new Bounds(4, 3, 2, 1)
     private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
     private ObjectContextFactory factory = new ObjectContextFactory(objectBoundsCalculator: objectBoundsCalculator)
     private DContext clonedContext = new DContext()
@@ -33,7 +33,7 @@ class ObjectContextFactoryTest extends Specification {
             getContentsBounds() >> PARENT_CONTENTS_BOUNDS
             1 * clone() >> clonedContext
         }
-        DObject object = new DObject() {}
+        PdfComponent object = new PdfComponent() {}
 
         expect:
         factory.createContextFrom(parentContext, object).is clonedContext
@@ -45,7 +45,7 @@ class ObjectContextFactoryTest extends Specification {
             getContentsBounds() >> PARENT_CONTENTS_BOUNDS
             1 * clone() >> clonedContext
         }
-        DObject object = new DObject() {}
+        PdfComponent object = new PdfComponent() {}
 
         expect:
         factory.createContextFrom(parentContext, object).parent.is parentContext
@@ -57,7 +57,7 @@ class ObjectContextFactoryTest extends Specification {
             getContentsBounds() >> PARENT_CONTENTS_BOUNDS
             1 * clone() >> clonedContext
         }
-        DObject object = Mock(DObject) {
+        PdfComponent object = Mock(PdfComponent) {
             getPositionType() >> PositionType.RELATIVE
             getPosition() >> CHILD_CONTENTS_BOUNDS
         }
@@ -75,7 +75,7 @@ class ObjectContextFactoryTest extends Specification {
             getContentsBounds() >> PARENT_CONTENTS_BOUNDS
             1 * clone() >> clonedContext
         }
-        DObject object = Mock(DObject) {
+        PdfComponent object = Mock(PdfComponent) {
             getPositionType() >> PositionType.ABSOlUTE
             getPosition() >> CHILD_CONTENTS_BOUNDS
         }
@@ -93,7 +93,7 @@ class ObjectContextFactoryTest extends Specification {
             getContentsBounds() >> PARENT_CONTENTS_BOUNDS
             1 * clone() >> clonedContext
         }
-        DObject object = new DObject() {}
+        PdfComponent object = new PdfComponent() {}
 
         when:
         factory.createContextFrom(parentContext, object)
@@ -106,7 +106,7 @@ class ObjectContextFactoryTest extends Specification {
         given:
         parentContext = new DContext()
         parentContext.backgroundColor = Color.red
-        DObject object = new DObject() {}
+        PdfComponent object = new PdfComponent() {}
 
         when:
         DContext childContext = factory.createContextFrom(parentContext, object)
@@ -119,7 +119,7 @@ class ObjectContextFactoryTest extends Specification {
         given:
         parentContext = new DContext()
         parentContext.backgroundColor = Color.red
-        DObject object = new DObject() {}
+        PdfComponent object = new PdfComponent() {}
 
         when:
         DContext childContext = factory.createContextFrom(parentContext, object)
@@ -132,7 +132,7 @@ class ObjectContextFactoryTest extends Specification {
         given:
         parentContext = new DContext()
         parentContext.backgroundColor = Color.red
-        DObject object = new DObject() {}
+        PdfComponent object = new PdfComponent() {}
         object.backgroundColor = Color.blue
 
         when:

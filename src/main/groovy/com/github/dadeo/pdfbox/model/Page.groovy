@@ -13,17 +13,21 @@
 package com.github.dadeo.pdfbox.model
 
 import groovy.transform.Canonical
-import org.apache.pdfbox.pdmodel.font.PDFont
-
-import java.awt.*
 
 @Canonical
-class DFont {
-    PDFont font
-    float size
-    Color color = Color.black
+class Page implements Margined, Bordered, Padded {
+    static final float ONE_INCH = 72f
 
-    float getDescent() {
-        (float) ((font.fontDescriptor.descent / 1000) * size)
+    List<PdfComponent> contents = []
+    Font font
+    Bounds pageBounds = new Bounds((float) (11 * ONE_INCH), ((float) (8.5 * ONE_INCH)), 0, 0)
+
+    Page addContent(PdfComponent part) {
+        contents << part
+        this
+    }
+
+    Page leftShift(PdfComponent part) {
+        addContent(part)
     }
 }

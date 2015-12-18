@@ -15,7 +15,7 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
-import com.github.dadeo.pdfbox.model.DParagraph
+import com.github.dadeo.pdfbox.model.Paragraph
 import spock.lang.Specification
 
 class ParagraphWritableTest extends Specification {
@@ -23,7 +23,7 @@ class ParagraphWritableTest extends Specification {
     private BackgroundPainter backgroundPainter = Mock(BackgroundPainter)
     private BorderDrawer borderDrawer = Mock(BorderDrawer)
     private DContext paragraphContext = new DContext()
-    private DParagraph paragraph = new DParagraph()
+    private Paragraph paragraph = new Paragraph()
     private BoundedTextBlock textBlock = Mock(BoundedTextBlock)
 
     def "write paragraph orchestration"() {

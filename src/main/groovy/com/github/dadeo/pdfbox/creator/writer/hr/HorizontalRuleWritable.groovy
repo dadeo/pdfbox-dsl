@@ -18,16 +18,16 @@ import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.object.PositionType
-import com.github.dadeo.pdfbox.model.DHorizontalRule
+import com.github.dadeo.pdfbox.model.HorizontalRule
 
 class HorizontalRuleWritable implements ObjectWritable {
     private HorizontalRuleContentsDrawer contentsDrawer = BootStrap.horizontalRuleContentsDrawer
     private BackgroundPainter backgroundPainter = BootStrap.backgroundPainter
     private BorderDrawer borderDrawer = BootStrap.borderDrawer
-    private DHorizontalRule horizontalRule
+    private HorizontalRule horizontalRule
     private DContext context
 
-    HorizontalRuleWritable(DHorizontalRule horizontalRule, DContext context) {
+    HorizontalRuleWritable(HorizontalRule horizontalRule, DContext context) {
         this.horizontalRule = horizontalRule
         this.context = context
     }

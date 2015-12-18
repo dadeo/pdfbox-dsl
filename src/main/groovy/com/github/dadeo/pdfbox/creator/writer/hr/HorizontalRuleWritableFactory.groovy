@@ -17,14 +17,14 @@ import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactory
-import com.github.dadeo.pdfbox.model.DHorizontalRule
+import com.github.dadeo.pdfbox.model.HorizontalRule
 
-class HorizontalRuleWritableFactory implements ObjectWritableFactory<DHorizontalRule> {
+class HorizontalRuleWritableFactory implements ObjectWritableFactory<HorizontalRule> {
     ObjectContextFactory contextFactory
     ObjectBoundsCalculator objectBoundsCalculator
 
     @Override
-    ObjectWritable createFor(DContext pageContext, DHorizontalRule horizontalRule) {
+    ObjectWritable createFor(DContext pageContext, HorizontalRule horizontalRule) {
         DContext horizontalRuleContext = contextFactory.createContextFrom(pageContext, horizontalRule)
         objectBoundsCalculator.resizeBoundsToHeight(horizontalRule.thickness, horizontalRuleContext)
         new HorizontalRuleWritable(horizontalRule, horizontalRuleContext)

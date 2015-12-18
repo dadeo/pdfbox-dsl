@@ -13,17 +13,17 @@
 package com.github.dadeo.pdfbox.creator.writer.page
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPage
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Page
 import spock.lang.Specification
 
 import static org.hamcrest.CoreMatchers.sameInstance
 
 
 class PageBoundsCalculatorTest extends Specification {
-    private static final DPage CURRENT_PAGE = new DPage()
-    private static final DBounds BORDER_BOUNDS = new DBounds()
-    private static final DBounds TEXT_BOUNDS = new DBounds(500, 0, 0, 72)
+    private static final Page CURRENT_PAGE = new Page()
+    private static final Bounds BORDER_BOUNDS = new Bounds()
+    private static final Bounds TEXT_BOUNDS = new Bounds(500, 0, 0, 72)
 
     private PageBoundsCalculations pageBoundsCalculations = Mock(PageBoundsCalculations)
     private PageBoundsCalculator calculator = new PageBoundsCalculator(pageBoundsCalculations: pageBoundsCalculations)

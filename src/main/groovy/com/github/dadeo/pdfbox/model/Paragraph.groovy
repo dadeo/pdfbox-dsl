@@ -16,44 +16,44 @@ import groovy.transform.Canonical
 import org.apache.pdfbox.pdmodel.font.PDFont
 
 @Canonical
-class DParagraph implements DObject, Margined, Bordered, Padded {
-    List<DPart> contents = []
-    DFont font
+class Paragraph implements PdfComponent, Margined, Bordered, Padded {
+    List<Part> contents = []
+    Font font
     Justification justification
     Float firstLineLeading = null
     float lineLeading = 0
     float paragraphBottomDescentMultiplier = 2
 
-    DParagraph() {
+    Paragraph() {
     }
 
-    DParagraph(String text, PDFont font, float fontSize) {
-        this(text, new DFont(font, fontSize))
+    Paragraph(String text, PDFont font, float fontSize) {
+        this(text, new Font(font, fontSize))
     }
 
-    DParagraph(String text, DFont font) {
+    Paragraph(String text, Font font) {
         this.font = font
-        contents << new DPart(text: text, font: font)
+        contents << new Part(text: text, font: font)
     }
 
-    DParagraph(String text) {
+    Paragraph(String text) {
         addContent text
     }
 
-    DParagraph addContent(DPart part) {
+    Paragraph addContent(Part part) {
         contents << part
         this
     }
 
-    DParagraph addContent(String text) {
-        addContent new DPart(text: text)
+    Paragraph addContent(String text) {
+        addContent new Part(text: text)
     }
 
-    DParagraph leftShift(String text) {
+    Paragraph leftShift(String text) {
         addContent(text)
     }
 
-    DParagraph leftShift(DPart part) {
+    Paragraph leftShift(Part part) {
         addContent(part)
     }
 }

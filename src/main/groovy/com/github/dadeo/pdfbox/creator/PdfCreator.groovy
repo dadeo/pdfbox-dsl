@@ -13,10 +13,10 @@
 package com.github.dadeo.pdfbox.creator
 
 import com.github.dadeo.pdfbox.creator.writer.DocumentWriter
-import com.github.dadeo.pdfbox.model.DDocument
+import com.github.dadeo.pdfbox.model.Document
 
 class PdfCreator {
-    byte[] createFor(DDocument document) {
+    byte[] createFor(Document document) {
         new DocumentWriter().write(document)
     }
 }

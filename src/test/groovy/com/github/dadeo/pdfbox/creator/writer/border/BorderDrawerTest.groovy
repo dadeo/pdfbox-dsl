@@ -15,14 +15,14 @@ package com.github.dadeo.pdfbox.creator.writer.border
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.model.Bordered
-import com.github.dadeo.pdfbox.model.DBounds
+import com.github.dadeo.pdfbox.model.Bounds
 import com.github.dadeo.pdfbox.model.LineBorder
 import spock.lang.Specification
 
 import static org.hamcrest.CoreMatchers.sameInstance
 
 class BorderDrawerTest extends Specification {
-    private static final DBounds BORDER_BOUNDS = new DBounds(0, 0, 0, 0)
+    private static final Bounds BORDER_BOUNDS = new Bounds(0, 0, 0, 0)
     private BorderDrawer drawer = new BorderDrawer()
     private LineBorder border = Mock(LineBorder)
     private Bordered bordered = Mock(Bordered)

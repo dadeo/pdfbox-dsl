@@ -16,16 +16,16 @@ import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactory
-import com.github.dadeo.pdfbox.model.DParagraph
+import com.github.dadeo.pdfbox.model.Paragraph
 
-class ParagraphWritableFactory implements ObjectWritableFactory<DParagraph> {
+class ParagraphWritableFactory implements ObjectWritableFactory<Paragraph> {
     ParagraphContentsDimensionsCalculator contentsDimensionsCalculator
     ParagraphContextFactory paragraphContextFactory
     BoundedTextBlockFactory boundedTextBlockFactory
     ObjectBoundsCalculator objectBoundsCalculator
 
     @Override
-    ObjectWritable createFor(DContext pageContext, DParagraph dParagraph) {
+    ObjectWritable createFor(DContext pageContext, Paragraph dParagraph) {
         // todo: is the following needed? or should boundedTextBlockFactory calculate width from contentsBounds
         float width = contentsDimensionsCalculator.calculateWidthFor(dParagraph, pageContext.contentsBounds)
         DContext paragraphContext = paragraphContextFactory.createContextFrom(pageContext, dParagraph)

@@ -13,7 +13,7 @@
 package com.github.dadeo.pdfbox.creator.writer.table
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.model.DBounds
+import com.github.dadeo.pdfbox.model.Bounds
 import com.github.dadeo.pdfbox.model.Table
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -27,7 +27,7 @@ class TableColumnWidthCalculatorTest extends Specification {
     @Unroll
     def "calculateFor"() {
         given:
-        context.contentsBounds = new DBounds(0, (float) (LEFT + contentsBoundsWidth), 0, LEFT)
+        context.contentsBounds = new Bounds(0, (float) (LEFT + contentsBoundsWidth), 0, LEFT)
 
         expect:
 

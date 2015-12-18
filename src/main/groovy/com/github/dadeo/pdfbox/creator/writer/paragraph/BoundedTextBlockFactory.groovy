@@ -18,18 +18,18 @@ import com.github.dadeo.pdfbox.creator.writer.text.AssignedLine
 import com.github.dadeo.pdfbox.creator.writer.text.StringToken
 import com.github.dadeo.pdfbox.creator.writer.text.StringTokenizer
 import com.github.dadeo.pdfbox.creator.writer.text.TokensToLineAssigner
-import com.github.dadeo.pdfbox.model.DParagraph
-import com.github.dadeo.pdfbox.model.DPart
+import com.github.dadeo.pdfbox.model.Paragraph
+import com.github.dadeo.pdfbox.model.Part
 
 
 class BoundedTextBlockFactory {
     StringTokenizer stringTokenizer = BootStrap.stringTokenizer
     TokensToLineAssigner tokensToLineAssigner = BootStrap.tokensToLineAssigner
 
-    BoundedTextBlock createFrom(DContext paragraphContext, DParagraph paragraph, float width) {
+    BoundedTextBlock createFrom(DContext paragraphContext, Paragraph paragraph, float width) {
         List<StringToken> tokens = []
 
-        paragraph.contents.each { DPart part ->
+        paragraph.contents.each { Part part ->
             tokens.addAll(stringTokenizer.tokenize(part.text, part.font ?: paragraphContext.font))
         }
 

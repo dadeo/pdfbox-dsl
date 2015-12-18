@@ -14,7 +14,7 @@ package com.github.dadeo.pdfbox.creator.writer.object
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.model.Bordered
-import com.github.dadeo.pdfbox.model.DObject
+import com.github.dadeo.pdfbox.model.PdfComponent
 import com.github.dadeo.pdfbox.model.Margined
 import com.github.dadeo.pdfbox.model.Padded
 
@@ -27,7 +27,7 @@ class ObjectBoundsCalculator {
      * @param object the object to calculate the bounds for
      * @param context the context with the containingBounds, borderBounds, and contentsBounds
      */
-    void calculateMaxBounds(DObject object, DContext context) {
+    void calculateMaxBounds(PdfComponent object, DContext context) {
         context.borderBounds = context.containingBounds
 
         if (object instanceof Margined)

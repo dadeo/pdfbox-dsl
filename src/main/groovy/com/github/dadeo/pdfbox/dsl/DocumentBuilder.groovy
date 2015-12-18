@@ -45,7 +45,7 @@ class DocumentBuilder extends FactoryBuilderSupport {
     static class DocumentBuilderFactory extends AbstractFactory {
 
         Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object o, Object o1, Map map) throws InstantiationException, IllegalAccessException {
-            new DDocument()
+            new Document()
         }
 
     }
@@ -53,7 +53,7 @@ class DocumentBuilder extends FactoryBuilderSupport {
     static class PageBuilderFactory extends AbstractFactory {
 
         Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object o, Object o1, Map map) throws InstantiationException, IllegalAccessException {
-            new DPage()
+            new Page()
         }
 
         void setParent(FactoryBuilderSupport builder, Object parent, Object child) {
@@ -77,10 +77,10 @@ class DocumentBuilder extends FactoryBuilderSupport {
         Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object o, Object text, Map map) throws InstantiationException, IllegalAccessException {
             Cell cell = new Cell()
             if (text) {
-                cell << new DParagraph(text.toString())
+                cell << new Paragraph(text.toString())
             }
             if (map.containsKey('text')) {
-                cell << new DParagraph(map.text.toString())
+                cell << new Paragraph(map.text.toString())
                 map.remove('text')
             }
             cell
@@ -94,12 +94,12 @@ class DocumentBuilder extends FactoryBuilderSupport {
     static class ParagraphBuilderFactory extends AbstractFactory {
 
         Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object objectType, Object text, Map map) throws InstantiationException, IllegalAccessException {
-            DParagraph paragraph = new DParagraph()
+            Paragraph paragraph = new Paragraph()
             if (text) {
-                paragraph << new DPart(text.toString())
+                paragraph << new Part(text.toString())
             }
             if (map.containsKey('text')) {
-                paragraph << new DPart(map.text.toString())
+                paragraph << new Part(map.text.toString())
                 map.remove('text')
             }
             paragraph
@@ -113,7 +113,7 @@ class DocumentBuilder extends FactoryBuilderSupport {
     static class PartBuilderFactory extends AbstractFactory {
 
         Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object objectType, Object text, Map map) throws InstantiationException, IllegalAccessException {
-            text ? new DPart(text: text) : new DPart()
+            text ? new Part(text: text) : new Part()
         }
 
         void setParent(FactoryBuilderSupport builder, Object parent, Object child) {
@@ -124,7 +124,7 @@ class DocumentBuilder extends FactoryBuilderSupport {
     static class HorizontalRuleBuilderFactory extends AbstractFactory {
 
         Object newInstance(FactoryBuilderSupport factoryBuilderSupport, Object o, Object o1, Map map) throws InstantiationException, IllegalAccessException {
-            new DHorizontalRule()
+            new HorizontalRule()
         }
 
         void setParent(FactoryBuilderSupport builder, Object parent, Object child) {

@@ -44,8 +44,8 @@ class VisualPlaygroundTest {
         .replaceAll(/\r|\n/, '')
 
     private Closure<Float> toFloat = { Number number -> number.toFloat() }
-    private Closure<DPoint> point = { Number x, Number y ->
-        new DPoint(toFloat(x), toFloat(y))
+    private Closure<Point> point = { Number x, Number y ->
+        new Point(toFloat(x), toFloat(y))
     }
 
     @Test
@@ -117,18 +117,18 @@ class VisualPlaygroundTest {
         bordered.border = 1
         DWriter dWriter = new DWriter(contentStream: contents)
         LineBorder lineBorder = new LineBorder()
-        lineBorder.drawBorder(bordered, dWriter, new DBounds(toFloat(9.25f), toFloat(1.75f * ONE_INCH), toFloat(9.0f * ONE_INCH), toFloat(1.70f * ONE_INCH)))
+        lineBorder.drawBorder(bordered, dWriter, new Bounds(toFloat(9.25f), toFloat(1.75f * ONE_INCH), toFloat(9.0f * ONE_INCH), toFloat(1.70f * ONE_INCH)))
 
         ObjectContextFactory contextFactory = BootStrap.objectContextFactory
 
-        DContext parentContext = new DContext(writer: dWriter, contentsBounds: DBounds.createFrom(point(ONE_INCH, 8.8 * ONE_INCH), point(1.5 * ONE_INCH, 8.6 * ONE_INCH)))
-        DHorizontalRule horizontalRule = new DHorizontalRule(thickness: 8, color: Color.yellow)
+        DContext parentContext = new DContext(writer: dWriter, contentsBounds: Bounds.createFrom(point(ONE_INCH, 8.8 * ONE_INCH), point(1.5 * ONE_INCH, 8.6 * ONE_INCH)))
+        HorizontalRule horizontalRule = new HorizontalRule(thickness: 8, color: Color.yellow)
         DContext horizontalRuleContext = contextFactory.createContextFrom(parentContext, horizontalRule)
         HorizontalRuleContentsDrawer horizontalRuleContentsDrawer = new HorizontalRuleContentsDrawer()
         horizontalRuleContentsDrawer.drawFor(horizontalRule, horizontalRuleContext)
 
-        parentContext = new DContext(writer: dWriter, contentsBounds: DBounds.createFrom(point(1.1 * ONE_INCH, 9.25 * ONE_INCH), point(1.4 * ONE_INCH, 9.0 * ONE_INCH)))
-        horizontalRule = new DHorizontalRule(thickness: toFloat(0.25 * ONE_INCH + 1), color: Color.yellow)
+        parentContext = new DContext(writer: dWriter, contentsBounds: Bounds.createFrom(point(1.1 * ONE_INCH, 9.25 * ONE_INCH), point(1.4 * ONE_INCH, 9.0 * ONE_INCH)))
+        horizontalRule = new HorizontalRule(thickness: toFloat(0.25 * ONE_INCH + 1), color: Color.yellow)
         contextFactory = BootStrap.objectContextFactory
         horizontalRuleContext = contextFactory.createContextFrom(parentContext, horizontalRule)
         horizontalRuleContentsDrawer.drawFor(horizontalRule, horizontalRuleContext)
@@ -196,7 +196,7 @@ class VisualPlaygroundTest {
     @Test
     void test_dsl_document() {
         use(PdfMeasurements) {
-            DDocument document = new DocumentBuilder().document {
+            Document document = new DocumentBuilder().document {
                 page margin: 1.inch, {
                     paragraph text: LOREM_IPSUM
                     paragraph text: LOREM_IPSUM
@@ -243,17 +243,17 @@ class VisualPlaygroundTest {
 
                     table columnRatios: [1],
                           positionType: PositionType.ABSOlUTE,
-                          position: DBounds.createFrom(new DPoint(0.5.inch, 2.75.inch), new DPoint(1.5.inch, 1.75.inch)),
+                          position: Bounds.createFrom(new Point(0.5.inch, 2.75.inch), new Point(1.5.inch, 1.75.inch)),
                           {
                               cell border: 2, {
-                                  paragraph text: 'Confirmation\nCode:', font: new DFont(PDType1Font.HELVETICA_BOLD_OBLIQUE, 10), justification: Justification.CENTER
-                                  paragraph text: '4321', font: new DFont(PDType1Font.HELVETICA_BOLD, 14), justification: Justification.CENTER
+                                  paragraph text: 'Confirmation\nCode:', font: new Font(PDType1Font.HELVETICA_BOLD_OBLIQUE, 10), justification: Justification.CENTER
+                                  paragraph text: '4321', font: new Font(PDType1Font.HELVETICA_BOLD, 14), justification: Justification.CENTER
                               }
                           }
 
                     paragraph LOREM_IPSUM, border: 1
 
-                    canvas height: 10, { DBounds bounds, DWriter writer ->
+                    canvas height: 10, { Bounds bounds, DWriter writer ->
                         writer.drawLine(bounds.leftTop(), bounds.rightBottom())
                         writer.drawLine(bounds.leftBottom(), bounds.rightTop())
                     }
@@ -278,41 +278,41 @@ class VisualPlaygroundTest {
         1.times {
 
             timer("create pdf") {
-                DDocument document = new DDocument()
+                Document document = new Document()
 
                 DocumentBuilder builder = new DocumentBuilder()
 
                 Table confirmationCodeTable = builder.table columnRatios: [1],
                                                             positionType: PositionType.ABSOlUTE,
-                                                            position: new DBounds((float) (1.5 * ONE_INCH), (float) (1.5 * ONE_INCH), (float) (0.5 * ONE_INCH), (float) (0.5 * ONE_INCH)),
+                                                            position: new Bounds((float) (1.5 * ONE_INCH), (float) (1.5 * ONE_INCH), (float) (0.5 * ONE_INCH), (float) (0.5 * ONE_INCH)),
                                                             {
                                                                 cell border: 2, {
-                                                                    paragraph font: new DFont(PDType1Font.HELVETICA_BOLD_OBLIQUE, 10), justification: Justification.CENTER, {
+                                                                    paragraph font: new Font(PDType1Font.HELVETICA_BOLD_OBLIQUE, 10), justification: Justification.CENTER, {
                                                                         part text: 'Confirmation'
                                                                     }
-                                                                    paragraph font: new DFont(PDType1Font.HELVETICA_BOLD_OBLIQUE, 10), justification: Justification.CENTER, {
+                                                                    paragraph font: new Font(PDType1Font.HELVETICA_BOLD_OBLIQUE, 10), justification: Justification.CENTER, {
                                                                         part text: "Code:"
                                                                     }
-                                                                    paragraph font: new DFont(PDType1Font.HELVETICA_BOLD, 14), justification: Justification.CENTER, {
+                                                                    paragraph font: new Font(PDType1Font.HELVETICA_BOLD, 14), justification: Justification.CENTER, {
                                                                         part text: '4321'
                                                                     }
                                                                 }
                                                             }
 
-                DParagraph paragraph1 = new DParagraph(LOREM_IPSUM)
-                paragraph1.font = new DFont(PDType1Font.HELVETICA_OBLIQUE, 6)
+                Paragraph paragraph1 = new Paragraph(LOREM_IPSUM)
+                paragraph1.font = new Font(PDType1Font.HELVETICA_OBLIQUE, 6)
                 paragraph1.border = 1
                 paragraph1.padding = 0
                 paragraph1.justification = Justification.LEFT
-                DParagraph paragraph3 = new DParagraph(LOREM_IPSUM)
-                paragraph3.font = new DFont(PDType1Font.HELVETICA_OBLIQUE, 6)
+                Paragraph paragraph3 = new Paragraph(LOREM_IPSUM)
+                paragraph3.font = new Font(PDType1Font.HELVETICA_OBLIQUE, 6)
                 paragraph3.border = 1
 //                paragraph3.borderPainter = new DashedBorder()
                 paragraph3.padding = 4
                 paragraph3.justification = Justification.RIGHT
                 paragraph3.backgroundColor = Color.lightGray
-                DParagraph paragraph4 = new DParagraph(LOREM_IPSUM)
-                paragraph4.font = new DFont(PDType1Font.HELVETICA_BOLD, 18, Color.BLUE)
+                Paragraph paragraph4 = new Paragraph(LOREM_IPSUM)
+                paragraph4.font = new Font(PDType1Font.HELVETICA_BOLD, 18, Color.BLUE)
                 paragraph4.border = 1
                 paragraph4.padding = 0
                 paragraph4.justification = Justification.CENTER
@@ -361,19 +361,19 @@ class VisualPlaygroundTest {
                 table << cell3
 
                 Canvas xCanvas = new Canvas(height: 20, border: 3, borderColor: Color.darkGray, backgroundColor: Color.orange, content: {
-                    DBounds bounds, DWriter writer ->
+                    Bounds bounds, DWriter writer ->
                         writer.drawLine(bounds.leftTop(), bounds.rightBottom())
                         writer.drawLine(bounds.leftBottom(), bounds.rightTop())
                 })
 
-                DPage page = new DPage()
+                Page page = new Page()
                 page.border = 5
                 page.borderLeftColor = Color.darkGray
                 page.borderRightColor = Color.lightGray
                 page.padding = ONE_INCH
                 page.addContent(paragraph1)
                 page.addContent(paragraph4)
-                page.addContent(new DHorizontalRule(thickness: 10, color: Color.red, border: 2, borderColor: Color.blue, marginLeft: 124, marginRight: 124, padding: 3, backgroundColor: Color.green))
+                page.addContent(new HorizontalRule(thickness: 10, color: Color.red, border: 2, borderColor: Color.blue, marginLeft: 124, marginRight: 124, padding: 3, backgroundColor: Color.green))
 //                page.addContent(new DHorizontalRule(thickness: 1, color: Color.BLACK, marginTop: 10, marginBottom: 0, marginLeft: 144, marginRight: 144))
 //                page.addContent(new DHorizontalRule(thickness: 10, color: Color.BLUE, marginTop: 0, marginBottom: 0, marginLeft: 144, marginRight: 144))
 //                page.addContent(new DHorizontalRule(thickness: 1, color: Color.BLACK, marginTop: 0, marginBottom: 0, marginLeft: 124, marginRight: 124))
@@ -396,7 +396,7 @@ class VisualPlaygroundTest {
         }
     }
 
-    protected DPage createPageTwo() {
+    protected Page createPageTwo() {
 
         def data = [
             [first: 'pinky', last: 'jones', ssn: '111'],
@@ -404,11 +404,11 @@ class VisualPlaygroundTest {
             [first: 'winky', last: 'jones', ssn: '333'],
         ]
 
-        DHorizontalRule hr = new DHorizontalRule(thickness: 1, color: Color.red, margin: 4, paddingBottom: 2)
+        HorizontalRule hr = new HorizontalRule(thickness: 1, color: Color.red, margin: 4, paddingBottom: 2)
 
-        DPage page = new DPage()
+        Page page = new Page()
 
-        DParagraph firstNameHeaderParagraph = new DParagraph("First Name")
+        Paragraph firstNameHeaderParagraph = new Paragraph("First Name")
         firstNameHeaderParagraph.justification = Justification.CENTER
 
         Cell firstNameHeader = new Cell()
@@ -416,10 +416,10 @@ class VisualPlaygroundTest {
         firstNameHeader << hr
 
         Cell lastNameHeader = new Cell()
-        lastNameHeader << new DParagraph("Last name")
+        lastNameHeader << new Paragraph("Last name")
 
         Cell ssnHeader = new Cell()
-        ssnHeader << new DParagraph("SSN")
+        ssnHeader << new Paragraph("SSN")
 
         Table personTable = new Table([1, 1, 1])
         personTable.margin = 5
@@ -427,7 +427,7 @@ class VisualPlaygroundTest {
         personTable << firstNameHeader << lastNameHeader << ssnHeader
 
         data.each {
-            personTable << new Cell(new DParagraph(it.first)) << new Cell(new DParagraph(it.last)) << new Cell(new DParagraph(it.ssn))
+            personTable << new Cell(new Paragraph(it.first)) << new Cell(new Paragraph(it.last)) << new Cell(new Paragraph(it.ssn))
         }
 
         Cell emptyCell = new Cell()
@@ -435,7 +435,7 @@ class VisualPlaygroundTest {
         Cell containerCell = new Cell(personTable)
         containerCell.verticalAlignment = VerticalAlignment.MIDDLE
 
-        Cell loremCell = new Cell(new DParagraph(LOREM_IPSUM))
+        Cell loremCell = new Cell(new Paragraph(LOREM_IPSUM))
 
         Table outerTable = new Table([1, 1])
         outerTable << loremCell << emptyCell << containerCell << loremCell << loremCell << loremCell

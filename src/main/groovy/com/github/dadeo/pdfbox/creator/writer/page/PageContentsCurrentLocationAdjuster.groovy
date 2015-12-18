@@ -13,15 +13,15 @@
 package com.github.dadeo.pdfbox.creator.writer.page
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.model.DBounds
+import com.github.dadeo.pdfbox.model.Bounds
 
 
 class PageContentsCurrentLocationAdjuster {
 
     void adjust(DContext pageContext, DContext childContext) {
         float newTop = childContext.containingBounds.bottom - 1
-        DBounds contentsBounds = pageContext.contentsBounds
-        pageContext.contentsBounds = new DBounds(newTop, contentsBounds.right, contentsBounds.bottom, contentsBounds.left)
+        Bounds contentsBounds = pageContext.contentsBounds
+        pageContext.contentsBounds = new Bounds(newTop, contentsBounds.right, contentsBounds.bottom, contentsBounds.left)
     }
 
 }

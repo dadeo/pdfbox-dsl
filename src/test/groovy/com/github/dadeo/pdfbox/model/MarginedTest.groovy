@@ -92,7 +92,7 @@ class MarginedTest {
         margined.marginBottom = 3
         margined.marginLeft = 4
 
-        DBounds offsets = margined.marginOffsets
+        Bounds offsets = margined.marginOffsets
 
         assert offsets.top == -1
         assert offsets.right == -2

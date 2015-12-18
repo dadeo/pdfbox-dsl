@@ -14,13 +14,13 @@ package com.github.dadeo.pdfbox.creator.writer
 
 import com.github.dadeo.pdfbox.creator.BootStrap
 import com.github.dadeo.pdfbox.creator.writer.page.PageWriter
-import com.github.dadeo.pdfbox.model.DDocument
+import com.github.dadeo.pdfbox.model.Document
 import org.apache.pdfbox.pdmodel.PDDocument
 
 class DocumentWriter {
     PageWriter pageWriter = BootStrap.pageWriter
 
-    byte[] write(DDocument dDocument) {
+    byte[] write(Document dDocument) {
         PDDocument pDDocument = new PDDocument()
 
         DContext context = new DContext(pdDocument: pDDocument, font: dDocument.font)

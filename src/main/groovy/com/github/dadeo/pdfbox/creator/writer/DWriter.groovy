@@ -12,9 +12,9 @@
  */
 package com.github.dadeo.pdfbox.creator.writer
 
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DFont
-import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Font
+import com.github.dadeo.pdfbox.model.Point
 import groovy.transform.Canonical
 import org.apache.pdfbox.pdmodel.PDPageContentStream
 
@@ -24,7 +24,7 @@ import java.awt.*
 class DWriter {
     PDPageContentStream contentStream
 
-    void writeText(String text, DPoint location, DFont font) {
+    void writeText(String text, Point location, Font font) {
         contentStream.beginText()
         contentStream.setNonStrokingColor font.color
         contentStream.setFont(font.font, font.size)
@@ -33,7 +33,7 @@ class DWriter {
         contentStream.endText()
     }
 
-    void drawLine(DPoint start, DPoint end, float lineWidth = 1, Color color = Color.black) {
+    void drawLine(Point start, Point end, float lineWidth = 1, Color color = Color.black) {
         contentStream.lineWidth = lineWidth
         contentStream.setStrokingColor color
         contentStream.moveTo(start.x, start.y)
@@ -41,7 +41,7 @@ class DWriter {
         contentStream.stroke()
     }
 
-    void fillRectangle(DBounds bounds, Color color) {
+    void fillRectangle(Bounds bounds, Color color) {
         float width = bounds.width
         float height = bounds.height
         contentStream.setNonStrokingColor color

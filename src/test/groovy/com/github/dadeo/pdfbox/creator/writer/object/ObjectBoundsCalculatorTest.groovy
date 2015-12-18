@@ -17,7 +17,7 @@ import com.github.dadeo.pdfbox.model.*
 import spock.lang.Specification
 
 class ObjectBoundsCalculatorTest extends Specification {
-    private static final DBounds ORIGINAL_CONTAINING_BOUNDS = new DBounds(500, 600, 100, 72)
+    private static final Bounds ORIGINAL_CONTAINING_BOUNDS = new Bounds(500, 600, 100, 72)
     private ObjectBoundsCalculator calculator = new ObjectBoundsCalculator()
     private DContext context = new DContext(containingBounds: ORIGINAL_CONTAINING_BOUNDS)
 
@@ -25,7 +25,7 @@ class ObjectBoundsCalculatorTest extends Specification {
         given:
         context.containingBounds = ORIGINAL_CONTAINING_BOUNDS
 
-        def object = new DObject() {}
+        def object = new PdfComponent() {}
 
         when:
         calculator.calculateMaxBounds(object, context)
@@ -40,7 +40,7 @@ class ObjectBoundsCalculatorTest extends Specification {
         given:
         context.containingBounds = ORIGINAL_CONTAINING_BOUNDS
 
-        def object = new DObject() {} as Margined
+        def object = new PdfComponent() {} as Margined
         object.marginTop = 5
         object.marginRight = 10
         object.marginBottom = 15
@@ -51,15 +51,15 @@ class ObjectBoundsCalculatorTest extends Specification {
 
         then:
         context.containingBounds == ORIGINAL_CONTAINING_BOUNDS
-        context.borderBounds == new DBounds(495, 590, 115, 92)
-        context.contentsBounds == new DBounds(495, 590, 115, 92)
+        context.borderBounds == new Bounds(495, 590, 115, 92)
+        context.contentsBounds == new Bounds(495, 590, 115, 92)
     }
 
     def "calculate max bounds when no margin, border, and no padding"() {
         given:
         context.containingBounds = ORIGINAL_CONTAINING_BOUNDS
 
-        def object = new DObject() {} as Bordered
+        def object = new PdfComponent() {} as Bordered
         object.borderTop = 5
         object.borderRight = 10
         object.borderBottom = 15
@@ -70,15 +70,15 @@ class ObjectBoundsCalculatorTest extends Specification {
 
         then:
         context.containingBounds == ORIGINAL_CONTAINING_BOUNDS
-        context.borderBounds == new DBounds(500, 600, 100, 72)
-        context.contentsBounds == new DBounds(495, 590, 115, 92)
+        context.borderBounds == new Bounds(500, 600, 100, 72)
+        context.contentsBounds == new Bounds(495, 590, 115, 92)
     }
 
     def "calculate max bounds when no margin, no border, and padding"() {
         given:
         context.containingBounds = ORIGINAL_CONTAINING_BOUNDS
 
-        def object = new DObject() {} as Padded
+        def object = new PdfComponent() {} as Padded
         object.paddingTop = 5
         object.paddingRight = 10
         object.paddingBottom = 15
@@ -90,14 +90,14 @@ class ObjectBoundsCalculatorTest extends Specification {
         then:
         context.containingBounds == ORIGINAL_CONTAINING_BOUNDS
         context.borderBounds == ORIGINAL_CONTAINING_BOUNDS
-        context.contentsBounds == new DBounds(495, 590, 115, 92)
+        context.contentsBounds == new Bounds(495, 590, 115, 92)
     }
 
     def "calculate max bounds when margin, border, and padding"() {
         given:
         context.containingBounds = ORIGINAL_CONTAINING_BOUNDS
 
-        def object = new DObject() {}.withTraits(Margined, Bordered, Padded)
+        def object = new PdfComponent() {}.withTraits(Margined, Bordered, Padded)
         object.margin = 20
         object.border = 20
         object.padding = 20
@@ -107,70 +107,70 @@ class ObjectBoundsCalculatorTest extends Specification {
 
         then:
         context.containingBounds == ORIGINAL_CONTAINING_BOUNDS
-        context.borderBounds == new DBounds(480, 580, 120, 92)
-        context.contentsBounds == new DBounds(440, 540, 160, 132)
+        context.borderBounds == new Bounds(480, 580, 120, 92)
+        context.contentsBounds == new Bounds(440, 540, 160, 132)
     }
 
     def "resize bounds height"() {
         given:
-        context.containingBounds = new DBounds(500, 600, 100, 72)
-        context.borderBounds = new DBounds(480, 580, 120, 92)
-        context.contentsBounds = new DBounds(440, 540, 160, 132)
+        context.containingBounds = new Bounds(500, 600, 100, 72)
+        context.borderBounds = new Bounds(480, 580, 120, 92)
+        context.contentsBounds = new Bounds(440, 540, 160, 132)
 
         when:
         calculator.resizeBoundsToHeight(150, context)
 
         then:
-        context.containingBounds == new DBounds(500, 600, 231, 72)
-        context.borderBounds == new DBounds(480, 580, 251, 92)
-        context.contentsBounds == new DBounds(440, 540, 291, 132)
+        context.containingBounds == new Bounds(500, 600, 231, 72)
+        context.borderBounds == new Bounds(480, 580, 251, 92)
+        context.contentsBounds == new Bounds(440, 540, 291, 132)
         context.contentsBounds.height == 150f
     }
 
     def "resize bounds to content width"() {
         given:
-        context.containingBounds = new DBounds(500, 600, 100, 72)
-        context.borderBounds = new DBounds(480, 580, 120, 92)
-        context.contentsBounds = new DBounds(440, 540, 160, 132)
+        context.containingBounds = new Bounds(500, 600, 100, 72)
+        context.borderBounds = new Bounds(480, 580, 120, 92)
+        context.contentsBounds = new Bounds(440, 540, 160, 132)
 
         when:
         calculator.resizeBoundsToContentWidth(200, context)
 
         then:
-        context.containingBounds == new DBounds(500, 391, 100, 72)
-        context.borderBounds == new DBounds(480, 371, 120, 92)
-        context.contentsBounds == new DBounds(440, 331, 160, 132)
+        context.containingBounds == new Bounds(500, 391, 100, 72)
+        context.borderBounds == new Bounds(480, 371, 120, 92)
+        context.contentsBounds == new Bounds(440, 331, 160, 132)
         context.contentsBounds.width == 200f
     }
 
     def "move bounds horizontally"() {
         given:
-        context.containingBounds = new DBounds(500, 600, 100, 72)
-        context.borderBounds = new DBounds(480, 580, 120, 92)
-        context.contentsBounds = new DBounds(440, 540, 160, 132)
+        context.containingBounds = new Bounds(500, 600, 100, 72)
+        context.borderBounds = new Bounds(480, 580, 120, 92)
+        context.contentsBounds = new Bounds(440, 540, 160, 132)
 
         when:
         calculator.moveBoundsHorizontally(200, context)
 
         then:
-        context.containingBounds == new DBounds(500, 800, 100, 272)
-        context.borderBounds == new DBounds(480, 780, 120, 292)
-        context.contentsBounds == new DBounds(440, 740, 160, 332)
+        context.containingBounds == new Bounds(500, 800, 100, 272)
+        context.borderBounds == new Bounds(480, 780, 120, 292)
+        context.contentsBounds == new Bounds(440, 740, 160, 332)
     }
 
     def "shrink bounds vertically"() {
         given:
-        context.containingBounds = new DBounds(500, 600, 100, 72)
-        context.borderBounds = new DBounds(480, 580, 120, 92)
-        context.contentsBounds = new DBounds(440, 540, 160, 132)
+        context.containingBounds = new Bounds(500, 600, 100, 72)
+        context.borderBounds = new Bounds(480, 580, 120, 92)
+        context.contentsBounds = new Bounds(440, 540, 160, 132)
 
         when:
         calculator.shrinkBoundsVertically(200, context)
 
         then:
-        context.containingBounds == new DBounds(300, 600, 100, 72)
-        context.borderBounds == new DBounds(280, 580, 120, 92)
-        context.contentsBounds == new DBounds(240, 540, 160, 132)
+        context.containingBounds == new Bounds(300, 600, 100, 72)
+        context.borderBounds == new Bounds(280, 580, 120, 92)
+        context.contentsBounds == new Bounds(240, 540, 160, 132)
     }
 
 }

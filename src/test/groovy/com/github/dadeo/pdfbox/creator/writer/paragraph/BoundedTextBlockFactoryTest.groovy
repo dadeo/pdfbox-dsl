@@ -17,32 +17,32 @@ import com.github.dadeo.pdfbox.creator.writer.text.AssignedLine
 import com.github.dadeo.pdfbox.creator.writer.text.StringToken
 import com.github.dadeo.pdfbox.creator.writer.text.StringTokenizer
 import com.github.dadeo.pdfbox.creator.writer.text.TokensToLineAssigner
-import com.github.dadeo.pdfbox.model.DFont
-import com.github.dadeo.pdfbox.model.DParagraph
-import com.github.dadeo.pdfbox.model.DPart
+import com.github.dadeo.pdfbox.model.Font
+import com.github.dadeo.pdfbox.model.Paragraph
+import com.github.dadeo.pdfbox.model.Part
 import spock.lang.Specification
 
 class BoundedTextBlockFactoryTest extends Specification {
-    private static final DFont PARAGRAPH_FONT = new DFont()
+    private static final Font PARAGRAPH_FONT = new Font()
 
     private StringTokenizer stringTokenizer = GroovyMock(StringTokenizer)
     private TokensToLineAssigner tokensToLineAssigner = Mock(TokensToLineAssigner)
     private BoundedTextBlockFactory factory = new BoundedTextBlockFactory(stringTokenizer: stringTokenizer,
                                                                           tokensToLineAssigner: tokensToLineAssigner)
     private DContext paragraphContext = new DContext()
-    private DParagraph paragraph = new DParagraph()
+    private Paragraph paragraph = new Paragraph()
 
     def "part font is used when one is specified"() {
         final String PART_TEXT_1 = "part text 1"
         final String PART_TEXT_2 = "part text 2"
-        final DFont PART_FONT_1 = new DFont(size: 8)
-        final DFont PART_FONT_2 = new DFont(size: 10)
+        final Font PART_FONT_1 = new Font(size: 8)
+        final Font PART_FONT_2 = new Font(size: 10)
 
         given:
         paragraphContext.font = PARAGRAPH_FONT
         paragraph.contents = [
-            new DPart(text: PART_TEXT_1, font: PART_FONT_1),
-            new DPart(text: PART_TEXT_2, font: PART_FONT_2)
+            new Part(text: PART_TEXT_1, font: PART_FONT_1),
+            new Part(text: PART_TEXT_2, font: PART_FONT_2)
         ]
 
         when:
@@ -56,13 +56,13 @@ class BoundedTextBlockFactoryTest extends Specification {
     def "paragraph context font is used when one part does not specify a font"() {
         final String PART_TEXT_1 = "part text 1"
         final String PART_TEXT_2 = "part text 2"
-        final DFont PART_FONT_2 = new DFont(size: 10)
+        final Font PART_FONT_2 = new Font(size: 10)
 
         given:
         paragraphContext.font = PARAGRAPH_FONT
         paragraph.contents = [
-            new DPart(text: PART_TEXT_1),
-            new DPart(text: PART_TEXT_2, font: PART_FONT_2)
+            new Part(text: PART_TEXT_1),
+            new Part(text: PART_TEXT_2, font: PART_FONT_2)
         ]
 
         when:
@@ -79,7 +79,7 @@ class BoundedTextBlockFactoryTest extends Specification {
         StringToken token3 = new StringToken(text: 'c')
 
         given:
-        paragraph.contents = [new DPart(), new DPart()]
+        paragraph.contents = [new Part(), new Part()]
 
         1 * stringTokenizer.tokenize(*_) >> [token1, token2]
         1 * stringTokenizer.tokenize(*_) >> [token3]
@@ -95,7 +95,7 @@ class BoundedTextBlockFactoryTest extends Specification {
         final List<AssignedLine> assignedLines = []
 
         given:
-        paragraph.contents = [new DPart()]
+        paragraph.contents = [new Part()]
         stringTokenizer.tokenize(*_) >> []
         tokensToLineAssigner.assignToLine(*_) >> assignedLines
 
@@ -111,7 +111,7 @@ class BoundedTextBlockFactoryTest extends Specification {
         final List<AssignedLine> assignedLines = []
 
         given:
-        paragraph.contents = [new DPart()]
+        paragraph.contents = [new Part()]
         stringTokenizer.tokenize(*_) >> []
 
         when:
@@ -126,7 +126,7 @@ class BoundedTextBlockFactoryTest extends Specification {
         final List<AssignedLine> assignedLines = []
 
         given:
-        paragraph.contents = [new DPart()]
+        paragraph.contents = [new Part()]
         paragraph.firstLineLeading = 4
         paragraph.lineLeading = 5
         stringTokenizer.tokenize(*_) >> []
@@ -143,7 +143,7 @@ class BoundedTextBlockFactoryTest extends Specification {
         final List<AssignedLine> assignedLines = []
 
         given:
-        paragraph.contents = [new DPart()]
+        paragraph.contents = [new Part()]
         paragraph.lineLeading = 5
         stringTokenizer.tokenize(*_) >> []
 

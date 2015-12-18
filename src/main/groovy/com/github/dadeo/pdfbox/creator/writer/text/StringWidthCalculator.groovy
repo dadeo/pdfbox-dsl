@@ -12,13 +12,13 @@
  */
 package com.github.dadeo.pdfbox.creator.writer.text
 
-import com.github.dadeo.pdfbox.model.DFont
+import com.github.dadeo.pdfbox.model.Font
 import groovy.transform.Immutable
 
 @Immutable
 class StringWidthCalculator {
 
-    float calculateFor(String text, DFont font) {
+    float calculateFor(String text, Font font) {
         float units = font.font.getStringWidth(text)
         (float) ((units / 1000) * font.size)
     }

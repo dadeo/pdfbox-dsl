@@ -12,14 +12,14 @@
  */
 package com.github.dadeo.pdfbox.creator.writer.page
 
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPage
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Page
 import spock.lang.Specification
 
 
 class PageBoundsCalculationsTest extends Specification {
     private PageBoundsCalculations calculations = new PageBoundsCalculations()
-    private DPage page = new DPage(pageBounds: new DBounds(720, 600, 200, 100))
+    private Page page = new Page(pageBounds: new Bounds(720, 600, 200, 100))
 
     def "border bounds when no margin, borders, and spacing"() {
         expect:
@@ -34,7 +34,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageBorderBounds(page) == new DBounds(710, 590, 210, 110)
+        calculations.calculatePageBorderBounds(page) == new Bounds(710, 590, 210, 110)
     }
 
     def "border bounds with every margin a different value"() {
@@ -47,7 +47,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageBorderBounds(page) == new DBounds(710, 580, 230, 140)
+        calculations.calculatePageBorderBounds(page) == new Bounds(710, 580, 230, 140)
     }
 
     def "border bounds are unaffected by width of border"() {
@@ -57,7 +57,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageBorderBounds(page) == new DBounds(720, 600, 200, 100)
+        calculations.calculatePageBorderBounds(page) == new Bounds(720, 600, 200, 100)
     }
 
     def "border bounds are not affected by padding"() {
@@ -67,7 +67,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageBorderBounds(page) == new DBounds(720, 600, 200, 100)
+        calculations.calculatePageBorderBounds(page) == new Bounds(720, 600, 200, 100)
     }
 
     def "content bounds when no margin, borders, and spacing"() {
@@ -83,7 +83,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageContentBounds(page) == new DBounds(710, 590, 210, 110)
+        calculations.calculatePageContentBounds(page) == new Bounds(710, 590, 210, 110)
     }
 
     def "contents with every margin a different value"() {
@@ -96,7 +96,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageContentBounds(page) == new DBounds(710, 580, 230, 140)
+        calculations.calculatePageContentBounds(page) == new Bounds(710, 580, 230, 140)
     }
 
     def "contents are within border"() {
@@ -106,7 +106,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageContentBounds(page) == new DBounds(710, 590, 210, 110)
+        calculations.calculatePageContentBounds(page) == new Bounds(710, 590, 210, 110)
     }
 
     def "contents with every border a different value"() {
@@ -119,7 +119,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageContentBounds(page) == new DBounds(710, 580, 230, 140)
+        calculations.calculatePageContentBounds(page) == new Bounds(710, 580, 230, 140)
     }
 
     def "contents are within padding"() {
@@ -129,7 +129,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageContentBounds(page) == new DBounds(710, 590, 210, 110)
+        calculations.calculatePageContentBounds(page) == new Bounds(710, 590, 210, 110)
     }
 
     def "contents with every padding a different value"() {
@@ -142,7 +142,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageContentBounds(page) == new DBounds(710, 580, 230, 140)
+        calculations.calculatePageContentBounds(page) == new Bounds(710, 580, 230, 140)
     }
 
     def "margin, border, and padding are accumulated for content's bounds"() {
@@ -154,7 +154,7 @@ class PageBoundsCalculationsTest extends Specification {
 
         expect:
 
-        calculations.calculatePageContentBounds(page) == new DBounds(690, 570, 230, 130)
+        calculations.calculatePageContentBounds(page) == new Bounds(690, 570, 230, 130)
     }
 
 }

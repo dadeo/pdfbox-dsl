@@ -14,16 +14,16 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DFont
-import com.github.dadeo.pdfbox.model.DParagraph
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Font
+import com.github.dadeo.pdfbox.model.Paragraph
 import com.github.dadeo.pdfbox.model.Justification
 import spock.lang.Specification
 
 class ParagraphContextFactoryTest extends Specification {
-    private static final DBounds PARENT_CONTENTS_BOUNDS = new DBounds(1, 2, 3, 4)
-    private static final DFont PAGE_FONT = new DFont()
-    private static final DFont PARAGRAPH_FONT = new DFont()
+    private static final Bounds PARENT_CONTENTS_BOUNDS = new Bounds(1, 2, 3, 4)
+    private static final Font PAGE_FONT = new Font()
+    private static final Font PARAGRAPH_FONT = new Font()
 
     private ObjectBoundsCalculator objectBoundsCalculator = Mock(ObjectBoundsCalculator)
     private ParagraphContextFactory factory = new ParagraphContextFactory(objectBoundsCalculator: objectBoundsCalculator)
@@ -36,24 +36,24 @@ class ParagraphContextFactoryTest extends Specification {
     def "page context is cloned and returned"() {
         expect:
 
-        factory.createContextFrom(parentContext, new DParagraph()).is clonedContext
+        factory.createContextFrom(parentContext, new Paragraph()).is clonedContext
     }
 
     def "DParagraph font overrides page context font"() {
         expect:
 
-        factory.createContextFrom(parentContext, new DParagraph(font: PARAGRAPH_FONT)).font.is PARAGRAPH_FONT
+        factory.createContextFrom(parentContext, new Paragraph(font: PARAGRAPH_FONT)).font.is PARAGRAPH_FONT
     }
 
     def "paragraph context contains parent context font when DParagraph font is null"() {
         expect:
 
-        factory.createContextFrom(parentContext, new DParagraph()).font.is PAGE_FONT
+        factory.createContextFrom(parentContext, new Paragraph()).font.is PAGE_FONT
     }
 
     def "paragraph context contains justification when one is specified"() {
         given:
-        DParagraph paragraph = new DParagraph(justification: justification)
+        Paragraph paragraph = new Paragraph(justification: justification)
 
         when:
         DContext paragraphContext = factory.createContextFrom(parentContext, paragraph)
@@ -70,18 +70,18 @@ class ParagraphContextFactoryTest extends Specification {
         parentContext.textJustification >> Justification.CENTER
 
         expect:
-        factory.createContextFrom(parentContext, new DParagraph()).textJustification.is Justification.CENTER
+        factory.createContextFrom(parentContext, new Paragraph()).textJustification.is Justification.CENTER
     }
 
     def "paragraph context contains parent context as parent"() {
         expect:
 
-        factory.createContextFrom(parentContext, new DParagraph()).parent.is parentContext
+        factory.createContextFrom(parentContext, new Paragraph()).parent.is parentContext
     }
 
     def "new context's containingBounds, borderBounds, and contentsBounds are initialized to parent context's contentsBounds"() {
         given:
-        DParagraph paragraph = new DParagraph()
+        Paragraph paragraph = new Paragraph()
 
         when:
         DContext childContext = factory.createContextFrom(parentContext, paragraph)

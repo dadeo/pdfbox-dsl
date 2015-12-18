@@ -12,11 +12,22 @@
  */
 package com.github.dadeo.pdfbox.model
 
-import com.github.dadeo.pdfbox.creator.writer.DWriter
+import com.github.dadeo.pdfbox.creator.writer.object.PositionType
 
+import java.awt.*
 
-interface DBorder {
+trait PdfComponent {
 
-    void drawBorder(Bordered bordered, DWriter writer, DBounds bounds)
+    Color backgroundColor
+
+    /**
+     * Specifies whether an object should be positioned relative to other objects or at an absolute position.
+     */
+    PositionType positionType = PositionType.RELATIVE
+
+    /**
+     * Specifies the position to place this object when positionType is set to ABSOLUTE.
+     */
+    Bounds position
 
 }

@@ -23,7 +23,7 @@ trait Bordered {
     float borderBottom = 0
     float borderLeft = 0
 
-    DBorder borderPainter = BootStrap.lineBorder
+    Border borderPainter = BootStrap.lineBorder
 
     Color borderTopColor = Color.black
     Color borderRightColor = Color.black
@@ -46,15 +46,15 @@ trait Bordered {
         this
     }
 
-    DBounds getBorderTextOffsets() {
-        new DBounds(-borderTop, -borderRight, borderBottom, borderLeft)
+    Bounds getBorderTextOffsets() {
+        new Bounds(-borderTop, -borderRight, borderBottom, borderLeft)
     }
 
-    DBounds getBorderLineOffsets() {
+    Bounds getBorderLineOffsets() {
         float topOffset = borderTop / 2
         float rightOffset = borderRight / 2
         float bottomOffset = borderBottom / 2
         float leftOffset = borderLeft / 2
-        new DBounds(-topOffset, -rightOffset, bottomOffset, leftOffset)
+        new Bounds(-topOffset, -rightOffset, bottomOffset, leftOffset)
     }
 }

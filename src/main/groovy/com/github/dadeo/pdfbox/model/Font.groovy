@@ -12,22 +12,18 @@
  */
 package com.github.dadeo.pdfbox.model
 
-import com.github.dadeo.pdfbox.creator.writer.object.PositionType
+import groovy.transform.Canonical
+import org.apache.pdfbox.pdmodel.font.PDFont
 
 import java.awt.*
 
-trait DObject {
+@Canonical
+class Font {
+    PDFont font
+    float size
+    Color color = Color.black
 
-    Color backgroundColor
-
-    /**
-     * Specifies whether an object should be positioned relative to other objects or at an absolute position.
-     */
-    PositionType positionType = PositionType.RELATIVE
-
-    /**
-     * Specifies the position to place this object when positionType is set to ABSOLUTE.
-     */
-    DBounds position
-
+    float getDescent() {
+        (float) ((font.fontDescriptor.descent / 1000) * size)
+    }
 }

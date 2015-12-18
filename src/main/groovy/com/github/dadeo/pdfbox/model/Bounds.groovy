@@ -20,23 +20,23 @@ import groovy.transform.ToString
 @CompileStatic
 @Immutable
 @ToString
-class DBounds {
+class Bounds {
     float top, right, bottom, left
 
-    DPoint leftTop() {
-        new DPoint(left, top)
+    Point leftTop() {
+        new Point(left, top)
     }
 
-    DPoint rightTop() {
-        new DPoint(right, top)
+    Point rightTop() {
+        new Point(right, top)
     }
 
-    DPoint leftBottom() {
-        new DPoint(left, bottom)
+    Point leftBottom() {
+        new Point(left, bottom)
     }
 
-    DPoint rightBottom() {
-        new DPoint(right, bottom)
+    Point rightBottom() {
+        new Point(right, bottom)
     }
 
     float getWidth() {
@@ -47,25 +47,25 @@ class DBounds {
         top - bottom + 1
     }
 
-    DBounds offset(DBounds offsets) {
-        new DBounds((float) (top + offsets.top), (float) (right + offsets.right), (float) (bottom + offsets.bottom), (float) (left + offsets.left))
+    Bounds offset(Bounds offsets) {
+        new Bounds((float) (top + offsets.top), (float) (right + offsets.right), (float) (bottom + offsets.bottom), (float) (left + offsets.left))
     }
 
-    DBounds offset(float offsetX, float offsetY) {
-        new DBounds((float) (top + offsetY), (float) (right + offsetX), (float) (bottom + offsetY), (float) (left + offsetX))
+    Bounds offset(float offsetX, float offsetY) {
+        new Bounds((float) (top + offsetY), (float) (right + offsetX), (float) (bottom + offsetY), (float) (left + offsetX))
     }
 
-    DBounds offset(float topOffset, float rightOffset, float bottomOffset, float leftOffset) {
-        new DBounds((float) (top + topOffset), (float) (right + rightOffset), (float) (bottom + bottomOffset), (float) (left + leftOffset))
+    Bounds offset(float topOffset, float rightOffset, float bottomOffset, float leftOffset) {
+        new Bounds((float) (top + topOffset), (float) (right + rightOffset), (float) (bottom + bottomOffset), (float) (left + leftOffset))
     }
 
-    static DBounds createFrom(DPoint leftTop, DPoint rightBottom) {
+    static Bounds createFrom(Point leftTop, Point rightBottom) {
         float top = leftTop.y
         float right = rightBottom.x
         float bottom = rightBottom.y
         float left = leftTop.x
 
-        new DBounds(top, right, bottom, left)
+        new Bounds(top, right, bottom, left)
     }
 
 }

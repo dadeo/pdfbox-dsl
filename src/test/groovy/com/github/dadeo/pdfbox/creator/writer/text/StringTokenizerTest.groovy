@@ -12,13 +12,13 @@
  */
 package com.github.dadeo.pdfbox.creator.writer.text
 
-import com.github.dadeo.pdfbox.model.DFont
+import com.github.dadeo.pdfbox.model.Font
 import groovy.mock.interceptor.MockFor
 import org.junit.Before
 import org.junit.Test
 
 class StringTokenizerTest {
-    private static final DFont ACTUAL_FONT = new DFont()
+    private static final Font ACTUAL_FONT = new Font()
     private StringTokenizer tokenizer
     private MockFor stringWidthCalculatorMock
 
@@ -185,7 +185,7 @@ class StringTokenizerTest {
     }
 
     private void expectStringWidthCalculator(Map<String, ?> options) {
-        stringWidthCalculatorMock.demand.calculateFor { String partialText, DFont fontUsed ->
+        stringWidthCalculatorMock.demand.calculateFor { String partialText, Font fontUsed ->
             assert partialText == options.expectsText
             assert fontUsed.is(ACTUAL_FONT)
             options.returns

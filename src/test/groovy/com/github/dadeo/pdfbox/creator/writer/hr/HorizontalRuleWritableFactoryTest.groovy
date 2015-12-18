@@ -15,7 +15,7 @@ package com.github.dadeo.pdfbox.creator.writer.hr
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContextFactory
-import com.github.dadeo.pdfbox.model.DHorizontalRule
+import com.github.dadeo.pdfbox.model.HorizontalRule
 import spock.lang.Specification
 
 class HorizontalRuleWritableFactoryTest extends Specification {
@@ -25,7 +25,7 @@ class HorizontalRuleWritableFactoryTest extends Specification {
     private HorizontalRuleWritableFactory horizontalRuleWritableFactory = new HorizontalRuleWritableFactory(contextFactory: contextFactory,
                                                                                                             objectBoundsCalculator: objectBoundsCalculator)
     private DContext parentContext = Mock(DContext)
-    private DHorizontalRule horizontalRule = new DHorizontalRule()
+    private HorizontalRule horizontalRule = new HorizontalRule()
 
     def "createFor returns a configured writable"() {
         given:

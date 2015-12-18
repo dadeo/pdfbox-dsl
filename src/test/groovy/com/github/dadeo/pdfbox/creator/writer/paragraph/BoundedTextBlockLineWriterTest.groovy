@@ -15,8 +15,8 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.text.AssignedLine
 import com.github.dadeo.pdfbox.creator.writer.text.StringToken
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Point
 import spock.lang.Specification
 
 class BoundedTextBlockLineWriterTest extends Specification {
@@ -28,12 +28,12 @@ class BoundedTextBlockLineWriterTest extends Specification {
     private StringToken token2 = new StringToken()
     private StringToken token3 = new StringToken()
     private AssignedLine line = new AssignedLine()
-    private DBounds contentsBounds = GroovyMock(DBounds)
-    private DPoint currentLocation = new DPoint(100, 100)
-    private DPoint location1 = new DPoint(100, 800)
-    private DPoint location2 = new DPoint(100, 700)
-    private DPoint location3 = new DPoint(100, 600)
-    private DPoint location4 = new DPoint(100, 500)
+    private Bounds contentsBounds = GroovyMock(Bounds)
+    private Point currentLocation = new Point(100, 100)
+    private Point location1 = new Point(100, 800)
+    private Point location2 = new Point(100, 700)
+    private Point location3 = new Point(100, 600)
+    private Point location4 = new Point(100, 500)
     private DWriter dWriter = Mock(DWriter)
 
     def "passes the repositioned location in to the first call of token writer"() {
@@ -67,7 +67,7 @@ class BoundedTextBlockLineWriterTest extends Specification {
         line.tokens = [token1, token2, token3]
 
         when:
-        DPoint result = lineWriter.write(line, contentsBounds, currentLocation, dWriter)
+        Point result = lineWriter.write(line, contentsBounds, currentLocation, dWriter)
 
         then:
         1 * tokenWriter.write(*_) >> location2

@@ -13,12 +13,12 @@
 package com.github.dadeo.pdfbox.creator.writer.object
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.model.DObject
+import com.github.dadeo.pdfbox.model.PdfComponent
 
 class ObjectContextFactory {
     ObjectBoundsCalculator objectBoundsCalculator
 
-    DContext createContextFrom(DContext parentContext, DObject object) {
+    DContext createContextFrom(DContext parentContext, PdfComponent object) {
         DContext childContext = parentContext.clone()
         childContext.parent = parentContext
         childContext.containingBounds = (!object || object.positionType == PositionType.RELATIVE) ? parentContext.contentsBounds : object.position

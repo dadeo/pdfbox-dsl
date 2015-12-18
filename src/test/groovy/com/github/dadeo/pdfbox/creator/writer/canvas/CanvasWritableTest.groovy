@@ -17,11 +17,11 @@ import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.model.Canvas
-import com.github.dadeo.pdfbox.model.DBounds
+import com.github.dadeo.pdfbox.model.Bounds
 import spock.lang.Specification
 
 class CanvasWritableTest extends Specification {
-    private static final DBounds CONTENTS_BOUNDS = new DBounds(1, 2, 3, 4)
+    private static final Bounds CONTENTS_BOUNDS = new Bounds(1, 2, 3, 4)
     private BackgroundPainter backgroundPainter = Mock(BackgroundPainter)
     private BorderDrawer borderDrawer = Mock(BorderDrawer)
     private Canvas canvas = Mock(Canvas)

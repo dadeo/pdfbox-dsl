@@ -15,18 +15,18 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.text.AssignedLine
 import com.github.dadeo.pdfbox.creator.writer.text.StringToken
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Point
 
 
 class BoundedTextBlockLineWriter {
     TextBlockCurrentLocationPositioner currentLocationPositioner
     BoundedTextBlockTokenWriter tokenWriter
 
-    DPoint write(AssignedLine line, DBounds contentsBounds, DPoint currentLocation, DWriter writer) {
-        DPoint repositionedLocation = currentLocationPositioner.repositionForLine(currentLocation, contentsBounds, line)
+    Point write(AssignedLine line, Bounds contentsBounds, Point currentLocation, DWriter writer) {
+        Point repositionedLocation = currentLocationPositioner.repositionForLine(currentLocation, contentsBounds, line)
 
-        line.tokens.inject(repositionedLocation) { DPoint location, StringToken token ->
+        line.tokens.inject(repositionedLocation) { Point location, StringToken token ->
             tokenWriter.write(token, location, writer)
         }
     }

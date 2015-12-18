@@ -15,23 +15,23 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.text.AssignedLine
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Point
 import spock.lang.Specification
 
 
 class BoundedTextBlockWriterTest extends Specification {
-    private static final DBounds CONTENTS_BOUNDS = new DBounds(800, 0, 0, 100)
-    private static final DPoint STARTING_LOCATION = new DPoint(100, 800)
-    private static final DPoint STARTING_LOCATION_LEADING_ADJUSTED = new DPoint(100, 795)
-    private static final DPoint END_LOCATION_1 = new DPoint(100, 775)
-    private static final DPoint END_LOCATION_1_LEADING_ADJUSTED = new DPoint(100, 772)
-    private static final DPoint END_LOCATION_2 = new DPoint(100, 750)
-    private static final DPoint END_LOCATION_2_LEADING_ADJUSTED = new DPoint(100, 747)
-    private static final DPoint END_LOCATION_3 = new DPoint(100, 700)
-    private static final DPoint END_LOCATION_3_LEADING_ADJUSTED = new DPoint(100, 697)
-    private static final DPoint END_LOCATION_4 = new DPoint(100, 675)
-    private static final DPoint END_LOCATION_4_LEADING_ADJUSTED = new DPoint(100, 672)
+    private static final Bounds CONTENTS_BOUNDS = new Bounds(800, 0, 0, 100)
+    private static final Point STARTING_LOCATION = new Point(100, 800)
+    private static final Point STARTING_LOCATION_LEADING_ADJUSTED = new Point(100, 795)
+    private static final Point END_LOCATION_1 = new Point(100, 775)
+    private static final Point END_LOCATION_1_LEADING_ADJUSTED = new Point(100, 772)
+    private static final Point END_LOCATION_2 = new Point(100, 750)
+    private static final Point END_LOCATION_2_LEADING_ADJUSTED = new Point(100, 747)
+    private static final Point END_LOCATION_3 = new Point(100, 700)
+    private static final Point END_LOCATION_3_LEADING_ADJUSTED = new Point(100, 697)
+    private static final Point END_LOCATION_4 = new Point(100, 675)
+    private static final Point END_LOCATION_4_LEADING_ADJUSTED = new Point(100, 672)
 
     private BoundedTextBlockLineWriter lineWriter = Mock(BoundedTextBlockLineWriter)
     private TextBlockLineWriterFactory lineWriterFactory = Mock(TextBlockLineWriterFactory)

@@ -13,7 +13,7 @@
 package com.github.dadeo.pdfbox.model
 
 
-class Table implements DObject, Margined, Bordered, Padded {
+class Table implements PdfComponent, Margined, Bordered, Padded {
     List<Float> columnRatios
     List<Cell> contents = []
     VerticalAlignment verticalAlignment

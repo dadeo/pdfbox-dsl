@@ -16,7 +16,7 @@ import com.github.dadeo.pdfbox.model.*
 
 class ObjectContentsWidthCalculator {
 
-    float calculateFor(DObject object, DBounds areaBounds) {
+    float calculateFor(PdfComponent object, Bounds areaBounds) {
         float right = areaBounds.right
         float left = areaBounds.left
 

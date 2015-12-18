@@ -17,84 +17,84 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font
 import spock.lang.Specification
 
 class DocumentBuilderTest extends Specification {
-    private DFont FONT_1 = new DFont(PDType1Font.HELVETICA_BOLD, 12)
-    private DFont FONT_2 = new DFont(PDType1Font.HELVETICA, 10)
+    private Font FONT_1 = new Font(PDType1Font.HELVETICA_BOLD, 12)
+    private Font FONT_2 = new Font(PDType1Font.HELVETICA, 10)
     private DocumentBuilder builder = new DocumentBuilder()
 
     def "creates empty document"() {
         when:
-        DDocument document = builder.document()
+        Document document = builder.document()
 
         then:
-        document instanceof DDocument
+        document instanceof Document
         document.pages == []
     }
 
     def "creates document with page"() {
         when:
-        DDocument document = builder.document {
+        Document document = builder.document {
             page()
         }
 
         then:
-        document.pages == [new DPage()]
+        document.pages == [new Page()]
     }
 
     def "creates document with multiple pages"() {
         when:
-        DDocument document = builder.document {
+        Document document = builder.document {
             page()
             page()
         }
 
         then:
-        document.pages == [new DPage(), new DPage()]
+        document.pages == [new Page(), new Page()]
     }
 
     def "creates page with font"() {
         when:
-        DPage page = builder.page(font: FONT_1)
+        Page page = builder.page(font: FONT_1)
 
         then:
-        page instanceof DPage
+        page instanceof Page
         page.contents == []
         page.font == FONT_1
     }
 
     def "creates page with contents"() {
         when:
-        DPage page = builder.page {
+        Page page = builder.page {
             paragraph(font: FONT_1)
             hr()
         }
 
         then:
-        page instanceof DPage
-        page.contents == [new DParagraph(font: FONT_1), new DHorizontalRule()]
+        page instanceof Page
+        page.contents == [new Paragraph(font: FONT_1), new HorizontalRule()]
     }
 
     def "creates empty paragraph"() {
         when:
-        DParagraph paragraph = builder.paragraph()
+        Paragraph paragraph = builder.paragraph()
 
         then:
-        paragraph == new DParagraph()
+        paragraph == new Paragraph()
     }
 
     def "creates paragraph with a font and a part"() {
         when:
-        DParagraph paragraph = builder.paragraph("yo dog", justification: Justification.CENTER, font: FONT_1)
+        Paragraph paragraph = builder.paragraph("yo dog", justification: Justification.CENTER, font: FONT_1)
 
         then:
-        paragraph == new DParagraph(justification: Justification.CENTER, font: FONT_1, contents: [new DPart("yo dog")])
+        paragraph == new Paragraph(justification: Justification.CENTER, font: FONT_1, contents: [new Part("yo dog")])
     }
 
     def "creates paragraph text specified with text, justification, and font attributes"() {
         when:
-        DParagraph paragraph = builder.paragraph(text: "yo dog", justification: Justification.CENTER, font: FONT_1)
+        Paragraph paragraph = builder.paragraph(text: "yo dog", justification: Justification.CENTER, font: FONT_1)
 
         then:
-        paragraph == new DParagraph(justification: Justification.CENTER, font: FONT_1, contents: [new DPart("yo dog")])
+        paragraph == new Paragraph(justification: Justification.CENTER, font: FONT_1, contents: [new Part("yo dog")])
     }
 
     def "creates paragraph where text attribute is an Object"() {
@@ -107,10 +107,10 @@ class DocumentBuilderTest extends Specification {
         }
 
         when:
-        DParagraph paragraph = builder.paragraph(text: textObject, justification: Justification.CENTER, font: FONT_1)
+        Paragraph paragraph = builder.paragraph(text: textObject, justification: Justification.CENTER, font: FONT_1)
 
         then:
-        paragraph == new DParagraph(justification: Justification.CENTER, font: FONT_1, contents: [new DPart("yo dog")])
+        paragraph == new Paragraph(justification: Justification.CENTER, font: FONT_1, contents: [new Part("yo dog")])
     }
 
     def "creates paragraph where text parameter is an Object"() {
@@ -123,37 +123,37 @@ class DocumentBuilderTest extends Specification {
         }
 
         when:
-        DParagraph paragraph = builder.paragraph(textObject, justification: Justification.CENTER, font: FONT_1)
+        Paragraph paragraph = builder.paragraph(textObject, justification: Justification.CENTER, font: FONT_1)
 
         then:
-        paragraph == new DParagraph(justification: Justification.CENTER, font: FONT_1, contents: [new DPart("yo dog")])
+        paragraph == new Paragraph(justification: Justification.CENTER, font: FONT_1, contents: [new Part("yo dog")])
     }
 
     def "creates paragraph with multiple parts"() {
         when:
-        DParagraph paragraph = builder.paragraph {
+        Paragraph paragraph = builder.paragraph {
             part(text: "yo ", font: FONT_1)
             part(text: "dog", font: FONT_2)
         }
 
         then:
-        paragraph == new DParagraph(contents: [new DPart(text: "yo ", font: FONT_1), new DPart(text: "dog", font: FONT_2)])
+        paragraph == new Paragraph(contents: [new Part(text: "yo ", font: FONT_1), new Part(text: "dog", font: FONT_2)])
     }
 
     def "creates empty part"() {
         when:
-        DPart part = builder.part()
+        Part part = builder.part()
 
         then:
-        part == new DPart()
+        part == new Part()
     }
 
     def "creates part with text parameter (String)"() {
         when:
-        DPart part = builder.part("yo dog")
+        Part part = builder.part("yo dog")
 
         then:
-        part == new DPart(text: "yo dog")
+        part == new Part(text: "yo dog")
     }
 
     def "creates part with text parameter (Object)"() {
@@ -166,18 +166,18 @@ class DocumentBuilderTest extends Specification {
         }
 
         when:
-        DPart part = builder.part(textObject)
+        Part part = builder.part(textObject)
 
         then:
-        part == new DPart(text: "yo dog")
+        part == new Part(text: "yo dog")
     }
 
     def "creates part with text specified with text attribute (String)"() {
         when:
-        DPart part = builder.part(text: "yo dog")
+        Part part = builder.part(text: "yo dog")
 
         then:
-        part == new DPart(text: "yo dog")
+        part == new Part(text: "yo dog")
     }
 
     def "creates part with text specified with text attribute (Object)"() {
@@ -190,34 +190,34 @@ class DocumentBuilderTest extends Specification {
         }
 
         when:
-        DPart part = builder.part(text: textObject)
+        Part part = builder.part(text: textObject)
 
         then:
-        part == new DPart(text: "yo dog")
+        part == new Part(text: "yo dog")
     }
 
     def "creates part with text and font"() {
         when:
-        DPart part = builder.part("yo dog", font: FONT_2)
+        Part part = builder.part("yo dog", font: FONT_2)
 
         then:
-        part == new DPart(text: "yo dog", font: FONT_2)
+        part == new Part(text: "yo dog", font: FONT_2)
     }
 
     def "creates empty horizontal rule"() {
         when:
-        DHorizontalRule horizontalRule = builder.hr()
+        HorizontalRule horizontalRule = builder.hr()
 
         then:
-        horizontalRule == new DHorizontalRule()
+        horizontalRule == new HorizontalRule()
     }
 
     def "creates horizontal rule with thickness"() {
         when:
-        DHorizontalRule horizontalRule = builder.hr(thickness: 4f)
+        HorizontalRule horizontalRule = builder.hr(thickness: 4f)
 
         then:
-        horizontalRule == new DHorizontalRule(thickness: 4f)
+        horizontalRule == new HorizontalRule(thickness: 4f)
     }
 
     def "creates empty table"() {
@@ -268,7 +268,7 @@ class DocumentBuilderTest extends Specification {
 
         then:
         cell.verticalAlignment == VerticalAlignment.MIDDLE
-        cell.contents == [new DParagraph(), new DHorizontalRule(), new DParagraph()]
+        cell.contents == [new Paragraph(), new HorizontalRule(), new Paragraph()]
     }
 
     def "creates cell with paragraph with text parameter (String)"() {
@@ -277,7 +277,7 @@ class DocumentBuilderTest extends Specification {
 
         then:
         cell.verticalAlignment == VerticalAlignment.MIDDLE
-        cell.contents == [new DParagraph("yo dog")]
+        cell.contents == [new Paragraph("yo dog")]
     }
 
     def "creates cell with paragraph with text parameter (Object)"() {
@@ -294,7 +294,7 @@ class DocumentBuilderTest extends Specification {
 
         then:
         cell.verticalAlignment == VerticalAlignment.MIDDLE
-        cell.contents == [new DParagraph("yo dog")]
+        cell.contents == [new Paragraph("yo dog")]
     }
 
     def "creates cell with paragraph when text (String) passed in with text attribute"() {
@@ -303,7 +303,7 @@ class DocumentBuilderTest extends Specification {
 
         then:
         cell.verticalAlignment == VerticalAlignment.MIDDLE
-        cell.contents == [new DParagraph("yo dog")]
+        cell.contents == [new Paragraph("yo dog")]
     }
 
     def "creates cell with paragraph when text (Object) passed in with text attribute"() {
@@ -320,7 +320,7 @@ class DocumentBuilderTest extends Specification {
 
         then:
         cell.verticalAlignment == VerticalAlignment.MIDDLE
-        cell.contents == [new DParagraph("yo dog")]
+        cell.contents == [new Paragraph("yo dog")]
     }
 
     def "creates a canvas with height and content"() {

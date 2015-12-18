@@ -92,7 +92,7 @@ class PaddedTest {
         padded.paddingBottom = 3
         padded.paddingLeft = 4
 
-        DBounds offsets = padded.paddingOffsets
+        Bounds offsets = padded.paddingOffsets
 
         assert offsets.top == -1
         assert offsets.right == -2

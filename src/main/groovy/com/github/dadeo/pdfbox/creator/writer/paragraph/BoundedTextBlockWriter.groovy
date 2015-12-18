@@ -15,22 +15,22 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.DWriter
 import com.github.dadeo.pdfbox.creator.writer.text.AssignedLine
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Point
 
 class BoundedTextBlockWriter {
     TextBlockLineWriterFactory textBlockLineWriterFactory
 
     void write(BoundedTextBlock textBlock, DContext context) {
         DWriter writer = context.writer
-        DBounds contentsBounds = context.contentsBounds
-        DPoint currentLocation = context.contentsBounds.leftTop()
+        Bounds contentsBounds = context.contentsBounds
+        Point currentLocation = context.contentsBounds.leftTop()
 
         BoundedTextBlockLineWriter lineWriter = textBlockLineWriterFactory.createWriterFor(context)
 
         float leading = textBlock.firstLineLeading
-        textBlock.assignedLines.inject(currentLocation) { DPoint location, AssignedLine line ->
-            DPoint leadingAdjustedLocation = location.offset(0, -leading)
+        textBlock.assignedLines.inject(currentLocation) { Point location, AssignedLine line ->
+            Point leadingAdjustedLocation = location.offset(0, -leading)
             leading = textBlock.lineLeading
             lineWriter.write(line, contentsBounds, leadingAdjustedLocation, writer)
         }

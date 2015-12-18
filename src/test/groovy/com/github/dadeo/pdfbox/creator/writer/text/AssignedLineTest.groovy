@@ -12,14 +12,14 @@
  */
 package com.github.dadeo.pdfbox.creator.writer.text
 
-import com.github.dadeo.pdfbox.model.DFont
+import com.github.dadeo.pdfbox.model.Font
 import spock.lang.Specification
 
 class AssignedLineTest extends Specification {
 
     def "height is the maximum height of the font"() {
         expect:
-        List<StringToken> tokens = fontSizes.collect { new StringToken(font: new DFont(size: it)) }
+        List<StringToken> tokens = fontSizes.collect { new StringToken(font: new Font(size: it)) }
         new AssignedLine(tokens: tokens).height == height
 
         where:

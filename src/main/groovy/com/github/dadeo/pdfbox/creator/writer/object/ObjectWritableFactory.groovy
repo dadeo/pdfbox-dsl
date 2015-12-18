@@ -13,9 +13,9 @@
 package com.github.dadeo.pdfbox.creator.writer.object
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.model.DObject
+import com.github.dadeo.pdfbox.model.PdfComponent
 
-interface ObjectWritableFactory<T extends DObject> {
+interface ObjectWritableFactory<T extends PdfComponent> {
 
     ObjectWritable createFor(DContext pageContext, T dObject)
 

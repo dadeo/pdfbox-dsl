@@ -17,8 +17,8 @@ import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritableFactoryFactory
 import com.github.dadeo.pdfbox.creator.writer.object.PositionType
-import com.github.dadeo.pdfbox.model.DObject
-import com.github.dadeo.pdfbox.model.DPage
+import com.github.dadeo.pdfbox.model.PdfComponent
+import com.github.dadeo.pdfbox.model.Page
 import spock.lang.Specification
 
 import static org.hamcrest.CoreMatchers.sameInstance
@@ -28,10 +28,10 @@ class PageContentsWriterTest extends Specification {
     private PageContentsCurrentLocationAdjuster currentLocationAdjuster = Mock(PageContentsCurrentLocationAdjuster)
     private ObjectWritableFactoryFactory factoryFactory = Mock(ObjectWritableFactoryFactory)
     private PageContentsWriter writer = new PageContentsWriter(writableFactoryFactory: factoryFactory, currentLocationAdjuster: currentLocationAdjuster)
-    private DPage dPage = new DPage()
+    private Page dPage = new Page()
 
     def "passes null in to first child writer"() {
-        DObject contents1 = new DObject() {}
+        PdfComponent contents1 = new PdfComponent() {}
         ObjectWritable objectWritable1 = Mock(ObjectWritable)
         ObjectWritableFactory factory1 = Mock(ObjectWritableFactory)
 
@@ -53,9 +53,9 @@ class PageContentsWriterTest extends Specification {
     }
 
     def "passes result of previous content writer in to next content writer"() {
-        DObject contents1 = new DObject() {}
-        DObject contents2 = new DObject() {}
-        DObject contents3 = new DObject() {}
+        PdfComponent contents1 = new PdfComponent() {}
+        PdfComponent contents2 = new PdfComponent() {}
+        PdfComponent contents3 = new PdfComponent() {}
         ObjectWritable objectWritable1 = Mock(ObjectWritable)
         ObjectWritable objectWritable2 = Mock(ObjectWritable)
         ObjectWritable objectWritable3 = Mock(ObjectWritable)
@@ -97,9 +97,9 @@ class PageContentsWriterTest extends Specification {
     }
 
     def "location isn't adjusted for absolutely positioned elements"() {
-        DObject contents1 = new DObject() {}
-        DObject contents2 = new DObject() {}
-        DObject contents3 = new DObject() {}
+        PdfComponent contents1 = new PdfComponent() {}
+        PdfComponent contents2 = new PdfComponent() {}
+        PdfComponent contents3 = new PdfComponent() {}
         ObjectWritable objectWritable1 = Mock(ObjectWritable)
         ObjectWritable objectWritable2 = Mock(ObjectWritable)
         ObjectWritable objectWritable3 = Mock(ObjectWritable)

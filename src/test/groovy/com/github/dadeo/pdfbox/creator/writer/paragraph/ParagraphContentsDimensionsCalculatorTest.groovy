@@ -14,8 +14,8 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectContentsWidthCalculator
 import com.github.dadeo.pdfbox.creator.writer.positioning.DescentMultiplier
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DParagraph
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Paragraph
 import spock.lang.Specification
 
 class ParagraphContentsDimensionsCalculatorTest extends Specification {
@@ -35,8 +35,8 @@ class ParagraphContentsDimensionsCalculatorTest extends Specification {
 
     def "calculateWidthFor delegates to ObjectWidthCalculator"() {
         given:
-        DParagraph paragraph = new DParagraph() {}
-        DBounds bounds = new DBounds(1, 2, 3, 4)
+        Paragraph paragraph = new Paragraph() {}
+        Bounds bounds = new Bounds(1, 2, 3, 4)
         1 * objectContentsWidthCalculator.calculateFor(paragraph, bounds) >> CALCULATED_WIDTH
 
         expect:
@@ -45,7 +45,7 @@ class ParagraphContentsDimensionsCalculatorTest extends Specification {
 
     def "calculateHeight for paragraph"() {
         given:
-        DParagraph paragraph = Mock(DParagraph) {
+        Paragraph paragraph = Mock(Paragraph) {
             getBorderBottom() >> 1f
             getParagraphBottomDescentMultiplier() >> DESCENT_MODIFIER
         }

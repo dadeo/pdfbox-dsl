@@ -17,7 +17,7 @@ import com.github.dadeo.pdfbox.creator.writer.object.*
 import com.github.dadeo.pdfbox.creator.writer.positioning.DescentMultiplier
 import com.github.dadeo.pdfbox.creator.writer.util.VerticalAlignmentCalculator
 import com.github.dadeo.pdfbox.model.Cell
-import com.github.dadeo.pdfbox.model.DObject
+import com.github.dadeo.pdfbox.model.PdfComponent
 import com.github.dadeo.pdfbox.model.Table
 
 class TableWritableFactory implements ObjectWritableFactory<Table> {
@@ -94,8 +94,8 @@ class TableWritableFactory implements ObjectWritableFactory<Table> {
         cellContext.verticalAlignment = cell.verticalAlignment
         DContext cellWorkContext = cellContext.clone()
 
-        List<ObjectWritable> cellWritableContents = cell.contents.collect { DObject object ->
-            ObjectWritableFactory<? extends DObject> writerFactory = writerFactoryFactory.createWriter(object)
+        List<ObjectWritable> cellWritableContents = cell.contents.collect { PdfComponent object ->
+            ObjectWritableFactory<? extends PdfComponent> writerFactory = writerFactoryFactory.createWriter(object)
             ObjectWritable cellChildWritable = writerFactory.createFor(cellWorkContext, object)
             if (cellChildWritable.positionType == PositionType.RELATIVE)
                 objectBoundsCalculator.shrinkBoundsVertically(cellChildWritable.context.containingBounds.height, cellWorkContext)

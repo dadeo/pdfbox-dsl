@@ -14,18 +14,18 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.text.AssignedLine
 import com.github.dadeo.pdfbox.creator.writer.text.StringToken
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Point
 
 
 class LeftJustifiedTextBlockCurrentLocationPositioner implements TextBlockCurrentLocationPositioner {
 
-    DPoint repositionForLine(DPoint currentLocation, DBounds contentsBounds, AssignedLine line) {
-        new DPoint(x: contentsBounds.left, y: currentLocation.y - line.height)
+    Point repositionForLine(Point currentLocation, Bounds contentsBounds, AssignedLine line) {
+        new Point(x: contentsBounds.left, y: currentLocation.y - line.height)
     }
 
-    DPoint repositionForNextToken(StringToken token, DPoint currentLocation) {
-        new DPoint(x: currentLocation.x + token.size, y: currentLocation.y)
+    Point repositionForNextToken(StringToken token, Point currentLocation) {
+        new Point(x: currentLocation.x + token.size, y: currentLocation.y)
     }
 
 }

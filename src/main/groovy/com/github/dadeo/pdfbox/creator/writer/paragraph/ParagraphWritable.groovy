@@ -18,18 +18,18 @@ import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
 import com.github.dadeo.pdfbox.creator.writer.object.BackgroundPainter
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectWritable
 import com.github.dadeo.pdfbox.creator.writer.object.PositionType
-import com.github.dadeo.pdfbox.model.DParagraph
+import com.github.dadeo.pdfbox.model.Paragraph
 
 
 class ParagraphWritable implements ObjectWritable {
     private BoundedTextBlockWriter boundedTextBlockWriter = BootStrap.boundedTextBlockWriter
     private BackgroundPainter backgroundPainter = BootStrap.backgroundPainter
     private BorderDrawer borderDrawer = BootStrap.borderDrawer
-    private DParagraph dParagraph
+    private Paragraph dParagraph
     private BoundedTextBlock textBlock
     private DContext context
 
-    ParagraphWritable(DParagraph paragraph, BoundedTextBlock textBlock, DContext context) {
+    ParagraphWritable(Paragraph paragraph, BoundedTextBlock textBlock, DContext context) {
         this.dParagraph = paragraph
         this.textBlock = textBlock
         this.context = context

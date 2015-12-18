@@ -14,15 +14,15 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.object.ObjectBoundsCalculator
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DParagraph
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Paragraph
 import spock.lang.Specification
 
 class ParagraphWritableFactoryTest extends Specification {
     private static final float TEXT_BLOCK_HEIGHT = 150
     private static final float CONTENT_WIDTH = 600
-    private static final DBounds PAGE_CONTENT_BOUNDS = new DBounds(1, 2, 3, 4)
-    private static final DBounds PARAGRAPH_CONTAINING_BOUNDS = new DBounds(1, 2, 3, 4)
+    private static final Bounds PAGE_CONTENT_BOUNDS = new Bounds(1, 2, 3, 4)
+    private static final Bounds PARAGRAPH_CONTAINING_BOUNDS = new Bounds(1, 2, 3, 4)
     private ParagraphContentsDimensionsCalculator contentsSizeCalculator = Mock(ParagraphContentsDimensionsCalculator)
     private ParagraphContextFactory paragraphContextFactory = Mock(ParagraphContextFactory)
     private BoundedTextBlockFactory boundedTextBlockFactory = Mock(BoundedTextBlockFactory)
@@ -33,7 +33,7 @@ class ParagraphWritableFactoryTest extends Specification {
                                                                                              objectBoundsCalculator: objectBoundsCalculator)
     private DContext pageContext = new DContext()
     private DContext paragraphContext = new DContext()
-    private DParagraph paragraph = new DParagraph()
+    private Paragraph paragraph = new Paragraph()
     private BoundedTextBlock textBlock = Mock(BoundedTextBlock)
 
     def "write paragraph orchestration"() {

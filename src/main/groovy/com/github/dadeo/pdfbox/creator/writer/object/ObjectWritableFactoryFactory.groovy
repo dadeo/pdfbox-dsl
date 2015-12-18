@@ -16,9 +16,9 @@ import com.github.dadeo.pdfbox.creator.writer.canvas.CanvasWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.hr.HorizontalRuleWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.paragraph.ParagraphWritableFactory
 import com.github.dadeo.pdfbox.creator.writer.table.TableWritableFactory
-import com.github.dadeo.pdfbox.model.DHorizontalRule
-import com.github.dadeo.pdfbox.model.DObject
-import com.github.dadeo.pdfbox.model.DParagraph
+import com.github.dadeo.pdfbox.model.HorizontalRule
+import com.github.dadeo.pdfbox.model.PdfComponent
+import com.github.dadeo.pdfbox.model.Paragraph
 import com.github.dadeo.pdfbox.model.Canvas
 import com.github.dadeo.pdfbox.model.Table
 
@@ -28,12 +28,12 @@ class ObjectWritableFactoryFactory {
     TableWritableFactory tableWritableFactory
     CanvasWritableFactory canvasWritableFactory
 
-    ObjectWritableFactory<? extends DObject> createWriter(DObject dObject) {
+    ObjectWritableFactory<? extends PdfComponent> createWriter(PdfComponent dObject) {
         switch (dObject) {
-            case DParagraph:
+            case Paragraph:
                 paragraphWritableFactory
                 break
-            case DHorizontalRule:
+            case HorizontalRule:
                 horizontalRuleWritableFactory
                 break
             case Table:

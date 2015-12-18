@@ -16,11 +16,11 @@ import com.github.dadeo.pdfbox.creator.writer.DWriter
 import groovy.transform.Canonical
 
 @Canonical
-class Canvas implements DObject, Margined, Bordered, Padded {
+class Canvas implements PdfComponent, Margined, Bordered, Padded {
     float height
     Closure content
 
-    void draw(DBounds bounds, DWriter writer) {
+    void draw(Bounds bounds, DWriter writer) {
         content bounds, writer
     }
 

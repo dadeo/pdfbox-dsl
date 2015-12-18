@@ -14,7 +14,7 @@ package com.github.dadeo.pdfbox.creator.writer.page
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.border.BorderDrawer
-import com.github.dadeo.pdfbox.model.DPage
+import com.github.dadeo.pdfbox.model.Page
 import spock.lang.Specification
 
 import static org.hamcrest.CoreMatchers.sameInstance
@@ -41,7 +41,7 @@ class PageWriterTest extends Specification {
     def "pageWriter write"() {
         given:
         DContext documentContext = new DContext()
-        DPage dPage = new DPage()
+        Page dPage = new Page()
 
         when:
         pageWriter.write(documentContext, dPage)

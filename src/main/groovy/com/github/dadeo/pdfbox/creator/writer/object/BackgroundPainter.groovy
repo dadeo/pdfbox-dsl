@@ -13,14 +13,14 @@
 package com.github.dadeo.pdfbox.creator.writer.object
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.model.DBounds
+import com.github.dadeo.pdfbox.model.Bounds
 
 
 class BackgroundPainter {
 
     void paintFor(DContext context) {
         if (context.backgroundColor) {
-            DBounds bounds = context.borderBounds.offset(-0.5f, -0.5f, -0.5f, -0.5f)
+            Bounds bounds = context.borderBounds.offset(-0.5f, -0.5f, -0.5f, -0.5f)
 
             context.writer.fillRectangle(bounds, context.backgroundColor)
         }

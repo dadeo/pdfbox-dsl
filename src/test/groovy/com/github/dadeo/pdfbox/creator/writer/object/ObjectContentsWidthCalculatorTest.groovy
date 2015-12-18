@@ -20,71 +20,71 @@ class ObjectContentsWidthCalculatorTest extends Specification {
 
     def "calculate when no margins, border, and spacing"() {
         expect:
-        calculator.calculateFor(new DParagraph(), new DBounds(0, 600, 0, 100)) == 500f
+        calculator.calculateFor(new Paragraph(), new Bounds(0, 600, 0, 100)) == 500f
     }
 
     def "calculate when only margin"() {
         expect:
-        calculator.calculateFor(new DParagraph(marginLeft: 10, marginRight: 40), new DBounds(0, 600, 0, 100)) == 450f
+        calculator.calculateFor(new Paragraph(marginLeft: 10, marginRight: 40), new Bounds(0, 600, 0, 100)) == 450f
     }
 
     def "calculate when only border"() {
         expect:
-        calculator.calculateFor(new DParagraph(borderLeft: 10, borderRight: 40), new DBounds(0, 600, 0, 100)) == 450f
+        calculator.calculateFor(new Paragraph(borderLeft: 10, borderRight: 40), new Bounds(0, 600, 0, 100)) == 450f
     }
 
     def "calculate when only padding"() {
         expect:
-        calculator.calculateFor(new DParagraph(paddingLeft: 10, paddingRight: 40), new DBounds(0, 600, 0, 100)) == 450f
+        calculator.calculateFor(new Paragraph(paddingLeft: 10, paddingRight: 40), new Bounds(0, 600, 0, 100)) == 450f
     }
 
     def "calculate when margin, border, and padding"() {
         given:
 
-        DParagraph paragraph = new DParagraph(marginLeft: 5,
-                                              marginRight: 10,
-                                              borderLeft: 10,
-                                              borderRight: 20,
-                                              paddingLeft: 50,
-                                              paddingRight: 100)
+        Paragraph paragraph = new Paragraph(marginLeft: 5,
+                                            marginRight: 10,
+                                            borderLeft: 10,
+                                            borderRight: 20,
+                                            paddingLeft: 50,
+                                            paddingRight: 100)
 
         expect:
 
-        calculator.calculateFor(paragraph, new DBounds(0, 600, 0, 100)) == 305f
+        calculator.calculateFor(paragraph, new Bounds(0, 600, 0, 100)) == 305f
     }
 
 
     def "calculate when object is not Bordered or Padded"() {
         given:
-        MarginedTestDObject object = new MarginedTestDObject()
+        MarginedTestPdfComponent object = new MarginedTestPdfComponent()
         object.margin = 20
 
         expect:
-        calculator.calculateFor(object, new DBounds(0, 600, 0, 100)) == 460f
+        calculator.calculateFor(object, new Bounds(0, 600, 0, 100)) == 460f
     }
 
     def "calculate when object is not Margined or Padded"() {
         given:
-        BorderedTestDObject object = new BorderedTestDObject() {}
+        BorderedTestPdfComponent object = new BorderedTestPdfComponent() {}
         object.border = 20
 
         expect:
-        calculator.calculateFor(object, new DBounds(0, 600, 0, 100)) == 460f
+        calculator.calculateFor(object, new Bounds(0, 600, 0, 100)) == 460f
     }
 
     def "calculate when object is not Margined or Bordered"() {
         given:
-        PaddedTestDObject object = new PaddedTestDObject() {}
+        PaddedTestPdfComponent object = new PaddedTestPdfComponent() {}
         object.padding = 20
 
         expect:
-        calculator.calculateFor(object, new DBounds(0, 600, 0, 100)) == 460f
+        calculator.calculateFor(object, new Bounds(0, 600, 0, 100)) == 460f
     }
 
-    private class MarginedTestDObject implements DObject, Margined {}
+    private class MarginedTestPdfComponent implements PdfComponent, Margined {}
 
-    private class BorderedTestDObject implements DObject, Bordered {}
+    private class BorderedTestPdfComponent implements PdfComponent, Bordered {}
 
-    private class PaddedTestDObject implements DObject, Padded {}
+    private class PaddedTestPdfComponent implements PdfComponent, Padded {}
 
 }

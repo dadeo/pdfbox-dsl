@@ -13,14 +13,14 @@
 package com.github.dadeo.pdfbox.creator.writer.page
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
-import com.github.dadeo.pdfbox.model.DFont
-import com.github.dadeo.pdfbox.model.DPage
+import com.github.dadeo.pdfbox.model.Font
+import com.github.dadeo.pdfbox.model.Page
 import spock.lang.Specification
 
 
 class PageContextFactoryTest extends Specification {
-    private static final DFont DOCUMENT_FONT = new DFont()
-    private static final DFont PAGE_FONT = new DFont()
+    private static final Font DOCUMENT_FONT = new Font()
+    private static final Font PAGE_FONT = new Font()
 
     private PageContextFactory factory = new PageContextFactory()
     private DContext clonedContext = new DContext(font: DOCUMENT_FONT)
@@ -31,24 +31,24 @@ class PageContextFactoryTest extends Specification {
     def "document context is cloned and returned"() {
         expect:
 
-        factory.createContextFrom(documentContext, new DPage()).is clonedContext
+        factory.createContextFrom(documentContext, new Page()).is clonedContext
     }
 
     def "DPage font overrides document context font"() {
         expect:
 
-        factory.createContextFrom(documentContext, new DPage(font: PAGE_FONT)).font.is PAGE_FONT
+        factory.createContextFrom(documentContext, new Page(font: PAGE_FONT)).font.is PAGE_FONT
     }
 
     def "page context contains document context font when DPage font is null"() {
         expect:
 
-        factory.createContextFrom(documentContext, new DPage()).font.is DOCUMENT_FONT
+        factory.createContextFrom(documentContext, new Page()).font.is DOCUMENT_FONT
     }
 
     def "page context contains document context as parent"() {
         expect:
 
-        factory.createContextFrom(documentContext, new DPage()).parent.is documentContext
+        factory.createContextFrom(documentContext, new Page()).parent.is documentContext
     }
 }

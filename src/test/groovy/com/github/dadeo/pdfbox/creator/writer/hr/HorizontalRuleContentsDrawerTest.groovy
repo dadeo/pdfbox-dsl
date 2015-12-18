@@ -14,22 +14,22 @@ package com.github.dadeo.pdfbox.creator.writer.hr
 
 import com.github.dadeo.pdfbox.creator.writer.DContext
 import com.github.dadeo.pdfbox.creator.writer.DWriter
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DHorizontalRule
-import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Point
+import com.github.dadeo.pdfbox.model.HorizontalRule
 import spock.lang.Specification
 
 import java.awt.*
 
 class HorizontalRuleContentsDrawerTest extends Specification {
     private HorizontalRuleContentsDrawer contentsDrawer = new HorizontalRuleContentsDrawer()
-    private DHorizontalRule horizontalRule = new DHorizontalRule()
+    private HorizontalRule horizontalRule = new HorizontalRule()
     private DWriter dWriter = Mock(DWriter)
     private DContext horizontalRuleContext = new DContext(writer: dWriter)
 
     def "draws line centered between contents bounds"() {
         given:
-        horizontalRuleContext.contentsBounds = new DBounds(600f, 700f, 500f, 100f)
+        horizontalRuleContext.contentsBounds = new Bounds(600f, 700f, 500f, 100f)
         horizontalRule.thickness = 4f
         horizontalRule.color = Color.red
 
@@ -37,7 +37,7 @@ class HorizontalRuleContentsDrawerTest extends Specification {
         contentsDrawer.drawFor(horizontalRule, horizontalRuleContext)
 
         then:
-        1 * dWriter.drawLine(new DPoint(99.5f, 550f), new DPoint(700.5f, 550f), 4, Color.red)
+        1 * dWriter.drawLine(new Point(99.5f, 550f), new Point(700.5f, 550f), 4, Color.red)
     }
 
 }

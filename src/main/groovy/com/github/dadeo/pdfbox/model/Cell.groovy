@@ -16,22 +16,22 @@ import groovy.transform.Canonical
 
 
 @Canonical
-class Cell implements DObject, Margined, Bordered, Padded {
-    List<DObject> contents = []
+class Cell implements PdfComponent, Margined, Bordered, Padded {
+    List<PdfComponent> contents = []
     VerticalAlignment verticalAlignment
 
     Cell() {}
 
-    Cell(DObject object) {
+    Cell(PdfComponent object) {
         addContent(object)
     }
 
-    Cell addContent(DObject object) {
+    Cell addContent(PdfComponent object) {
         contents << object
         this
     }
 
-    Cell leftShift(DObject object) {
+    Cell leftShift(PdfComponent object) {
         addContent(object)
     }
 }

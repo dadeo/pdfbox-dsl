@@ -12,14 +12,14 @@
  */
 package com.github.dadeo.pdfbox.creator.writer.text
 
-import com.github.dadeo.pdfbox.model.DFont
+import com.github.dadeo.pdfbox.model.Font
 import groovy.transform.Canonical
 
 @Canonical
 class StringToken {
     String text
     float size
-    DFont font
+    Font font
 
     float getDescent() {
         font?.descent ?: 0

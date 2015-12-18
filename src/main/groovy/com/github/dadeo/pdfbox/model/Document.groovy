@@ -12,28 +12,18 @@
  */
 package com.github.dadeo.pdfbox.model
 
-import groovy.transform.AutoClone
-import groovy.transform.Immutable
+import org.apache.pdfbox.pdmodel.font.PDType1Font
 
+class Document {
+    List<Page> pages = []
+    Font font = new Font(PDType1Font.HELVETICA_BOLD, 12)
 
-@Immutable
-@AutoClone
-class DPoint {
-    float x, y
-
-    DPoint offsetX(float xAdjustment) {
-        new DPoint((float) (x + xAdjustment), y)
+    Document addPage(Page page) {
+        pages << page
+        this
     }
 
-    DPoint offsetY(float yAdjustment) {
-        new DPoint(x, (float) (y + yAdjustment))
-    }
-
-    DPoint offset(DPoint offsets) {
-        new DPoint((float) (x + offsets.x), (float) (y + offsets.y))
-    }
-
-    DPoint offset(float offsetX, float offsetY) {
-        new DPoint((float) (x + offsetX), (float) (y + offsetY))
+    Document leftShift(Page page) {
+        addPage page
     }
 }

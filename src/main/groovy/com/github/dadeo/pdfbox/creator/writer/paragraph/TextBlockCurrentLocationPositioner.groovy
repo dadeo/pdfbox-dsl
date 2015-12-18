@@ -14,14 +14,14 @@ package com.github.dadeo.pdfbox.creator.writer.paragraph
 
 import com.github.dadeo.pdfbox.creator.writer.text.AssignedLine
 import com.github.dadeo.pdfbox.creator.writer.text.StringToken
-import com.github.dadeo.pdfbox.model.DBounds
-import com.github.dadeo.pdfbox.model.DPoint
+import com.github.dadeo.pdfbox.model.Bounds
+import com.github.dadeo.pdfbox.model.Point
 
 
 interface TextBlockCurrentLocationPositioner {
 
-    DPoint repositionForLine(DPoint currentLocation, DBounds contentsBounds, AssignedLine line)
+    Point repositionForLine(Point currentLocation, Bounds contentsBounds, AssignedLine line)
 
-    DPoint repositionForNextToken(StringToken token, DPoint currentLocation)
+    Point repositionForNextToken(StringToken token, Point currentLocation)
 
 }
